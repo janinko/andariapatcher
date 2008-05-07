@@ -3,8 +3,9 @@ package cz.polous.andaria;
 /*******************************************************************************
  * Patch process queue super class. Take care about queue processing progress
  * calculations, status bars value updates and queue threads monitoring.
+ * 
  * @author  Martin Polehla (andaria_patcher@polous.cz)
- * @version 0.1
+ * 
  ******************************************************************************/
 
 
@@ -25,7 +26,7 @@ abstract class PatcherQueue  implements Runnable {
     private JProgressBar totalProgressBar; // single file download progressbar
     private JLabel label; // single file donwload label (using for filename and status)
 
-    static Log log;
+    protected Log log;
     /***************************************************************************
      * (abstract) Queue item processing method.
      **************************************************************************/

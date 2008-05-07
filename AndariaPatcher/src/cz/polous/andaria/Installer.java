@@ -14,12 +14,7 @@ import java.nio.channels.FileChannel;
  * Installer unpack files to ultima's directory and try execute start_a.bat
  * or start_g.bat if exists.
  *
- * Changelog:
- *      [0.2]   podpora i souboru ktere nejsou zabalene. Ty se pak ciste
- *              zkopiruji do adresare uo.
- * 
  * @author Martin Polehla (andaria_patcher@polous.cz)
- * @version 0.2
  */
 class Installer extends PatcherQueue {
 

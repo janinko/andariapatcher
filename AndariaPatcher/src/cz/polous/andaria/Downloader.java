@@ -15,11 +15,6 @@ import java.io.IOException;
  * local temp storage, add patchitem to Installer object (installator) and
  * run it.
  * 
- * ChangLog:
- *      [0.3] oprava funkce stahovani. Uz neodecita dva soubory v jednom cyklu.
- *      [0.2] osetreni chyby s hlasenim nestazeneho soubor presunutim odchytuti
- *              vyjimky checkHash funkce mimo funkci.
- * 
  * @author Martin Polehla (andaria_patcher@polous.cz)
  * 
  */

@@ -86,6 +86,7 @@ class PatchList  {
                             return;
                         }
                         sLine = br.readLine();
+                        log.addDebug(sLine);
                         sItems = sLine.split(";");
                         data.add(new PatchItem(sItems));
                     }

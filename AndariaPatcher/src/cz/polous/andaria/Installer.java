@@ -83,7 +83,7 @@ class Installer extends PatcherQueue {
                     setFailed(true);
                     log.addEx(e);
                 } finally {
-                    //log.addLine("** spoustim instalaci dal");
+                    log.addDebug("Poustim instalaci dal");
                     work();
                 }
             }

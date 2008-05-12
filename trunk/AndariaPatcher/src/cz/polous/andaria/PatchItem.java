@@ -53,7 +53,7 @@ class PatchItem {
     public PatchItem(String[] data) {
         log = new Log(this);
         name = data[1];
-        hash = new BigInteger(data[3], 16);
+        hash = new BigInteger(data[3].trim(), 16);
         version = data[6];
         currentVersion = data[6];
         try {

@@ -16,10 +16,10 @@ import org.jdom.Element;
 
 
 /*******************************************************************************
- * Settings: Take cares about settings and settings XML file.
+ * Settings: Trida se statickyma metodama pro pristup k nastaveni a ukladani 
+ * nastaveni.
  * 
  * @author  Martin Polehla (andaria_patcher@polous.cz)
- * @version 0.1
  ******************************************************************************/
 class Settings {
 
@@ -169,7 +169,7 @@ class Settings {
         if (doc == null) {
             return;
         }
-        SAXBuilder parser = new SAXBuilder();
+      //  SAXBuilder parser = new SAXBuilder();
         File f = os.getExistingFileInstance(os.getConfigPath());
 
         try {

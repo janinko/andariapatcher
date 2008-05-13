@@ -1,12 +1,3 @@
-/*
- * Browser.java
- *
- * Created on 3. říjen 2007, 23:46
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
-
 package cz.polous.andaria;
 
 import java.awt.Dimension;
@@ -29,7 +20,10 @@ import org.xml.sax.InputSource;
 
 
 /**
- *
+ * Trida ktera zobrazi stranku v HtmlPanelu.
+ * 
+ * nepouzivano - misto toho se puziva knihovna Cobra.
+ * 
  * @author p0l0us
  */
 class Browser {
@@ -55,7 +49,7 @@ class Browser {
      *
      * @see cz.polous.andaria.Browser#openUrl
      */
-    private class hyperlink implements HyperlinkListener {
+   private class hyperlink implements HyperlinkListener {
 
         public void hyperlinkUpdate(HyperlinkEvent e) {
             if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {

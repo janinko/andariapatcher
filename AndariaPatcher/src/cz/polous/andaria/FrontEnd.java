@@ -12,14 +12,10 @@ import javax.swing.event.ChangeListener;
 import org.lobobrowser.html.gui.HtmlPanel;
 
 /*******************************************************************************
- * Main class of FrontEnd. Displays form and hadle controll components.
- *
- * Changelog:
- *      [0.2]   opraveno tlacitko pro hledani urar.exe
- *      [0.2]   pridano tlacitko pro stazeni unraru
+ * Predni panel aplikace - rozhrani mezi uzivatelem a logikou aplikace.
+ * Hlavni spustitelna trida, ktera ve svem kontruktoru inicializuje program.
  * 
  * @author Martin Polehla (andaria_patcher@polous.cz)
- * @version 0.2
  ******************************************************************************/
 public class FrontEnd extends JFrame {
 
@@ -668,7 +664,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.2");
+        jLabel1.setText("Verze programu: 1.3");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());
@@ -802,7 +798,6 @@ public class FrontEnd extends JFrame {
 
         jLConfUnRARCommand.getAccessibleContext().setAccessibleDescription("Umístění souboru unrar.exe. Používá se k rozbalení .rar souborů. Najdete ho ke stažení na http://www.winrar.cz/download.php?area=rarother");
         jTConfUnRARCommand.getAccessibleContext().setAccessibleDescription("Umístění souboru unrar.exe. Používá se k rozbalení .rar souborů. Najdete ho ke stažení na http://www.winrar.cz/download.php?area=rarother");
-        jLabel1.getAccessibleContext().setAccessibleName("Verze programu: 1.2");
 
         jTPMain.addTab("Nastavení", null, jPSettingsTab, "Klikni pro zobrazení panelu s nastavením Andaria Patcheru...");
 
@@ -902,6 +897,7 @@ public class FrontEnd extends JFrame {
             patchList.downloadOther(patchItem);
 
             jTConfUnRARCommand.setText(Settings.os.getUltima_online_path() + File.separator + patchItem.getFileName());
+            Settings.save();
         }
         
     }//GEN-LAST:event_jBConfBrowseUnRARCommand1ActionPerformed

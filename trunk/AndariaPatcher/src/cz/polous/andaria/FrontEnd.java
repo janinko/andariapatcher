@@ -897,7 +897,8 @@ public class FrontEnd extends JFrame {
             patchList.downloadOther(patchItem);
 
             jTConfUnRARCommand.setText(Settings.os.getUltima_online_path() + File.separator + patchItem.getFileName());
-            Settings.save();
+            
+            saveSettings();
         }
         
     }//GEN-LAST:event_jBConfBrowseUnRARCommand1ActionPerformed

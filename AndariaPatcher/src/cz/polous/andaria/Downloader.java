@@ -10,10 +10,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Downloader: Downloade files and start instalator when file ready.
- * When file don't exists on localhost, download it. After correct file found on
- * local temp storage, add patchitem to Installer object (installator) and
- * run it.
+ * Downloader se stara o stahovani souboru. Po uspesnem stazeni presune soubor
+ * do fronty installeru a spusti installer.
  * 
  * @author Martin Polehla (andaria_patcher@polous.cz)
  * 

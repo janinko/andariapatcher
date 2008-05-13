@@ -1,11 +1,13 @@
 package cz.polous.andaria;
 
 /*******************************************************************************
- * Patch process queue super class. Take care about queue processing progress
- * calculations, status bars value updates and queue threads monitoring.
+ * Supertrida, ktera se stara o frontu patchu a probihajici proces. Dedi ji
+ * tridy Downloader a Installer, ktere zajisti konkretni zpracovani patchu
+ * ve fronte.
+ * 
+ * Resi update statusbaru, monitorovani thready a pod.
  * 
  * @author  Martin Polehla (andaria_patcher@polous.cz)
- * 
  ******************************************************************************/
 
 

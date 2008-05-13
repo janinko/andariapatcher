@@ -9,17 +9,19 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 /**
- * Installer: take care about installing downloaded files.
- * Downloader adds files into installator queue and run it.
- * Installer unpack files to ultima's directory and try execute start_a.bat
- * or start_g.bat if exists.
- *
+ * Installer se stara o rozbalovani (nebo jen kopirovani) souboru do adresare
+ * s ultimou. Po rozbaleni souboru do adresare s uo se koukne po instalacnich
+ * skriptech start_a.bat nebo start_b.bat a kdyz je najde tak je spusti.
+ * 
+ * Po uspesnem nainstalovani oznaci soubor jako nainstalovany a odstrani
+ * z fornty pro instalaci
+ * 
  * @author Martin Polehla (andaria_patcher@polous.cz)
  */
 class Installer extends PatcherQueue {
 
     private boolean failed;
-
+    //public static Log log;
     public void setFailed(boolean failed) {
         this.failed = failed;
     }
@@ -65,25 +67,27 @@ class Installer extends PatcherQueue {
             public void run() {
                 try {
                     Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getValue(Settings.ULTIMA_ONINE_PATH)));
-                    // if (Settings.debugMode()) {
-                    String line;
+                    if (Settings.debugMode()) {
+                        String line;
 
-                    BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-                    while ((line = input.readLine()) != null) {
-                        log.addDebug("[" + command[0] + "]: " + line);
+                        BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+                        while ((line = input.readLine()) != null) {
+                            log.addDebug("[" + command[0] + "]: " + line);
+                        }
+
+                        input.close();
                     }
-                    input.close();
-                //     } else {
-                //       proc.waitFor();
-                // }
-                // } catch (InterruptedException e) {
-                //    setFailed(true);
-                //  log.addEx(e);
+                    proc.waitFor();
+
+                } catch (InterruptedException e) {
+                    setFailed(true);
+                    log.addEx(e);
                 } catch (IOException e) {
                     setFailed(true);
                     log.addEx(e);
                 } finally {
-                    log.addDebug("Poustim instalaci dal");
+                    log.addDebug("spusteny program skoncil");
+
                     work();
                 }
             }
@@ -115,7 +119,7 @@ class Installer extends PatcherQueue {
 
         // - reset progress
         resetSingleDone(patchItem.getSize());
-        
+
         log.addDebug("Pracuju se souborem: " + patchItem.getLocalFileName());
         if (patchItem.isPacked()) {
             // - Unpack patch files
@@ -126,10 +130,13 @@ class Installer extends PatcherQueue {
             exec(new String[]{Settings.getValue(Settings.UNRAR_PATH), "-o+", "e", patchItem.getLocalFileName()});
 
             singleDone(((double) patchItem.getSize()) / 2);
-
+            log.addDebug("Soubor je rozbaleny, hledam instalacni skripty.");
             // - if exist start_a.bat, execute it
+
             File f = new File(uopath + File.separator + "start_a.bat");
+            log.addDebug("hledam:" + f.getAbsolutePath());
             if (f.exists()) {
+                log.addDebug("Nasel jsem start_a.bat.");
                 setLabelText("Instaluju patch: " + patchItem.getFileName());
 
                 exec(Settings.os.getBatchExecCommand(f));
@@ -137,7 +144,9 @@ class Installer extends PatcherQueue {
             }
             // - if exist start_g.bat, execute it
             f = new File(uopath + File.separator + "start_g.bat");
+            log.addDebug("hledam:" + f.getAbsolutePath());
             if (f.exists()) {
+                log.addDebug("Nasel jsem start_g.bat.");
                 setLabelText("Instaluju patch: " + patchItem.getFileName());
                 exec(Settings.os.getBatchExecCommand(f));
 
@@ -149,10 +158,11 @@ class Installer extends PatcherQueue {
             // wait(300);
             setLabelText("Prace dokoncena (" + patchItem.getFileName() + ").");
             singleDone((double) patchItem.getSize());
+            log.addDebug("Instalace patche " + patchItem.getFileName() + " dokoncena.");
         } else {
             // copy files into game directory
             setLabelText("Kopiruju soubor: " + patchItem.getFileName() + " do adresare UO.");
-            
+
             final String uopath = Settings.getValue(Settings.ULTIMA_ONINE_PATH);
             File inFile = new File(patchItem.getLocalFileName());
             File outFile = new File(uopath + File.separator + patchItem.getFileName());

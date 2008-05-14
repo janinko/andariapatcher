@@ -66,8 +66,10 @@ class Installer extends PatcherQueue {
             @Override
             public void run() {
                 try {
+                    log.addDebug("Pred spustenim");
                     Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getValue(Settings.ULTIMA_ONINE_PATH)));
-                    if (Settings.debugMode()) {
+                    //if (Settings.debugMode()) {
+                        log.addDebug("Vystup procesu:");
                         String line;
 
                         BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
@@ -76,7 +78,8 @@ class Installer extends PatcherQueue {
                         }
 
                         input.close();
-                    }
+                    //}
+                    log.addDebug("Cekam na dokonceni.");
                     proc.waitFor();
 
                 } catch (InterruptedException e) {
@@ -86,7 +89,7 @@ class Installer extends PatcherQueue {
                     setFailed(true);
                     log.addEx(e);
                 } finally {
-                    log.addDebug("spusteny program skoncil");
+                    log.addDebug("Spusteny program skoncil");
 
                     work();
                 }

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stddef.h>
-#include <string.h>
+#include <string>
 #include <windows.h>
 #include <winioctl.h>
 

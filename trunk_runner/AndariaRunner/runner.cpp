@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "runner.h"
 
+DWORD WINAPI runClient( LPVOID lpParam ) 
 
-void runClient()
 {
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
@@ -10,28 +10,23 @@ void runClient()
     ZeroMemory( &si, sizeof(si) );
     si.cb = sizeof(si);
     ZeroMemory( &pi, sizeof(pi) );
-/*
-    if( argc != 2 )
-    {
-        printf("Usage: %s [cmdline]\n", argv[0]);
-        return;
-    }*/
+	printf("Startuji uo\n");
 
     // Start the child process. 
     if( !CreateProcess( NULL,   // No module name (use command line)
-        "d:\\uo\\AndariaClient.exe",        // Command line
+        "c:\\uo\\AndariaClient.exe",        // Command line
         NULL,           // Process handle not inheritable
         NULL,           // Thread handle not inheritable
         FALSE,          // Set handle inheritance to FALSE
         0,              // No creation flags
         NULL,           // Use parent's environment block
-        "d:\\uo",           // Use parent's starting directory 
+        "c:\\uo",           // Use parent's starting directory 
         &si,            // Pointer to STARTUPINFO structure
         &pi )           // Pointer to PROCESS_INFORMATION structure
     ) 
     {
         printf( "CreateProcess failed (%d)\n", GetLastError() );
-        return;
+        return 0;
     }
 
     // Wait until child process exits.
@@ -40,4 +35,14 @@ void runClient()
     // Close process and thread handles. 
     CloseHandle( pi.hProcess );
     CloseHandle( pi.hThread );
+	 return 1;
+}
+
+HANDLE createAppThread(DWORD dwThreadID) {
+	return CreateThread(NULL,
+                             0,
+                             runClient,
+                             NULL,
+                             0,
+                             &dwThreadID);
 }

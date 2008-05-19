@@ -1,11 +1,9 @@
 #include <windows.h>
-/*
 #include <stdio.h>
 #include <tchar.h>
-#include <psapi.h>
-#include <iostream>
-//#include <cstdlib>
-//#include <Tlhelp32.h>
-//*/
-int getRunningProcess();
+#include "psapi.h"
+
+#pragma comment(lib, "Psapi")
+
+void getProcssList();
 void PrintProcessNameAndID( DWORD processID );

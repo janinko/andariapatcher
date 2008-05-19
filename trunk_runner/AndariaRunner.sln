@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AndairaRunner", "AndariaRunner\AndariaRunner.vcproj", "{3301E3D5-5531-457D-892C-DEEE3052902E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "processexplore", "processexplore\processexplore.vcproj", "{73A38609-E723-4ED7-BCC3-ED2AC0083595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{3301E3D5-5531-457D-892C-DEEE3052902E}.Debug|Win32.Build.0 = Debug|Win32
 		{3301E3D5-5531-457D-892C-DEEE3052902E}.Release|Win32.ActiveCfg = Release|Win32
 		{3301E3D5-5531-457D-892C-DEEE3052902E}.Release|Win32.Build.0 = Release|Win32
+		{73A38609-E723-4ED7-BCC3-ED2AC0083595}.Debug|Win32.ActiveCfg = Debug|Win32
+		{73A38609-E723-4ED7-BCC3-ED2AC0083595}.Debug|Win32.Build.0 = Debug|Win32
+		{73A38609-E723-4ED7-BCC3-ED2AC0083595}.Release|Win32.ActiveCfg = Release|Win32
+		{73A38609-E723-4ED7-BCC3-ED2AC0083595}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

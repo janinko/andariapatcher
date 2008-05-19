@@ -44,7 +44,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="4"
@@ -187,6 +187,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\process.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\runner.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -222,6 +230,14 @@
 			</File>
 			<File
 				RelativePath=".\macId.h"
+				>
+			</File>
+			<File
+				RelativePath=".\process.h"
+				>
+			</File>
+			<File
+				RelativePath=".\runner.h"
 				>
 			</File>
 			<File

@@ -1,3 +1,5 @@
+#include <windows.h>
+#include <iostream>
 
-
-void runClient();
+HANDLE createAppThread(DWORD &dwThreadID);
+DWORD WINAPI runClient( LPVOID lpParam );

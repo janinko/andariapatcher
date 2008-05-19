@@ -566,8 +566,8 @@ int ReadPhysicalDriveInNTWithZeroRights (void)
 			            //  (but there can be leading spaces on IBM drives)
 				   (isalnum (serialNumber [0]) || isalnum (serialNumber [19])))
 			 {
-				strcpy (HardDriveSerialNumber, serialNumber);
-				strcpy (HardDriveModelNumber, modelNumber);
+				strcpy_s (HardDriveSerialNumber, serialNumber);
+				strcpy_s (HardDriveModelNumber, modelNumber);
 				done = TRUE;
 			 }
 #ifdef PRINTING_TO_CONSOLE_ALLOWED
@@ -883,8 +883,8 @@ void PrintIdeInfo (int drive, DWORD diskdata [256])
        //  (but there can be leading spaces on IBM drives)
        (isalnum (serialNumber [0]) || isalnum (serialNumber [19])))
    {
-      strcpy (HardDriveSerialNumber, serialNumber);
-      strcpy (HardDriveModelNumber, modelNumber);
+      strcpy_s (HardDriveSerialNumber, serialNumber);
+      strcpy_s (HardDriveModelNumber, modelNumber);
    }
 
 #ifdef PRINTING_TO_CONSOLE_ALLOWED
@@ -1004,7 +1004,7 @@ HDD_ID getHardDriveComputerID ()
    __int64 id = 0;
    OSVERSIONINFO version;
 
-   strcpy (HardDriveSerialNumber, "");
+   strcpy_s (HardDriveSerialNumber, "");
 
    memset (&version, 0, sizeof (version));
    version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
@@ -1125,8 +1125,8 @@ HDD_ID getHardDriveComputerID ()
    HDD_ID hddId;// = { NULL, NULL,  };
 
    hddId;
-   strcpy(hddId.HardDriveModelNumber, HardDriveModelNumber);
-   strcpy(hddId.HardDriveSerialNumber, HardDriveSerialNumber);
+   strcpy_s(hddId.HardDriveModelNumber, HardDriveModelNumber);
+   strcpy_s(hddId.HardDriveSerialNumber, HardDriveSerialNumber);
    hddId.idNumber = lId;
    
 

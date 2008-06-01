@@ -1,127 +1,170 @@
-#include "stdafx.h"
-#include "hddId.h"
+//#include "stdafx.h"
 
-char HardDriveSerialNumber [1024];
-char HardDriveModelNumber [1024];
+#include <stdlib.h>
+#include <stddef.h>
+#include <string>
+#include <windows.h>
+#include <winioctl.h>
+#include <sstream>
+#include "md5wrapper.h"
 
+	//  special include from the MS DDK
+//#include "c:\win2kddk\inc\ddk\ntddk.h"
+//#include "c:\win2kddk\inc\ntddstor.h"
 
-#define  IDENTIFY_BUFFER_SIZE  512
+#include "hdd.h"
 
+//  Required to ensure correct PhysicalDrive IOCTL structure setup
+#pragma pack(1)
 
-   //  IOCTL commands
-#define  DFP_GET_VERSION          0x00074080
-#define  DFP_SEND_DRIVE_COMMAND   0x0007c084
-#define  DFP_RECEIVE_DRIVE_DATA   0x0007c088
-
-#define  FILE_DEVICE_SCSI              0x0000001b
-#define  IOCTL_SCSI_MINIPORT_IDENTIFY  ((FILE_DEVICE_SCSI << 16) + 0x0501)
-#define  IOCTL_SCSI_MINIPORT 0x0004D008  //  see NTDDSCSI.H for definition
-
-#define SMART_GET_VERSION               CTL_CODE(IOCTL_DISK_BASE, 0x0020, METHOD_BUFFERED, FILE_READ_ACCESS)
-#define SMART_SEND_DRIVE_COMMAND        CTL_CODE(IOCTL_DISK_BASE, 0x0021, METHOD_BUFFERED, FILE_READ_ACCESS | FILE_WRITE_ACCESS)
-#define SMART_RCV_DRIVE_DATA            CTL_CODE(IOCTL_DISK_BASE, 0x0022, METHOD_BUFFERED, FILE_READ_ACCESS | FILE_WRITE_ACCESS)
-
-
-
-   //  GETVERSIONOUTPARAMS contains the data returned from the 
-   //  Get Driver Version function.
-typedef struct _GETVERSIONOUTPARAMS
+/* *********************************************************************************** 
+ * Hdd::Hdd
+ * ***********************************************************************************/
+Hdd::Hdd()
 {
-   BYTE bVersion;      // Binary driver version.
-   BYTE bRevision;     // Binary driver revision.
-   BYTE bReserved;     // Not used.
-   BYTE bIDEDeviceMap; // Bit map of IDE devices.
-   DWORD fCapabilities; // Bit mask of driver capabilities.
-   DWORD dwReserved[4]; // For future use.
-} GETVERSIONOUTPARAMS, *PGETVERSIONOUTPARAMS, *LPGETVERSIONOUTPARAMS;
+	driveCount = 0;
+	// char string [1024];
+
+	OSVERSIONINFO version;
+
+	// strcpy_s (HardDriveSerialNumber, "");
+
+	memset (&version, 0, sizeof (version));
+	version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+	GetVersionEx (&version);
+	if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
+	{
+		//  this works under WinNT4 or Win2K if you have admin rights
+#ifdef PRINTING_TO_CONSOLE_ALLOWED
+		printf ("\nTrying to read the drive IDs using physical access with admin rights\n");
+#endif
+		driveCount = ReadPhysicalDriveInNTWithAdminRights ();
+		if ( driveCount == 0 ) {
+			//  this should work in WinNT or Win2K if previous did not work
+			//  this is kind of a backdoor via the SCSI mini port driver into
+			//     the IDE drives
+#ifdef PRINTING_TO_CONSOLE_ALLOWED
+			printf ("\nTrying to read the drive IDs using the SCSI back door\n");
+#endif
+			driveCount = ReadIdeDriveAsScsiDriveInNT ();
+		}
+		if ( driveCount == 0 ) {
+			//  this works under WinNT4 or Win2K or WinXP if you have any rights
+#ifdef PRINTING_TO_CONSOLE_ALLOWED
+			printf ("\nTrying to read the drive IDs using physical access with zero rights\n");
+#endif
+			driveCount = ReadPhysicalDriveInNTWithZeroRights ();
+		}
+		if ( driveCount == 0){
+			//  this works under WinNT4 or Win2K or WinXP or Windows Server 2003 or Vista if you have any rights
+#ifdef PRINTING_TO_CONSOLE_ALLOWED
+			printf ("\nTrying to read the drive IDs using Smart\n");
+#endif
+			driveCount = ReadPhysicalDriveInNTUsingSmart ();
+		}
+	}
+	else
+	{
+		//  this works under Win9X and calls a VXD
+		int attempt = 0;
+
+		//  try this up to 10 times to get a hard drive serial number
+		for (attempt = 0;
+				attempt < 10 && driveCount == 0 ;
+				attempt++)
+			driveCount = ReadDrivePortsInWin9X ();
+		
+	}
+}
 
 
-   //  Bits returned in the fCapabilities member of GETVERSIONOUTPARAMS 
-#define  CAP_IDE_ID_FUNCTION             1  // ATA ID command supported
-#define  CAP_IDE_ATAPI_ID                2  // ATAPI ID command supported
-#define  CAP_IDE_EXECUTE_SMART_FUNCTION  4  // SMART commannds supported
+/* *********************************************************************************** 
+ * Hdd::getInfo
+ * vrati retezec popisujici harddisk
+ * ***********************************************************************************/
 
-
-
-
- 
-
-   //  Valid values for the bCommandReg member of IDEREGS.
-#define  IDE_ATAPI_IDENTIFY  0xA1  //  Returns ID sector for ATAPI.
-#define  IDE_ATA_IDENTIFY    0xEC  //  Returns ID sector for ATA.
-
-
-  
-
-
-   // The following struct defines the interesting part of the IDENTIFY
-   // buffer:
-typedef struct _IDSECTOR
+char * Hdd::getInfo()
 {
-   USHORT  wGenConfig;
-   USHORT  wNumCyls;
-   USHORT  wReserved;
-   USHORT  wNumHeads;
-   USHORT  wBytesPerTrack;
-   USHORT  wBytesPerSector;
-   USHORT  wSectorsPerTrack;
-   USHORT  wVendorUnique[3];
-   CHAR    sSerialNumber[20];
-   USHORT  wBufferType;
-   USHORT  wBufferSize;
-   USHORT  wECCSize;
-   CHAR    sFirmwareRev[8];
-   CHAR    sModelNumber[40];
-   USHORT  wMoreVendorUnique;
-   USHORT  wDoubleWordIO;
-   USHORT  wCapabilities;
-   USHORT  wReserved1;
-   USHORT  wPIOTiming;
-   USHORT  wDMATiming;
-   USHORT  wBS;
-   USHORT  wNumCurrentCyls;
-   USHORT  wNumCurrentHeads;
-   USHORT  wNumCurrentSectorsPerTrack;
-   ULONG   ulCurrentSectorCapacity;
-   USHORT  wMultSectorStuff;
-   ULONG   ulTotalAddressableSectors;
-   USHORT  wSingleWordDMA;
-   USHORT  wMultiWordDMA;
-   BYTE    bReserved[128];
-} IDSECTOR, *PIDSECTOR;
+	// creating a wrapper object
+	md5wrapper md5;
+	// create a hash from a string
+	std::string hash;
 
+	std::stringstream sstr;
+	std::string str;
+	char * id;
+	for (int i=0;i<driveCount;i++)
+	{
+		id = new char[sizeof(drives[i].modelNumber) + sizeof(drives[i].serialNumber) + 1];	
+		strcpy(id, drives[i].modelNumber);
+		strcat(id, drives[i].serialNumber);
 
-typedef struct _SRB_IO_CONTROL
+		hash = md5.getHashFromString(id);
+		sstr << hash << ":";
+		str = sstr.str();
+	}
+	// prevod na ceckovy char *
+	char * result = new char[str.length() + 1];	
+	strcpy (result, str.c_str());
+	return result;
+}
+/* *********************************************************************************** 
+ * Hdd::PrintIdeInfo
+ *	console output
+ * ***********************************************************************************/
+void Hdd::PrintIdeInfo (int drive, DWORD diskdata [256])
 {
-   ULONG HeaderLength;
-   UCHAR Signature[8];
-   ULONG Timeout;
-   ULONG ControlCode;
-   ULONG ReturnCode;
-   ULONG Length;
-} SRB_IO_CONTROL, *PSRB_IO_CONTROL;
+   char serialNumber [1024];
+   char modelNumber [1024];
+   char revisionNumber [1024];
+   char bufferSize [32];
+
+   // result
+   HDD_ID hddId;
+
+   __int64 sectors = 0;
+   __int64 bytes = 0;
+
+      //  copy the hard drive serial number to the buffer
+   ConvertToString (diskdata, 10, 19, serialNumber);
+   ConvertToString (diskdata, 27, 46, modelNumber);
+   ConvertToString (diskdata, 23, 26, revisionNumber);
+   sprintf_s (bufferSize, "%u", diskdata [21] * 512);
+
+	//  serial number must be alphanumeric
+    //  (but there can be leading spaces on IBM drives)
+	if (isalnum (serialNumber [0]) || isalnum (serialNumber [19]) )
+	{
+		strcpy_s(hddId.modelNumber, modelNumber);
+		strcpy_s(hddId.serialNumber, serialNumber);
+		strcpy_s(hddId.revisionNumber, revisionNumber);
+	    hddId.idNumber = getDriveId(&hddId);
+	}
 
 
-   // Define global buffers.
-BYTE IdOutCmd [sizeof (SENDCMDOUTPARAMS) + IDENTIFY_BUFFER_SIZE - 1];
+	if (diskdata [0] & 0x0080) 
+		hddId.driveType = DRIVE_REMOVABLE;
+
+	else if (diskdata [0] & 0x0040)
+		hddId.driveType = DRIVE_FIXED;
+
+	else 
+		hddId.driveType = DRIVE_UNKNOWN;
+	
 
 
-char *ConvertToString (DWORD diskdata [256],
-		       int firstIndex,
-		       int lastIndex,
-		       char* buf);
-void PrintIdeInfo (int drive, DWORD diskdata [256]);
-BOOL DoIDENTIFY (HANDLE, PSENDCMDINPARAMS, PSENDCMDOUTPARAMS, BYTE, BYTE,
-                 PDWORD);
+	if (drive <= MAX_IDE_DRIVES) {
+		drives[drive] = hddId;
+		//driveCount = drive+1;
+	}
+}
 
-
-   //  Max number of drives assuming primary/secondary, master/slave topology
-#define  MAX_IDE_DRIVES  16
-
-
-int ReadPhysicalDriveInNTWithAdminRights (void)
+/* *********************************************************************************** 
+ * Hdd::ReadPhysicalDriveInNTWithAdminRights
+ * ***********************************************************************************/
+int Hdd::ReadPhysicalDriveInNTWithAdminRights (void)
 {
-   int done = FALSE;
+   int driveCount = 0;
    int drive = 0;
 
    for (drive = 0; drive < MAX_IDE_DRIVES; drive++)
@@ -132,7 +175,7 @@ int ReadPhysicalDriveInNTWithAdminRights (void)
          //  and exit if can't.
       char driveName [256];
 
-      sprintf (driveName, "\\\\.\\PhysicalDrive%d", drive);
+      sprintf_s (driveName, "\\\\.\\PhysicalDrive%d", drive);
 
          //  Windows NT, Windows 2000, must have admin rights
       hPhysicalDriveIOCTL = CreateFile (driveName,
@@ -185,7 +228,7 @@ int ReadPhysicalDriveInNTWithAdminRights (void)
 
                PrintIdeInfo (drive, diskdata);
 
-               done = TRUE;
+               driveCount = drive+1;
             }
 	    }
 
@@ -193,7 +236,7 @@ int ReadPhysicalDriveInNTWithAdminRights (void)
       }
    }
 
-   return done;
+   return driveCount;
 }
 
 
@@ -259,10 +302,12 @@ typedef struct _IDENTIFY_DATA {
 #pragma pack()
 
 
-
-int ReadPhysicalDriveInNTUsingSmart (void)
+/* *********************************************************************************** 
+ * Hdd::ReadPhysicalDriveInNTUsingSmart
+ * ***********************************************************************************/
+int Hdd::ReadPhysicalDriveInNTUsingSmart (void)
 {
-   int done = FALSE;
+   int driveCount = 0;
    int drive = 0;
 
    for (drive = 0; drive < MAX_IDE_DRIVES; drive++)
@@ -273,7 +318,7 @@ int ReadPhysicalDriveInNTUsingSmart (void)
          //  and exit if can't.
       char driveName [256];
 
-      sprintf (driveName, "\\\\.\\PhysicalDrive%d", drive);
+      sprintf_s (driveName, "\\\\.\\PhysicalDrive%d", drive);
 
          //  Windows NT, Windows 2000, Windows Server 2003, Vista
       hPhysicalDriveIOCTL = CreateFile (driveName,
@@ -328,7 +373,7 @@ int ReadPhysicalDriveInNTUsingSmart (void)
                    diskdata [ijk] = pIdSector [ijk];
 
                 PrintIdeInfo (drive, diskdata);
-                done = TRUE;
+                driveCount = drive+1;
 			}
 	           // Done
             CloseHandle (hPhysicalDriveIOCTL);
@@ -337,7 +382,7 @@ int ReadPhysicalDriveInNTUsingSmart (void)
       }
    }
 
-   return done;
+   return driveCount;
 }
 
 
@@ -380,10 +425,12 @@ int ReadPhysicalDriveInNTUsingSmart (void)
 
 
 
-
-	//  function to decode the serial numbers of IDE hard drives
-	//  using the IOCTL_STORAGE_QUERY_PROPERTY command 
-char * flipAndCodeBytes (const char * str,
+/* *********************************************************************************** 
+ * Hdd::flipAndCodeBytes
+ *  function to decode the serial numbers of IDE hard drives
+ *  using the IOCTL_STORAGE_QUERY_PROPERTY command 
+ * ***********************************************************************************/
+char * Hdd::flipAndCodeBytes (const char * str,
 			 int pos,
 			 int flip,
 			 char * buf)
@@ -503,11 +550,15 @@ char * flipAndCodeBytes (const char * str,
 
 
 
-
-int ReadPhysicalDriveInNTWithZeroRights (void)
+/* *********************************************************************************** 
+ * Hdd::ReadPhysicalDriveInNTWithZeroRights
+ * ***********************************************************************************/
+int Hdd::ReadPhysicalDriveInNTWithZeroRights (void)
 {
-   int done = FALSE;
+   int driveCount = 0;
    int drive = 0;
+
+   HDD_ID hddId;
 
    for (drive = 0; drive < MAX_IDE_DRIVES; drive++)
    {
@@ -517,7 +568,7 @@ int ReadPhysicalDriveInNTWithZeroRights (void)
          //  and exit if can't.
       char driveName [256];
 
-      sprintf (driveName, "\\\\.\\PhysicalDrive%d", drive);
+      sprintf_s (driveName, "\\\\.\\PhysicalDrive%d", drive);
 
          //  Windows NT, Windows 2000, Windows XP - admin rights not required
       hPhysicalDriveIOCTL = CreateFile (driveName, 0,
@@ -560,16 +611,20 @@ int ReadPhysicalDriveInNTWithZeroRights (void)
 	         flipAndCodeBytes (buffer,
 			                   descrip -> SerialNumberOffset,
 			                   1, serialNumber );
+			//  serial number must be alphanumeric
+			//  (but there can be leading spaces on IBM drives)
+			if ( (isalnum (serialNumber [0]) || isalnum (serialNumber [19])))
+			{
+				strcpy_s (hddId.serialNumber, serialNumber);
+				strcpy_s (hddId.modelNumber, modelNumber);
+				strcpy_s (hddId.revisionNumber, "aa");
+				hddId.idNumber = getDriveId(&hddId);
+				hddId.driveType = DRIVE_UNKNOWN;
 
-			 if (0 == HardDriveSerialNumber [0] &&
-						//  serial number must be alphanumeric
-			            //  (but there can be leading spaces on IBM drives)
-				   (isalnum (serialNumber [0]) || isalnum (serialNumber [19])))
-			 {
-				strcpy_s (HardDriveSerialNumber, serialNumber);
-				strcpy_s (HardDriveModelNumber, modelNumber);
-				done = TRUE;
-			 }
+				drives[drive] = hddId;
+
+				driveCount = drive+1;
+			}
 #ifdef PRINTING_TO_CONSOLE_ALLOWED
              printf ("\n**** STORAGE_DEVICE_DESCRIPTOR for drive %d ****\n"
 		             "Vendor Id = [%s]\n"
@@ -619,15 +674,17 @@ int ReadPhysicalDriveInNTWithZeroRights (void)
       }
    }
 
-   return done;
+   return driveCount;
 }
 
-
-   // DoIDENTIFY
-   // FUNCTION: Send an IDENTIFY command to the drive
-   // bDriveNum = 0-3
-   // bIDCmd = IDE_ATA_IDENTIFY or IDE_ATAPI_IDENTIFY
-BOOL DoIDENTIFY (HANDLE hPhysicalDriveIOCTL, PSENDCMDINPARAMS pSCIP,
+/* *********************************************************************************** 
+ * Hdd::DoIDENTIFY
+ *	DoIDENTIFY
+ *	FUNCTION: Send an IDENTIFY command to the drive
+ *	bDriveNum = 0-3
+ *	bIDCmd = IDE_ATA_IDENTIFY or IDE_ATAPI_IDENTIFY
+ * ***********************************************************************************/
+BOOL Hdd::DoIDENTIFY (HANDLE hPhysicalDriveIOCTL, PSENDCMDINPARAMS pSCIP,
                  PSENDCMDOUTPARAMS pSCOP, BYTE bIDCmd, BYTE bDriveNum,
                  PDWORD lpcbBytesReturned)
 {
@@ -687,13 +744,12 @@ typedef struct _rt_DiskInfo_
 
 #define  m_cVxDFunctionIdesDInfo  1
 
-
-//  ---------------------------------------------------
-
-
-int ReadDrivePortsInWin9X (void)
+/* *********************************************************************************** 
+ * Hdd::ReadDrivePortsInWin9X
+ * ***********************************************************************************/
+int Hdd::ReadDrivePortsInWin9X (void)
 {
-   int done = FALSE;
+   int driveCount = 0;
    unsigned long int i = 0;
 
    HANDLE VxDHandle = 0;
@@ -754,8 +810,8 @@ int ReadDrivePortsInWin9X (void)
       CloseHandle (VxDHandle);
    }
    else
-		MessageBox (NULL, "ERROR: Could not open IDE21201.VXD file", 
-					TITLE, MB_ICONSTOP);
+		/*MessageBox (NULL, "ERROR: Could not open IDE21201.VXD file", 
+					TITLE, MB_ICONSTOP);*/
 
       // 4. Translate and store data
    for (i=0; i<8; i++)
@@ -768,7 +824,7 @@ int ReadDrivePortsInWin9X (void)
 
             // process the information for this buffer
 		   PrintIdeInfo (i, diskinfo);
-			done = TRUE;
+			driveCount = i+1;
       }
    }
 
@@ -776,16 +832,18 @@ int ReadDrivePortsInWin9X (void)
    // SetThreadPriority (GetCurrentThread(), THREAD_PRIORITY_NORMAL);
    SetPriorityClass (GetCurrentProcess (), NORMAL_PRIORITY_CLASS);
 
-   return done;
+   return driveCount;
 }
 
 
 #define  SENDIDLENGTH  sizeof (SENDCMDOUTPARAMS) + IDENTIFY_BUFFER_SIZE
 
-
-int ReadIdeDriveAsScsiDriveInNT (void)
+/* *********************************************************************************** 
+ * Hdd::ReadIdeDriveAsScsiDriveInNT
+ * ***********************************************************************************/
+int Hdd::ReadIdeDriveAsScsiDriveInNT (void)
 {
-   int done = FALSE;
+   int driveCount = 0;
    int controller = 0;
 
    for (controller = 0; controller < 16; controller++)
@@ -795,7 +853,7 @@ int ReadIdeDriveAsScsiDriveInNT (void)
 
          //  Try to get a handle to PhysicalDrive IOCTL, report failure
          //  and exit if can't.
-      sprintf (driveName, "\\\\.\\Scsi%d:", controller);
+      sprintf_s (driveName, "\\\\.\\Scsi%d:", controller);
 
          //  Windows NT, Windows 2000, any rights should do
       hScsiDriveIOCTL = CreateFile (driveName,
@@ -850,7 +908,7 @@ int ReadIdeDriveAsScsiDriveInNT (void)
 
                   PrintIdeInfo (controller * 2 + drive, diskdata);
 
-                  done = TRUE;
+                  driveCount = controller * 2 + drive+1;
                }
             }
          }
@@ -858,117 +916,14 @@ int ReadIdeDriveAsScsiDriveInNT (void)
       }
    }
 
-   return done;
+   return driveCount;
 }
 
 
-void PrintIdeInfo (int drive, DWORD diskdata [256])
-{
-   char serialNumber [1024];
-   char modelNumber [1024];
-   char revisionNumber [1024];
-   char bufferSize [32];
-
-   __int64 sectors = 0;
-   __int64 bytes = 0;
-
-      //  copy the hard drive serial number to the buffer
-   ConvertToString (diskdata, 10, 19, serialNumber);
-   ConvertToString (diskdata, 27, 46, modelNumber);
-   ConvertToString (diskdata, 23, 26, revisionNumber);
-   sprintf (bufferSize, "%u", diskdata [21] * 512);
-
-   if (0 == HardDriveSerialNumber [0] &&
-       //  serial number must be alphanumeric
-       //  (but there can be leading spaces on IBM drives)
-       (isalnum (serialNumber [0]) || isalnum (serialNumber [19])))
-   {
-      strcpy_s (HardDriveSerialNumber, serialNumber);
-      strcpy_s (HardDriveModelNumber, modelNumber);
-   }
-
-#ifdef PRINTING_TO_CONSOLE_ALLOWED
-
-   printf ("\nDrive %d - ", drive);
-
-   switch (drive / 2)
-   {
-      case 0: printf ("Primary Controller - ");
-              break;
-      case 1: printf ("Secondary Controller - ");
-              break;
-      case 2: printf ("Tertiary Controller - ");
-              break;
-      case 3: printf ("Quaternary Controller - ");
-              break;
-   }
-
-   switch (drive % 2)
-   {
-      case 0: printf (" - Master drive\n\n");
-              break;
-      case 1: printf (" - Slave drive\n\n");
-              break;
-   }
-
-   printf ("Drive Model Number________________: [%s]\n",
-           modelNumber);
-   printf ("Drive Serial Number_______________: [%s]\n",
-           serialNumber);
-   printf ("Drive Controller Revision Number__: [%s]\n",
-           revisionNumber);
-
-   printf ("Controller Buffer Size on Drive___: %s bytes\n",
-           bufferSize);
-
-   printf ("Drive Type________________________: ");
-   if (diskdata [0] & 0x0080)
-      printf ("Removable\n");
-   else if (diskdata [0] & 0x0040)
-      printf ("Fixed\n");
-   else printf ("Unknown\n");
-           
-		//  calculate size based on 28 bit or 48 bit addressing
-		//  48 bit addressing is reflected by bit 10 of word 83
-	if (diskdata [83] & 0x400) 
-		sectors = diskdata [103] * 65536I64 * 65536I64 * 65536I64 + 
-					diskdata [102] * 65536I64 * 65536I64 + 
-					diskdata [101] * 65536I64 + 
-					diskdata [100];
-	else
-		sectors = diskdata [61] * 65536 + diskdata [60];
-		//  there are 512 bytes in a sector
-	bytes = sectors * 512;
-	printf ("Drive Size________________________: %I64d bytes\n",
-			bytes);
-
-#endif  // PRINTING_TO_CONSOLE_ALLOWED
-
-   char string1 [1000];
-   sprintf (string1, "Drive%dModelNumber", drive);
-   WriteConstantString (string1, modelNumber);
-
-   sprintf (string1, "Drive%dSerialNumber", drive);
-   WriteConstantString (string1, serialNumber);
-
-   sprintf (string1, "Drive%dControllerRevisionNumber", drive);
-   WriteConstantString (string1, revisionNumber);
-
-   sprintf (string1, "Drive%dControllerBufferSize", drive);
-   WriteConstantString (string1, bufferSize);
-
-   sprintf (string1, "Drive%dType", drive);
-   if (diskdata [0] & 0x0080)
-      WriteConstantString (string1, "Removable");
-   else if (diskdata [0] & 0x0040)
-      WriteConstantString (string1, "Fixed");
-   else
-      WriteConstantString (string1, "Unknown");
-}
-
-
-
-char *ConvertToString (DWORD diskdata [256],
+/* *********************************************************************************** 
+ * Hdd::ConvertToString
+ * ***********************************************************************************/
+char *Hdd::ConvertToString (DWORD diskdata [256],
 		       int firstIndex,
 		       int lastIndex,
 		       char* buf)
@@ -996,71 +951,24 @@ char *ConvertToString (DWORD diskdata [256],
    return buf;
 }
 
-
-HDD_ID getHardDriveComputerID ()
+/* *********************************************************************************** 
+ * Hdd::getHardDriveComputerID
+ *
+ * vrati vypocitane id cislo identifikujici harddisk
+ * ***********************************************************************************/
+long  Hdd::getDriveId (HDD_ID * hddId)
 {
-   int done = FALSE;
-   // char string [1024];
-   __int64 id = 0;
-   OSVERSIONINFO version;
+	   __int64 id = 0;
 
-   strcpy_s (HardDriveSerialNumber, "");
-
-   memset (&version, 0, sizeof (version));
-   version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
-   GetVersionEx (&version);
-   if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
-	{
-		  //  this works under WinNT4 or Win2K if you have admin rights
-#ifdef PRINTING_TO_CONSOLE_ALLOWED
-		printf ("\nTrying to read the drive IDs using physical access with admin rights\n");
-#endif
-		done = ReadPhysicalDriveInNTWithAdminRights ();
-
-			//  this should work in WinNT or Win2K if previous did not work
-			//  this is kind of a backdoor via the SCSI mini port driver into
-			//     the IDE drives
-#ifdef PRINTING_TO_CONSOLE_ALLOWED
-		printf ("\nTrying to read the drive IDs using the SCSI back door\n");
-#endif
-		// if ( ! done) 
-			done = ReadIdeDriveAsScsiDriveInNT ();
-
-		  //  this works under WinNT4 or Win2K or WinXP if you have any rights
-#ifdef PRINTING_TO_CONSOLE_ALLOWED
-		printf ("\nTrying to read the drive IDs using physical access with zero rights\n");
-#endif
-		//if ( ! done)
-			done = ReadPhysicalDriveInNTWithZeroRights ();
-
-		  //  this works under WinNT4 or Win2K or WinXP or Windows Server 2003 or Vista if you have any rights
-#ifdef PRINTING_TO_CONSOLE_ALLOWED
-		printf ("\nTrying to read the drive IDs using Smart\n");
-#endif
-		//if ( ! done)
-			done = ReadPhysicalDriveInNTUsingSmart ();
-   }
-   else
+	if (hddId->serialNumber [0] > 0)
    {
-         //  this works under Win9X and calls a VXD
-      int attempt = 0;
+      char *p = hddId->serialNumber;
 
-         //  try this up to 10 times to get a hard drive serial number
-      for (attempt = 0;
-           attempt < 10 && ! done && 0 == HardDriveSerialNumber [0];
-           attempt++)
-         done = ReadDrivePortsInWin9X ();
-   }
-
-   if (HardDriveSerialNumber [0] > 0)
-   {
-      char *p = HardDriveSerialNumber;
-
-      WriteConstantString ("HardDriveSerialNumber", HardDriveSerialNumber);
+    /*  WriteConstantString ("HardDriveSerialNumber", hddId->serialNumber);*/
 
          //  ignore first 5 characters from western digital hard drives if
          //  the first four characters are WD-W
-      if ( ! strncmp (HardDriveSerialNumber, "WD-W", 4)) 
+      if ( ! strncmp (hddId->serialNumber, "WD-W", 4)) 
          p += 5;
       for ( ; p && *p; p++)
       {
@@ -1110,43 +1018,36 @@ HDD_ID getHardDriveComputerID ()
    }
 
    id %= 100000000;
-   if (strstr (HardDriveModelNumber, "IBM-"))
+   if (strstr (hddId->modelNumber, "IBM-"))
       id += 300000000;
-   else if (strstr (HardDriveModelNumber, "MAXTOR") ||
-            strstr (HardDriveModelNumber, "Maxtor"))
+   else if (strstr (hddId->modelNumber, "MAXTOR") ||
+            strstr (hddId->modelNumber, "Maxtor"))
       id += 400000000;
-   else if (strstr (HardDriveModelNumber, "WDC "))
+   else if (strstr (hddId->modelNumber, "WDC "))
       id += 500000000;
    else
       id += 600000000;
 
    long lId = (long) id;
 
-   HDD_ID hddId;// = { NULL, NULL,  };
-
-   hddId;
-   strcpy_s(hddId.HardDriveModelNumber, HardDriveModelNumber);
-   strcpy_s(hddId.HardDriveSerialNumber, HardDriveSerialNumber);
-   hddId.idNumber = lId;
-   
-
-   //HDD_ID hddId = { HardDriveSerialNumber, HardDriveModelNumber, lId };
 #ifdef PRINTING_TO_CONSOLE_ALLOWED
 
    printf ("\nHard Drive Serial Number__________: %s\n", 
-           HardDriveSerialNumber);
+           hddId->serialNumber);
    printf ("\nHard Drive Model Number___________: %s\n", 
-           HardDriveModelNumber);
+           hddId->modelNumber);
    printf ("\nComputer ID_______________________: %I64d\n", id);
    printf ("\nComputer ID__(long)_______________: %d\n", lId);
 
 #endif
 
 
-   return hddId;
+  return lId;
 }
-
-static void dump_buffer (const char* title,
+/* *********************************************************************************** 
+ * Hdd::dump_buffer
+ * ***********************************************************************************/
+void Hdd::dump_buffer (const char* title,
 			const unsigned char* buffer,
 			int len)
 {

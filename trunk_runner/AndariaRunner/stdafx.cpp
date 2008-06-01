@@ -5,7 +5,8 @@
 #include "stdafx.h"
 
 
-
+/*
 void WriteConstantString (char *entry, char *string)
 {
 }
+*/

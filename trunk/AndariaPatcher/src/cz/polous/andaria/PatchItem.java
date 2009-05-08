@@ -17,19 +17,9 @@ import org.jdom.Element;
 /*******************************************************************************
  * PatchItem: Object of one patch file and procedures to control it.
  * 
- * 
- * ChangLog:
- *      [0.2] osetreni chyby s hlasenim nestazeneho soubor presunutim odchytuti
- *              vyjimky checkHash funkce mimo funkci.
- *            pridana funkce isPacked(), ktere urci, jestli je soubor zabaleny
- * 
- * 
  * @author  Martin Polehla (andaria_patcher@polous.cz)
- * @version 0.2
  ******************************************************************************/
 class PatchItem {
-
-   
 
     private String name;                    // patch name2
     private BigInteger hash;                // MD5 hash
@@ -47,7 +37,11 @@ class PatchItem {
     private Boolean downloaded;             // is file downloaded and ready for instalation ?
     private static Log log;
     public PatchPanel panel;
-    public final DateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy, hh:mm");
+    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+
+    public DateFormat getDateFormat() {
+        return dateFormat;
+    }
 
     /***************************************************************************
      * Creates a new instance of PatchItem
@@ -58,10 +52,14 @@ class PatchItem {
         hash = new BigInteger(data[3].trim(), 16);
         version = data[6];
         currentVersion = data[6];
+        // data[2] example: 13.4.2009, 00:41
         try {
+
             date = dateFormat.parse(data[2]);
+            //TODO: opravit parsovani datumu a casu !
+            log.addDebug("Datum patche: |".concat(date.toString()).concat("| z |").concat(data[2]).concat("|."));
         } catch (ParseException e) {
-            log.addLine("Chyba rozpoznani datumu patche: ".concat(e.getMessage()));
+            log.addErr("Chyba rozpoznani datumu patche: ".concat(e.getMessage()));
         }
 
         description = data[7];
@@ -124,13 +122,16 @@ class PatchItem {
     }
 
     public String getDates() {
-        String cd;
+        String currentDateStr;
+        String dateStr;
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        dateStr = format.format(date);
         try {
-            cd = dateFormat.format(currentDate);
-        } catch (NullPointerException e) {
-            cd = "-";
+            currentDateStr = format.format(currentDate); //dateFormat.format(currentDate);
+        } catch (NullPointerException ex) {
+            currentDateStr = "-";
         }
-        return (dateFormat.format(date)).concat(" (").concat(cd).concat(")");
+        return dateStr.concat(" (").concat(currentDateStr).concat(")");
     }
 
     public String getVersion() {

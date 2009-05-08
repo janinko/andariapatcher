@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -28,10 +26,12 @@ class WindowsOS extends OperatingSystem {
         log = new Log("WindowsOS");
     }
    // @Override
+    @Override
     public String getRun_command() {
         return getUltima_online_path().concat("\\AndariaClient.exe");
     }
     //@Override
+    @Override
     public String getUltima_online_path() {
         // If I had checked (or inicialized) uoPath before,
         // don't try again.
@@ -148,74 +148,6 @@ class WindowsOS extends OperatingSystem {
         return result;
     }
 
-    /***************************************************************************
-     * @return ultima online path from windows registers
-     **************************************************************************/
-    @Deprecated
-    private String getRegUoPath() {
-        String uopath = null;
-
-        //   final int HKEY_LOCAL_MACHINE = 0x80000002;
-        //   final int KEY_QUERY_VALUE = 1;
-        final Preferences root = Preferences.systemRoot();
-        final Class cl = root.getClass();
-        //  final Method queryValue;
-        final int KEY_READ = 0x20019;
-        final String subKey = "SOFTWARE\\Origin Worlds Online\\Ultima Online\\1.0";
-
-        // Class[] params = {int.class, byte[].class};
-
-
-        try {
-
-            Class[] parms1 = {byte[].class, int.class, int.class};
-            final Method mOpenKey = cl.getDeclaredMethod("openKey", parms1);
-            mOpenKey.setAccessible(true);
-
-            Class[] parms2 = {int.class};
-            final Method mCloseKey = cl.getDeclaredMethod("closeKey", parms2);
-            mCloseKey.setAccessible(true);
-
-            Class[] parms3 = {int.class, byte[].class};
-            final Method mWinRegQueryValue = cl.getDeclaredMethod("WindowsRegQueryValueEx", parms3);
-            mWinRegQueryValue.setAccessible(true);
-
-            Object[] subKeyByteArray = {toByteArray(subKey), new Integer(KEY_READ), new Integer(KEY_READ)};
-            Integer hSettings = (Integer) mOpenKey.invoke(root, subKeyByteArray);
-
-            Object[] instPathByteArray = {hSettings, toByteArray("InstCDPath")};
-            byte[] b = (byte[]) mWinRegQueryValue.invoke(root, instPathByteArray);
-            String value = b != null ? new String(b).trim() : null;
-
-            Object[] oSettings = {hSettings};
-            mCloseKey.invoke(root, oSettings);
-
-            uopath = value;
-        } catch (InvocationTargetException e) {
-            System.err.println(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        } catch (IllegalAccessException e) {
-            System.err.println(e.getMessage());
-        } catch (SecurityException e) {
-            System.err.println(e.getMessage());
-        } catch (NoSuchMethodException e) {
-            System.err.println(e.getMessage());
-        }
-
-
-        if (uopath == null) {
-            Object[] opts = {"Obnovit", "Neobnovovat"};
-            int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít registry UO Monday's Legacy v registrech windows.\nBud nemas nainstalovaou uo spravne, nebo je to rozbity. Zkus ultimu preinstalovat ultimu.\nPokud to nepomuze, napis p0l0usovi na foru andarie o pomoc. Přeješ si registry obnovit ručně ?", "Upozorneni !", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
-            if (obnov == JOptionPane.YES_OPTION) {
-               renewWindowsRegistry();
-            }
-            return null;
-        }
-        System.out.println("Rozpoznaný adresář s ultimou: ".concat(uopath));
-        return uopath;
-    }
-
     public void renewWindowsRegistry() {
          String newpath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
          if (newpath.isEmpty()) return;
@@ -284,15 +216,19 @@ class WindowsOS extends OperatingSystem {
     }
 
     /***************************************************************************
-     * TODO: Java unrar implementation (using unrar native library).
+     * 
      * @param file to extract
      **************************************************************************/
+    @Override
     public void unrar(File file) {
+        // TODO: Java unrar implementation (using unrar native library).
     }
 
     /***************************************************************************
      * TODO: Unrar library inicialization
      **************************************************************************/
+    @Override
     public void unrarInit() {
+        // TODO: Java unrar implementation (using unrar native library).
     }
 }

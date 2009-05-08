@@ -1,5 +1,6 @@
 package cz.polous.andaria;
 
+import java.awt.GridLayout;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -8,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Vector;
 import java.io.IOException;
+import javax.swing.JPanel;
 
 /*******************************************************************************
  * installatortchList: List of installatortches, offers download start procedure.
@@ -35,7 +37,7 @@ class PatchList {
         Thread downloadThread = new Thread(downloader);
         downloadThread.start();
         installThread.start();
-        reload();
+       // reload();
     }
 
     public static PatchList getInstance() {
@@ -62,7 +64,6 @@ class PatchList {
             @Override
             public void run() {
                 try {
-
                     log.addLine("Zacinam stahovat seznam patchu z internetu.");
                     URL url = new URL(Settings.getInstance().getValue(Settings.FILE_LIST_URL));
                     URLConnection connection = url.openConnection();
@@ -73,18 +74,24 @@ class PatchList {
                     String sLine; // Line buffer
                     String[] sItems; // Item Buffer
                     patchData = new Vector(); //reset patchdata
+                    JPanel jPPatchList = FrontEnd.getInstance().getJPPatchList();
+                    jPPatchList.removeAll(); // clean frontend patchlist
+                    PatchItem patchItem;
                     for (int i = 0; br.ready(); i++) {
                         if (canceled) {
                             reader.close();
                             return;
                         }
-                        sLine = br.readLine();
+                            sLine = br.readLine();
                         log.addDebug(sLine);
                         sItems = sLine.split(";");
-                        patchData.add(new PatchItem(sItems));
+                        patchItem = new PatchItem(sItems);
+                        patchData.add(patchItem);
+                        jPPatchList.add(patchItem.getInFrame());
                     }
+                    jPPatchList.setLayout(new GridLayout(patchData.size(), 0));
+                    FrontEnd.getInstance().pack();
                     reader.close();
-                    FrontEnd.getInstance().refreshPlPane();
                     log.addLine("Seznam patchu byl nahran z internetu.");
                 } catch (IOException e) {
                     log.addEx(e);
@@ -100,21 +107,6 @@ class PatchList {
      **************************************************************************/
     public boolean inProgress() {
         return downloader.inProgress() | installator.inProgress();
-    }
-
-    /***************************************************************************
-     * Create panel for FrontEnd containig patch files informations.
-     * @return vector of jPanels
-     **************************************************************************/
-    public Vector getInPanel() {
-        PatchItem patchItem;
-        Vector result = new Vector();
-
-        for (int i = 0; i < patchData.size(); i++) {
-            patchItem = (PatchItem) patchData.get(i);
-            result.add(patchItem.getInFrame());
-        }
-        return result;
     }
 
     /***************************************************************************

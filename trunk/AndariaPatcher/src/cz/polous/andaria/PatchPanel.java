@@ -36,12 +36,8 @@ class PatchPanel extends JPanel {
      **************************************************************************/
     public void refresh() {
         jChAutoInstall.setSelected(patchItem.getAutoInstallFlag());
-
-//        log.addDebug("installFlag= " + ( patchItem.getInstallFlag()?"true":"false" ) );
         jChInstall.setSelected(patchItem.getInstallFlag());
-
         jChRequired.setSelected(patchItem.isRequired());
-
         // green 204,255,204 - installed
         // red 255,233,233 - required
         // white 255,255,255 - user choice

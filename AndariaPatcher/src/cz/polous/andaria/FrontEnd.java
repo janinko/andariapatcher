@@ -1,7 +1,6 @@
 package cz.polous.andaria;
 
 import java.io.IOException;
-import javax.swing.JFrame;
 import java.awt.*;
 import javax.swing.*;
 import java.io.File;
@@ -20,14 +19,17 @@ import org.lobobrowser.html.gui.HtmlPanel;
 public class FrontEnd extends JFrame {
 
     private Log log;
-    public static volatile FrontEnd instance; //representation of main class (this)
-    private volatile PatchList patchList; // representation of patchlist, patch procedure control object
+    private static final FrontEnd INSTANCE = new FrontEnd(); //representation of main class (this)
+    private PatchList patchList; // representation of patchlist, patch procedure control object    private final Settings settings = ;
 
+    public static FrontEnd getInstance() {
+        return INSTANCE;
+    }
     /***************************************************************************
      * Creates new form FrontEnd and call pl inicialization
      **************************************************************************/
     public FrontEnd() {
-        instance = this;
+//        instance = this;
 
         initComponents();
         Log.logArea = jTLog;
@@ -40,12 +42,12 @@ public class FrontEnd extends JFrame {
         HtmlPanel htmlPNews = new HtmlPanel();
         jTPMain.insertTab(null, null, htmlPNews, "Tady se nachází novinky nejen ze světa...", 0);
         jTPMain.setTitleAt(0, "Novinky");
-        Browser news = new Browser(htmlPNews, Settings.getValue(Settings.NEWS_URL));
+        Browser news = new Browser(htmlPNews, Settings.getInstance().getValue(Settings.NEWS_URL));
 
         HtmlPanel htmlPAbout = new HtmlPanel();
         jTPMain.addTab(null, null, htmlPAbout, "Taky něco o programu samotném.");
         jTPMain.setTitleAt(jTPMain.getComponentCount() - 1, "O programu");
-        final Browser about = new Browser(htmlPAbout, Settings.getValue(Settings.ABOUT_URL));
+        final Browser about = new Browser(htmlPAbout, Settings.getInstance().getValue(Settings.ABOUT_URL));
 
         jTPMain.addChangeListener(new ChangeListener() {
 
@@ -59,9 +61,9 @@ public class FrontEnd extends JFrame {
 
         jTPMain.setSelectedIndex(0);
 
-        reloadPatchList();
+        patchList = PatchList.getInstance();
 
-        if (Settings.debugMode()) {
+        if (Settings.getInstance().debugMode()) {
             log.addDebug(System.getProperty("os.name"));
             log.addDebug(System.getProperty("user.home"));
             log.addDebug(System.getProperty("java.io.tmpdir"));
@@ -85,58 +87,38 @@ public class FrontEnd extends JFrame {
      * PatchList pl object inicialization, display list of patches at jPList panel.
      **************************************************************************/
     private void reloadPatchList() {
-        if (patchList != null && patchList.isWorking()) {
+        if (patchList.inProgress()) {
             patchList.cancel();
         }
         jBInstallSelection.setEnabled(false);
         jBInstall.setEnabled(false);
-        patchList = new PatchList();
+        patchList.reload();
     }
 
     /***************************************************************************
      * Inicialize application settings and settings form.
      **************************************************************************/
     private void loadSettings() {
-        Settings.load();
+        Settings.getInstance().load();
 
-        jTConfRunCommand.setText(Settings.getValue(Settings.RUN_COMMAND));
-        jTConfUnRARCommand.setText(Settings.getValue(Settings.UNRAR_PATH));
-        jTConfUltimaOnlinePath.setText(Settings.getValue(Settings.ULTIMA_ONINE_PATH));
-        jTConfTempPath.setText(Settings.getValue(Settings.LOCAL_STORAGE));
-        jChDebug.setSelected(Settings.debugMode());
+        jTConfRunCommand.setText(Settings.getInstance().getValue(Settings.RUN_COMMAND));
+        jTConfUnRARCommand.setText(Settings.getInstance().getValue(Settings.UNRAR_PATH));
+        jTConfUltimaOnlinePath.setText(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH));
+        jTConfTempPath.setText(Settings.getInstance().getValue(Settings.LOCAL_STORAGE));
+        jChDebug.setSelected(Settings.getInstance().debugMode());
     }
 
     /***************************************************************************
-     * Store application settings.
+     * Store application Settings.getInstance().
      **************************************************************************/
     private void saveSettings() {
-        Settings.setValue(Settings.RUN_COMMAND, jTConfRunCommand.getText());
-        Settings.setValue(Settings.UNRAR_PATH, jTConfUnRARCommand.getText());
-        Settings.setValue(Settings.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
-        Settings.setValue(Settings.LOCAL_STORAGE, jTConfTempPath.getText());
-        Settings.setValue(Settings.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
+        Settings.getInstance().setValue(Settings.RUN_COMMAND, jTConfRunCommand.getText());
+        Settings.getInstance().setValue(Settings.UNRAR_PATH, jTConfUnRARCommand.getText());
+        Settings.getInstance().setValue(Settings.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
+        Settings.getInstance().setValue(Settings.LOCAL_STORAGE, jTConfTempPath.getText());
+        Settings.getInstance().setValue(Settings.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
 
-        Settings.save();
-    }
-
-    /***************************************************************************
-     * Open file dialog openner.
-     * @param title Title of JFileCooser
-     * @param defPath Default path of JFileChooser
-     * @param ft Selection mode (ie. JFileCooser.DIRECTORY)
-     **************************************************************************/
-    private String openFile(String title, String defPath, int ft) {
-        final JFileChooser fc = new JFileChooser();
-        fc.setDialogTitle(title);
-        fc.setCurrentDirectory(new File(defPath).getParentFile());
-        fc.setFileSelectionMode(ft);
-        fc.setFileHidingEnabled(false);
-
-        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            return file.getAbsolutePath();
-        }
-        return defPath;
+        Settings.getInstance().save();
     }
 
     private Image getIcon(String fileName) {
@@ -196,7 +178,7 @@ public class FrontEnd extends JFrame {
      **************************************************************************/
     public void updateButtons() {
         try {
-            if (patchList.isWorking()) {
+            if (patchList.inProgress()) {
                 jBInstall.setEnabled(false);
                 jBInstallSelection.setEnabled(false);
                 jBCancel.setEnabled(true);
@@ -266,9 +248,10 @@ public class FrontEnd extends JFrame {
         jBSetAllInstalled = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator10 = new javax.swing.JSeparator();
-        jButton4 = new javax.swing.JButton();
+        jBDeleteNWB = new javax.swing.JButton();
         jBDeleteIntro = new javax.swing.JButton();
         jBConfBrowseUnRARCommand1 = new javax.swing.JButton();
+        jBRenewRegistry = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
@@ -671,13 +654,13 @@ public class FrontEnd extends JFrame {
         jSeparator10.setEnabled(false);
         jSeparator10.setMinimumSize(new java.awt.Dimension(10, 30));
 
-        jButton4.setBackground(getBackground());
-        jButton4.setForeground(getForeground());
-        jButton4.setText("Odstranit soubor desktop.nwb (použij, pokud máš problém se spuštěním UO)");
-        jButton4.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jBDeleteNWB.setBackground(getBackground());
+        jBDeleteNWB.setForeground(getForeground());
+        jBDeleteNWB.setText("Odstranit soubor desktop.nwb (použij, pokud máš problém se spuštěním UO)");
+        jBDeleteNWB.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBDeleteNWB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jBDeleteNWBActionPerformed(evt);
             }
         });
 
@@ -700,6 +683,19 @@ public class FrontEnd extends JFrame {
             }
         });
 
+        jBRenewRegistry.setBackground(getBackground());
+        jBRenewRegistry.setForeground(getForeground());
+        jBRenewRegistry.setText("Obnovit registry windows (vybereš adresář ve kterém je ultima nainstalovaná)");
+        jBRenewRegistry.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBRenewRegistry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRenewRegistryActionPerformed(evt);
+            }
+        });
+        if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS"))
+        jBRenewRegistry.setVisible(false);
+        else jBRenewRegistry.setVisible(true);
+
         org.jdesktop.layout.GroupLayout jPSettingsTabLayout = new org.jdesktop.layout.GroupLayout(jPSettingsTab);
         jPSettingsTab.setLayout(jPSettingsTabLayout);
         jPSettingsTabLayout.setHorizontalGroup(
@@ -714,7 +710,7 @@ public class FrontEnd extends JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPSettingsTabLayout.createSequentialGroup()
@@ -726,28 +722,29 @@ public class FrontEnd extends JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                                .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jBConfBrowseTempPath))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                                .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jBConfBrowseUltimaOnlinePath))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
                                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                                    .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                        .add(jTConfUnRARCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                                        .add(jTConfUnRARCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(jBConfBrowseUnRARCommand1)))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jBConfBrowseUnRARCommand)
                                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jBConfBrowseRunCommand)))))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
-                    .add(jButton4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                    .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                     .add(jChDebug)
-                    .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE))
+                    .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                    .add(jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPSettingsTabLayout.setVerticalGroup(
@@ -781,8 +778,10 @@ public class FrontEnd extends JFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBDeleteIntro)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton4)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 118, Short.MAX_VALUE)
+                .add(jBDeleteNWB)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jBRenewRegistry)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 152, Short.MAX_VALUE)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -814,12 +813,12 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBSetAllInstalledActionPerformed
 
     private void jChDebugStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jChDebugStateChanged
-        Settings.setValue("debug_log", jChDebug.isSelected() ? "1" : "0");
+        Settings.getInstance().setValue("debug_log", jChDebug.isSelected() ? "1" : "0");
     }//GEN-LAST:event_jChDebugStateChanged
 
     private void jBCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCloseActionPerformed
         try {
-            Runtime.getRuntime().exec(Settings.getValue(Settings.RUN_COMMAND).split(" "), null, new File(Settings.getValue(Settings.ULTIMA_ONINE_PATH)));
+            Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.RUN_COMMAND).split(" "), null, new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH)));
         } catch (IOException ex) {
             log.addErr("Chyba při spouštění externího programu !");
             ex.printStackTrace();
@@ -834,7 +833,7 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBCancelActionPerformed
 
     private void jBConfBrowseUnRARCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUnRARCommandActionPerformed
-        jTConfUnRARCommand.setText(openFile("Vyber unrar", jTConfUnRARCommand.getText(), JFileChooser.FILES_ONLY));
+        jTConfUnRARCommand.setText(Settings.getInstance().openFile("Vyber unrar", jTConfUnRARCommand.getText(), JFileChooser.FILES_ONLY));
     }//GEN-LAST:event_jBConfBrowseUnRARCommandActionPerformed
 
     private void jBConfLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfLoadActionPerformed
@@ -846,15 +845,15 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBConfSaveActionPerformed
 
     private void jBConfBrowseRunCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseRunCommandActionPerformed
-        jTConfRunCommand.setText(openFile("Vyber soubor ktery mam spustit po ukonceni", jTConfRunCommand.getText(), JFileChooser.FILES_ONLY));
+        jTConfRunCommand.setText(Settings.getInstance().openFile("Vyber soubor ktery mam spustit po ukonceni", jTConfRunCommand.getText(), JFileChooser.FILES_ONLY));
     }//GEN-LAST:event_jBConfBrowseRunCommandActionPerformed
 
     private void jBConfBrowseTempPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseTempPathActionPerformed
-        jTConfTempPath.setText(openFile("Vyber adresar kam stahovat soubory", jTConfTempPath.getText(), JFileChooser.DIRECTORIES_ONLY));
+        jTConfTempPath.setText(Settings.getInstance().openFile("Vyber adresar kam stahovat soubory", jTConfTempPath.getText(), JFileChooser.DIRECTORIES_ONLY));
     }//GEN-LAST:event_jBConfBrowseTempPathActionPerformed
 
     private void jBConfBrowseUltimaOnlinePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUltimaOnlinePathActionPerformed
-        jTConfUltimaOnlinePath.setText(openFile("Vyber adresar s Ultimou", jTConfUltimaOnlinePath.getText(), JFileChooser.DIRECTORIES_ONLY));
+        jTConfUltimaOnlinePath.setText(Settings.getInstance().openFile("Vyber adresar s Ultimou", jTConfUltimaOnlinePath.getText(), JFileChooser.DIRECTORIES_ONLY));
     }//GEN-LAST:event_jBConfBrowseUltimaOnlinePathActionPerformed
 
     private void jBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallActionPerformed
@@ -869,17 +868,17 @@ public class FrontEnd extends JFrame {
 
     private void jBDeleteIntroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteIntroActionPerformed
         if (0 == JOptionPane.showConfirmDialog(null, "Chceš opravdu smazat soubory s úvodníma videama ?", "Zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
-            OperatingSystem.deleteUOFile("Music", "Intro.bik");
-            OperatingSystem.deleteUOFile("Music", "ealogo.bik");
-            OperatingSystem.deleteUOFile("Music", "osilogo.bik");
+            Settings.getInstance().getOs().deleteUOFile("Music", "Intro.bik");
+            Settings.getInstance().getOs().deleteUOFile("Music", "ealogo.bik");
+            Settings.getInstance().getOs().deleteUOFile("Music", "osilogo.bik");
         }
     }//GEN-LAST:event_jBDeleteIntroActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jBDeleteNWBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDeleteNWBActionPerformed
         if (0 == JOptionPane.showConfirmDialog(null, "Chceš opravdu smazat soubor desktop.nwb ?", "Zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
-            OperatingSystem.deleteUOFile(".", "desktop.nwb");
+            Settings.getInstance().getOs().deleteUOFile(".", "desktop.nwb");
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+}//GEN-LAST:event_jBDeleteNWBActionPerformed
 
     private void jChDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChDebugActionPerformed
     // TODO add your handling code here:
@@ -888,20 +887,27 @@ public class FrontEnd extends JFrame {
     private void jBConfBrowseUnRARCommand1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUnRARCommand1ActionPerformed
 
         
-        if (Settings.os.getClass().toString().endsWith("LinuxOS")) {
+        if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS")) {
 
             JOptionPane.showMessageDialog(null, "Unrar si na linuxu musis zaridit sam :-P", "Chybka lenochu !", JOptionPane.WARNING_MESSAGE);
         } else {
-            PatchItem patchItem = new PatchItem(Settings.os.getUnrarPatchItem());
+            PatchItem patchItem = new PatchItem(Settings.getInstance().getOs().getUnrarPatchItem());
 
             patchList.downloadOther(patchItem);
 
-            jTConfUnRARCommand.setText(Settings.os.getUltima_online_path() + File.separator + patchItem.getFileName());
+            jTConfUnRARCommand.setText(Settings.getInstance().getOs().getUltima_online_path() + File.separator + patchItem.getFileName());
             
             saveSettings();
         }
         
     }//GEN-LAST:event_jBConfBrowseUnRARCommand1ActionPerformed
+
+    private void jBRenewRegistryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRenewRegistryActionPerformed
+        // button can't be visible on linux machines
+        WindowsOS winos = (WindowsOS) Settings.getInstance().getOs();
+        winos.renewWindowsRegistry();
+        loadSettings();
+}//GEN-LAST:event_jBRenewRegistryActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
@@ -914,11 +920,12 @@ public class FrontEnd extends JFrame {
     private javax.swing.JButton jBConfLoad;
     private javax.swing.JButton jBConfSave;
     private javax.swing.JButton jBDeleteIntro;
+    private javax.swing.JButton jBDeleteNWB;
     private javax.swing.JButton jBInstall;
     private javax.swing.JButton jBInstallSelection;
     private javax.swing.JButton jBRefreshPatchList;
+    private javax.swing.JButton jBRenewRegistry;
     private javax.swing.JButton jBSetAllInstalled;
-    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jChDebug;
     private javax.swing.JLabel jLConfRunCommand;
     private javax.swing.JLabel jLConfTempPath;

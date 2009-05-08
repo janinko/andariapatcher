@@ -12,22 +12,22 @@ import java.io.IOException;
 /**
  * Downloader se stara o stahovani souboru. Po uspesnem stazeni presune soubor
  * do fronty installeru a spusti installer.
- * 
+ *
+ * Trida umoznuje pouze jednu instanci (singleton)
+ *
  * @author Martin Polehla (andaria_patcher@polous.cz)
  * 
  */
 class Downloader extends PatcherQueue {
-
-    Installer installator;
-
+    private static final Downloader INSTANCE = new Downloader();
+  
     /***************************************************************************
      * Creates a new instance of Downloader
      ***************************************************************************/
-    public Downloader(Installer inst) {
-        super();
-        installator = inst;
+    private Downloader() { super(); }
+    public static Downloader getInstance() {
+        return INSTANCE;
     }
-
     /***************************************************************************
      * Main download procedure
      *  - SetTotal amount of install object to same like this (It suppose, user want install all files)
@@ -40,7 +40,7 @@ class Downloader extends PatcherQueue {
         //setInProgress();
         //  - SetTotal amount of install object to same like this (It suppose, user want install all files)
         PatchItem p = getFirstItem();
-        installator.setTotalAmount(getTotalAmount());
+        Installer.getInstance().setTotalAmount(getTotalAmount());
 
         // - Set progress
         resetSingleDone((double) p.getSize());
@@ -68,7 +68,7 @@ class Downloader extends PatcherQueue {
             String uri = p.getRemoteFileName();
 
             URL url = new URL(uri);
-            out = new BufferedOutputStream(new FileOutputStream(OperatingSystem.getExistingFileInstance(fileName)));
+            out = new BufferedOutputStream(new FileOutputStream(Settings.getOs().getExistingFileInstance(fileName)));
             conn = url.openConnection();
             in = conn.getInputStream();
 
@@ -116,7 +116,7 @@ class Downloader extends PatcherQueue {
                     // p.checkHash() throws an exception.
                     log.addEx(e);
                     log.addErr("Nemuzu otevrit soubor nebo je spatne stazeny ! Zkus to pozdeji znova.");
-                    installator.removeTotalAmount(p.getSize());
+                    Installer.getInstance().removeTotalAmount(p.getSize());
                     singleDone((double) p.getSize());
                     removeFirst();
                 }
@@ -134,8 +134,8 @@ class Downloader extends PatcherQueue {
     private void startInstaller(PatchItem p) {
         p.setDownloaded(true);
         singleDone((double) p.getSize());
-        installator.addPatchItem(p);
+        Installer.getInstance().addPatchItem(p);
         removeFirst();
-        installator.safeWork();
+        Installer.getInstance().startSafe();
     }
 }

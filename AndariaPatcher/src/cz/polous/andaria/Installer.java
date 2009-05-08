@@ -15,10 +15,13 @@ import java.nio.channels.FileChannel;
  * 
  * Po uspesnem nainstalovani oznaci soubor jako nainstalovany a odstrani
  * z fornty pro instalaci
+ *
+ * Trida umoznuje pouze jednu instanci (singleton)
  * 
  * @author Martin Polehla (andaria_patcher@polous.cz)
  */
 class Installer extends PatcherQueue {
+    private static final Installer INSTANCE = new Installer();
 
     private boolean failed;
     //public static Log log;
@@ -29,8 +32,10 @@ class Installer extends PatcherQueue {
     /***************************************************************************
      * Creates a new instance of Runner
      **************************************************************************/
-    public Installer() {
-        super();
+    private Installer() { super(); }
+
+    public static Installer getInstance() {
+        return INSTANCE;
     }
 
     /***************************************************************************
@@ -53,13 +58,7 @@ class Installer extends PatcherQueue {
      * @param command Command to execute
      */
     private synchronized void exec(final String[] command) {
-        String debugLine = new String();
-
-        for (int i = 0; i < command.length; i++) {
-            debugLine += command[i] + " ";
-        }
-
-        log.addLine("Spoustim prikaz: " + debugLine);
+        log.addCmd(command);
 
         Thread t = new Thread() {
 
@@ -67,8 +66,7 @@ class Installer extends PatcherQueue {
             public void run() {
                 try {
                     log.addDebug("Pred spustenim");
-                    Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getValue(Settings.ULTIMA_ONINE_PATH)));
-                    //if (Settings.debugMode()) {
+                    Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH)));
                         log.addDebug("Vystup procesu:");
                         String line;
 
@@ -91,7 +89,7 @@ class Installer extends PatcherQueue {
                 } finally {
                     log.addDebug("Spusteny program skoncil");
 
-                    work();
+                    start();
                 }
             }
         };
@@ -127,10 +125,10 @@ class Installer extends PatcherQueue {
         if (patchItem.isPacked()) {
             // - Unpack patch files
             setLabelText("Rozbaluju patch: " + patchItem.getFileName());
-            final String uopath = Settings.getValue(Settings.ULTIMA_ONINE_PATH);
+            final String uopath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
             singleDone(((double) patchItem.getSize()) / (5 + Math.random() * 10));
 
-            exec(new String[]{Settings.getValue(Settings.UNRAR_PATH), "-o+", "e", patchItem.getLocalFileName()});
+            exec(new String[]{Settings.getInstance().getValue(Settings.UNRAR_PATH), "-o+", "e", patchItem.getLocalFileName()});
 
             singleDone(((double) patchItem.getSize()) / 2);
             log.addDebug("Soubor je rozbaleny, hledam instalacni skripty.");
@@ -142,7 +140,7 @@ class Installer extends PatcherQueue {
                 log.addDebug("Nasel jsem start_a.bat.");
                 setLabelText("Instaluju patch: " + patchItem.getFileName());
 
-                exec(Settings.os.getBatchExecCommand(f));
+                exec(Settings.getInstance().getOs().getBatchExecCommand(f));
                 f.delete();
             }
             // - if exist start_g.bat, execute it
@@ -151,7 +149,7 @@ class Installer extends PatcherQueue {
             if (f.exists()) {
                 log.addDebug("Nasel jsem start_g.bat.");
                 setLabelText("Instaluju patch: " + patchItem.getFileName());
-                exec(Settings.os.getBatchExecCommand(f));
+                exec(Settings.getInstance().getOs().getBatchExecCommand(f));
 
                 f.delete();
             }
@@ -166,7 +164,7 @@ class Installer extends PatcherQueue {
             // copy files into game directory
             setLabelText("Kopiruju soubor: " + patchItem.getFileName() + " do adresare UO.");
 
-            final String uopath = Settings.getValue(Settings.ULTIMA_ONINE_PATH);
+            final String uopath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
             File inFile = new File(patchItem.getLocalFileName());
             File outFile = new File(uopath + File.separator + patchItem.getFileName());
 

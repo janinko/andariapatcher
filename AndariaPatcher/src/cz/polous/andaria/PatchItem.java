@@ -29,6 +29,8 @@ import org.jdom.Element;
  ******************************************************************************/
 class PatchItem {
 
+   
+
     private String name;                    // patch name2
     private BigInteger hash;                // MD5 hash
     private String version;                 // latest version
@@ -67,7 +69,7 @@ class PatchItem {
         size = Long.parseLong(data[5]);
         downloaded = false;
 
-        Element el = Settings.getPatchData(getFileName());
+        Element el = Settings.getInstance().getPatchData(getFileName());
 
         if (el != null) {
             try {
@@ -106,11 +108,11 @@ class PatchItem {
     }
 
     public String getLocalFileName() {
-        return Settings.getValue(Settings.LOCAL_STORAGE) + File.separator + fileName;
+        return Settings.getInstance().getValue(Settings.LOCAL_STORAGE) + File.separator + fileName;
     }
 
     public String getRemoteFileName() {
-        return Settings.getValue(Settings.REMOTE_STORAGE) + "/" + fileName;
+        return Settings.getInstance().getValue(Settings.REMOTE_STORAGE) + "/" + fileName;
     }
 
     public String getName() {
@@ -177,7 +179,7 @@ class PatchItem {
 
     public void setAutoInstallFlag(boolean b) {
         autoInstallFlag = b;
-        Settings.savePatchItem(this);
+        Settings.getInstance().savePatchItem(this);
     }
 
     public void switchInstallFlag() {
@@ -226,6 +228,6 @@ class PatchItem {
         installed = true;
         installFlag = false;
         panel.refresh();
-        Settings.savePatchItem(this);
+        Settings.getInstance().savePatchItem(this);
     }
 }

@@ -3,7 +3,6 @@ package cz.polous.andaria;
 import java.io.File;
 import java.io.IOException;
 
-
 /*******************************************************************************
  * Provide operating system specific methods
  * 
@@ -15,14 +14,14 @@ import java.io.IOException;
  ******************************************************************************/
 abstract class OperatingSystem {
 
-   // private final OperatingSystem os;
+    // private final OperatingSystem os;
     private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
     private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory";
     private final String about_url = "http://strazci.andaria.net/patcher/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.txt";
-    private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbaleni rar archivu."};//private final String[]
+    private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbalování .rar archivu."};
     private static Log log;
 
     public String[] getUnrarPatchItem() {
@@ -53,6 +52,7 @@ abstract class OperatingSystem {
         return remote_storage;
     }
     //private static final String[] defaultSettings = {"", "unrar_command", "ultima_onine_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url"};
+
     abstract String getRun_command();
 
     abstract String getUltima_online_path();
@@ -92,7 +92,7 @@ abstract class OperatingSystem {
      * Create a File instance and gurantee file existing
      * @return physical existing file instance
      **************************************************************************/
-    public  File getFileExistingInstance(File f) {
+    public File getFileExistingInstance(File f) {
         if (f.exists()) {
             return f;
         } else {
@@ -105,13 +105,13 @@ abstract class OperatingSystem {
                 }
             } catch (IOException e) {
                 //log.addEx(e);
-                log.addLine("Nemuzu vytvorit soubor (adresar): " + f.getAbsolutePath());
+                log.addLine("Nemůžu vytvořit soubor nebo adresář: " + f.getAbsolutePath());
             }
         }
         return f;
     }
 
-    public  void deleteUOFile(String subDir, String fileName) {
+    public void deleteUOFile(String subDir, String fileName) {
 
         File f = new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH) + File.separator + subDir + File.separator + fileName);
         if (f.exists()) {

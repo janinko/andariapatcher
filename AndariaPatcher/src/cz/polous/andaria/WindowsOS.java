@@ -16,21 +16,22 @@ import javax.swing.JOptionPane;
 class WindowsOS extends OperatingSystem {
 
     private static final String unrar_path = "C:\\Program Files\\WinRAR\\unrar.exe";
-//    private static final String ultima_online_path = getRegUoPath();
-//    private static final String run_command = ultima_online_path + "\\AndariaClient.exe";
     private static final String regOriginFileName = "UO_Registry_Origin.reg";
     private static Log log;
     private String uoPath;
 
+
     static {
         log = new Log("WindowsOS");
     }
-   // @Override
+    // @Override
+
     @Override
     public String getRun_command() {
         return getUltima_online_path().concat("\\AndariaClient.exe");
     }
     //@Override
+
     @Override
     public String getUltima_online_path() {
         // If I had checked (or inicialized) uoPath before,
@@ -89,7 +90,7 @@ class WindowsOS extends OperatingSystem {
 
         if (uoPath == null || uoPath.isEmpty()) {
             Object[] opts = {"Obnovit", "Neobnovovat"};
-            int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít registry UO Monday's Legacy v registrech windows.\nBud nemas nainstalovaou uo spravne, nebo je to rozbity. Zkus ultimu preinstalovat ultimu.\nPokud to nepomuze, napis p0l0usovi na foru andarie o pomoc. Přeješ si registry obnovit ručně ?", "Upozorneni !", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
+            int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít záznam UO Monday's Legacy v registrech windows.\nBuď nemáš nainstalovaou UO správně nebo je to rozbitý. Přeješ si registry obnovit ručně ?", "Upozornění !", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
             if (obnov == JOptionPane.YES_OPTION) {
                 uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
                 generateRegistryData(uoPath);
@@ -115,7 +116,6 @@ class WindowsOS extends OperatingSystem {
      **************************************************************************/
     WindowsOS() {
         super();
-        System.err.println("OPERACNI SYSTEM WINDOWS");
     }
 
     /***************************************************************************
@@ -149,11 +149,14 @@ class WindowsOS extends OperatingSystem {
     }
 
     public void renewWindowsRegistry() {
-         String newpath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
-         if (newpath.isEmpty()) return;
-         uoPath = newpath;
-         generateRegistryData(uoPath);
+        String newpath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
+        if (newpath.isEmpty()) {
+            return;
+        }
+        uoPath = newpath;
+        generateRegistryData(uoPath);
     }
+
     /***************************************************************************
      * @return ultima online path from windows registers
      **************************************************************************/

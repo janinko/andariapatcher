@@ -50,7 +50,7 @@ class Downloader extends PatcherQueue {
         try {
             p.checkHash();
             setLabelText("Kontroluju soubor: " + p.getFileName());
-            log.addLine("Soubor: " + p.getFileName() + " uz je stazeny.");
+            log.addLine("Soubor: " + p.getFileName() + " je už stažený.");
             startInstaller(p);
             return;
         } catch (IOException e) {
@@ -63,7 +63,6 @@ class Downloader extends PatcherQueue {
         URLConnection conn = null;
         InputStream in = null;
 
-
         try {
             String uri = p.getRemoteFileName();
 
@@ -71,11 +70,6 @@ class Downloader extends PatcherQueue {
             out = new BufferedOutputStream(new FileOutputStream(Settings.getInstance().getOs().getExistingFileInstance(fileName)));
             conn = url.openConnection();
             in = conn.getInputStream();
-
-            // long length = conn.getContentLength();
-            //long done = 0;
-
-
 
             byte[] buff = new byte[2048];
             int numRead;
@@ -91,10 +85,10 @@ class Downloader extends PatcherQueue {
             }
 
         } catch (FileNotFoundException e) {
-            log.addErr("Soubor nebyl na serveru nalezen. Prosim kontaktuj administratory.\n (" + e + ")");
+            log.addErr("Soubor jsem na serveru Andarie nenašel. Zřejmě problém seznamu patchů. Prosím kontaktuj admina Andarie.\n (" + e + ")");
         } catch (Exception e) {
             log.addEx(e);
-            log.addErr("Doslo k chybe pri stahovani souboru: " + p.getRemoteFileName() + ". Soubor vynechavam, zkuste to znova.");
+            log.addErr("Došlo k chybě při stahování souboru: " + p.getRemoteFileName() + ". Soubor vynechávám, zkus to znova nebo požádej o pomoc na fóru Andarie.");
         } finally {
             try {
                 if (in != null) {
@@ -115,14 +109,13 @@ class Downloader extends PatcherQueue {
                 } catch (IOException e) {
                     // p.checkHash() throws an exception.
                     log.addEx(e);
-                    log.addErr("Nemuzu otevrit soubor nebo je spatne stazeny ! Zkus to pozdeji znova.");
+                    log.addErr("Nemůžu otevřít soubor nebo je špatně stažený ! Zkus to znova nebo požádej o pomoc na fóru Andarie.");
                     Installer.getInstance().removeTotalAmount(p.getSize());
                     singleDone((double) p.getSize());
                     removeFirst();
                 }
             }
         }
-    //resetInProgress();
     }
 
     /***************************************************************************

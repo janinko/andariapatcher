@@ -21,10 +21,11 @@ import java.nio.channels.FileChannel;
  * @author Martin Polehla (andaria_patcher@polous.cz)
  */
 class Installer extends PatcherQueue {
-    private static final Installer INSTANCE = new Installer();
 
+    private static final Installer INSTANCE = new Installer();
     private boolean failed;
     //public static Log log;
+
     public void setFailed(boolean failed) {
         this.failed = failed;
     }
@@ -32,7 +33,9 @@ class Installer extends PatcherQueue {
     /***************************************************************************
      * Creates a new instance of Runner
      **************************************************************************/
-    private Installer() { super(); }
+    private Installer() {
+        super();
+    }
 
     public static Installer getInstance() {
         return INSTANCE;
@@ -65,19 +68,17 @@ class Installer extends PatcherQueue {
             @Override
             public void run() {
                 try {
-                    log.addDebug("Pred spustenim");
+                    log.addDebug("Před spuštěním");
                     Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH)));
-                        log.addDebug("Vystup procesu:");
-                        String line;
+                    log.addDebug("Výstup procesu:");
+                    String line;
 
-                        BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-                        while ((line = input.readLine()) != null) {
-                            log.addDebug("[" + command[0] + "]: " + line);
-                        }
-
-                        input.close();
-                    //}
-                    log.addDebug("Cekam na dokonceni.");
+                    BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+                    while ((line = input.readLine()) != null) {
+                        log.addDebug("[" + command[0] + "]: " + line);
+                    }
+                    input.close();
+                    log.addDebug("Čekám na dokončení.");
                     proc.waitFor();
 
                 } catch (InterruptedException e) {
@@ -87,13 +88,11 @@ class Installer extends PatcherQueue {
                     setFailed(true);
                     log.addEx(e);
                 } finally {
-                    log.addDebug("Spusteny program skoncil");
-
+                    log.addDebug("Špuštěný program skončil.");
                     start();
                 }
             }
         };
-
         t.start();
         try {
             wait();
@@ -112,6 +111,7 @@ class Installer extends PatcherQueue {
      *  - if exists start_g.bat, execute it
      *  - finish install procedure and remove file from queue
      **************************************************************************/
+    @Override
     synchronized void executeNext() {
 
         failed = false;
@@ -131,13 +131,13 @@ class Installer extends PatcherQueue {
             exec(new String[]{Settings.getInstance().getValue(Settings.UNRAR_PATH), "-o+", "e", patchItem.getLocalFileName()});
 
             singleDone(((double) patchItem.getSize()) / 2);
-            log.addDebug("Soubor je rozbaleny, hledam instalacni skripty.");
+            log.addDebug("Soubor je rozbalený, hledám instalační skripty.");
             // - if exist start_a.bat, execute it
 
             File f = new File(uopath + File.separator + "start_a.bat");
-            log.addDebug("hledam:" + f.getAbsolutePath());
+            log.addDebug("hledám:" + f.getAbsolutePath());
             if (f.exists()) {
-                log.addDebug("Nasel jsem start_a.bat.");
+                log.addDebug("Našel jsem start_a.bat.");
                 setLabelText("Instaluju patch: " + patchItem.getFileName());
 
                 exec(Settings.getInstance().getOs().getBatchExecCommand(f));
@@ -145,24 +145,23 @@ class Installer extends PatcherQueue {
             }
             // - if exist start_g.bat, execute it
             f = new File(uopath + File.separator + "start_g.bat");
-            log.addDebug("hledam:" + f.getAbsolutePath());
+            log.addDebug("hledám:" + f.getAbsolutePath());
             if (f.exists()) {
-                log.addDebug("Nasel jsem start_g.bat.");
+                log.addDebug("Našel jsem start_g.bat.");
                 setLabelText("Instaluju patch: " + patchItem.getFileName());
                 exec(Settings.getInstance().getOs().getBatchExecCommand(f));
-
                 f.delete();
             }
             // - finish install procedure and remove file from queue
             // Fake progress ? :-) .. maybe later, I don't wanna think about it now :-P
             // singleDone(  ( (double) patchItem.getSize() )/(Math.random()*5));
             // wait(300);
-            setLabelText("Prace dokoncena (" + patchItem.getFileName() + ").");
+            setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             singleDone((double) patchItem.getSize());
-            log.addDebug("Instalace patche " + patchItem.getFileName() + " dokoncena.");
+            log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");
         } else {
             // copy files into game directory
-            setLabelText("Kopiruju soubor: " + patchItem.getFileName() + " do adresare UO.");
+            setLabelText("Kopiruju soubor: " + patchItem.getFileName() + " do adresáře s UO.");
 
             final String uopath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
             File inFile = new File(patchItem.getLocalFileName());
@@ -201,6 +200,5 @@ class Installer extends PatcherQueue {
             patchItem.setInstalled();
         }
         removeFirst();
-    //resetInProgress();
     }
 }

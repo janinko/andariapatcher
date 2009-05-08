@@ -9,11 +9,10 @@ package cz.polous.andaria;
  * 
  * @author  Martin Polehla (andaria_patcher@polous.cz)
  ******************************************************************************/
-
-
 import java.util.Vector;
 
-abstract class PatcherQueue  implements Runnable {
+abstract class PatcherQueue implements Runnable {
+
     protected Vector patchQueue;
     private double totalDone;
     private double totalAmount;
@@ -22,6 +21,7 @@ abstract class PatcherQueue  implements Runnable {
     private boolean inProgress;
     private boolean cancel;
     protected Log log;
+
     /***************************************************************************
      * (abstract) Queue item processing method.
      **************************************************************************/
@@ -58,28 +58,28 @@ abstract class PatcherQueue  implements Runnable {
         try {
             while (true) {
                 //cancel = false;
-                log.addDebug("Cekam...");
-                
+                log.addDebug("Čekám...");
+
                 inProgress = false;
                 FrontEnd.getInstance().updateButtons();
-                
+
                 wait();
-                
+
                 inProgress = true;
                 FrontEnd.getInstance().updateButtons();
-                
+
                 updateSingleBar();
                 updateTotalBar();
 
                 while (patchQueue.size() > 0 && !cancel) {
-                    log.addDebug("Volani executeNext. Ve fronte je jeste: " + patchQueue.size() +" souboru."); 
+                    log.addDebug("Volání executeNext. Ve frontš je ještě: " + patchQueue.size() + " souborů.");
                     executeNext();
                 }
                 if (cancel) {
-                    setLabelText("Dalsi akce zruseny, vyckavam na prikazy...");
+                    setLabelText("Všechny akce byly zrušeny, vyčkávám na další příkazy...");
                     reset();
                 } else {
-                    setLabelText("Vyckavam na prikazy...");
+                    setLabelText("Vyčkávám na další příkazy...");
                 }
             }
         } catch (InterruptedException e) {
@@ -119,7 +119,7 @@ abstract class PatcherQueue  implements Runnable {
         //log.addLine(" -- prikaz k praci");
         //if (getState() == State.WAITING)
         notifyAll();
-        //this.inProgress = true;
+    //this.inProgress = true;
     }
 
     /**
@@ -278,16 +278,15 @@ abstract class PatcherQueue  implements Runnable {
         return (PatchItem) patchQueue.get(0);
     }
 
-  //  void setInProgress() {
-  //      inProgress = true;
- //       FrontEnd.getInstance().updateButtons();
-   // }
+    //  void setInProgress() {
+    //      inProgress = true;
+    //       FrontEnd.getInstance().updateButtons();
+    // }
 
-   // void resetInProgress() {
+    // void resetInProgress() {
     //    inProgress = false;
-   //     FrontEnd.getInstance().updateButtons();
-   // }
-
+    //     FrontEnd.getInstance().updateButtons();
+    // }
     boolean notCanceled() {
         return !cancel;
     }

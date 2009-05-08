@@ -32,7 +32,7 @@ class Log {
             System.err.println(errLine);
         }
 
-        add("CHYBA: " + errLine + "!");
+        add("CHYBKA: " + errLine + "!");
     }
 
     public void addEx(Exception e) {
@@ -40,7 +40,7 @@ class Log {
             e.printStackTrace();
             add(e.getStackTrace().toString());
         }
-        add("VNITRNI CHYBA: " + e.getMessage() + "!!!!!!!");
+        add("VNITŘNÍ CHYBA: " + e.getMessage() + "!!!!!!!");
 
     }
 
@@ -68,6 +68,6 @@ class Log {
             debugLine += cmd[i] + " ";
         }
 
-        addLine("Spoustim prikaz: " + debugLine);
+        addLine("Spouštím příkaz: " + debugLine);
     }
 }

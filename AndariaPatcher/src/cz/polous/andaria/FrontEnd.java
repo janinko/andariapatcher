@@ -644,7 +644,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.3");
+        jLabel1.setText("Verze programu: 1.4");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());
@@ -858,15 +858,15 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBConfSaveActionPerformed
 
     private void jBConfBrowseRunCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseRunCommandActionPerformed
-        jTConfRunCommand.setText(Settings.getInstance().openFile("Vyber soubor ktery mam spustit po ukonceni", jTConfRunCommand.getText(), JFileChooser.FILES_ONLY));
+        jTConfRunCommand.setText(Settings.getInstance().openFile("Vyber program, který mám spustit po ukončení patcheru tlačítkem zavřít", jTConfRunCommand.getText(), JFileChooser.FILES_ONLY));
     }//GEN-LAST:event_jBConfBrowseRunCommandActionPerformed
 
     private void jBConfBrowseTempPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseTempPathActionPerformed
-        jTConfTempPath.setText(Settings.getInstance().openFile("Vyber adresar kam stahovat soubory", jTConfTempPath.getText(), JFileChooser.DIRECTORIES_ONLY));
+        jTConfTempPath.setText(Settings.getInstance().openFile("Vyber adresář kam stahovat soubory", jTConfTempPath.getText(), JFileChooser.DIRECTORIES_ONLY));
     }//GEN-LAST:event_jBConfBrowseTempPathActionPerformed
 
     private void jBConfBrowseUltimaOnlinePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUltimaOnlinePathActionPerformed
-        jTConfUltimaOnlinePath.setText(Settings.getInstance().openFile("Vyber adresar s Ultimou", jTConfUltimaOnlinePath.getText(), JFileChooser.DIRECTORIES_ONLY));
+        jTConfUltimaOnlinePath.setText(Settings.getInstance().openFile("Vyber adresář s Ultimou", jTConfUltimaOnlinePath.getText(), JFileChooser.DIRECTORIES_ONLY));
     }//GEN-LAST:event_jBConfBrowseUltimaOnlinePathActionPerformed
 
     private void jBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallActionPerformed
@@ -900,18 +900,13 @@ public class FrontEnd extends JFrame {
 
 
         if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS")) {
-
-            JOptionPane.showMessageDialog(null, "Unrar si na linuxu musis zaridit sam :-P", "Chybka lenochu !", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Unrar si na linuxu musíš zařídit sám :-P", "Chybka lenochu !", JOptionPane.WARNING_MESSAGE);
         } else {
             PatchItem patchItem = new PatchItem(Settings.getInstance().getOs().getUnrarPatchItem());
-
-            PatchList.getInstance().downloadOther(patchItem);
-
+            PatchList.getInstance().downloadOnly(patchItem);
             jTConfUnRARCommand.setText(Settings.getInstance().getOs().getUltima_online_path() + File.separator + patchItem.getFileName());
-
             saveSettings();
         }
-
     }//GEN-LAST:event_jBConfBrowseUnRARCommand1ActionPerformed
 
     private void jBRenewRegistryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRenewRegistryActionPerformed

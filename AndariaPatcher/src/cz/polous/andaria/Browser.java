@@ -18,7 +18,6 @@ import org.lobobrowser.html.parser.InputSourceImpl;
 import org.lobobrowser.html.test.SimpleHtmlRendererContext;
 import org.xml.sax.InputSource;
 
-
 /**
  * Trida ktera zobrazi stranku v HtmlPanelu.
  * 
@@ -44,13 +43,14 @@ class Browser {
         }
     }
 
-/**
+    /**
      * Custom hyperlink listener. Used by jTBrowser JTextArea.
      *
      * @see cz.polous.andaria.Browser#openUrl
      */
-   private class hyperlink implements HyperlinkListener {
+    private class hyperlink implements HyperlinkListener {
 
+        @Override
         public void hyperlinkUpdate(HyperlinkEvent e) {
             if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                 JEditorPane pane = (JEditorPane) e.getSource();
@@ -89,12 +89,12 @@ class Browser {
         htmlPanel.setDocument(document, rendererContext);
     }
 
-/**
+    /**
      *
      */
     private static class LocalHtmlRendererContext extends SimpleHtmlRendererContext {
-
         // O1verride methods here to implement browser functionality
+
         public LocalHtmlRendererContext(HtmlPanel contextComponent) {
             super(contextComponent);
         }

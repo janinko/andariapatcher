@@ -19,11 +19,7 @@ import javax.swing.JPanel;
 class PatchList {
 
     private static final PatchList INSTANCE = new PatchList();
-    private static final Downloader downloader = Downloader.getInstance();
-    private static final Installer installator = Installer.getInstance();
-
     private Vector patchData; //= new Vector();
-    //   private Thread downloadThread, installThread;
     private Thread t;
     private static Log log;
 
@@ -33,16 +29,17 @@ class PatchList {
     private PatchList() {
         log = new Log(this);
 
-        Thread installThread = new Thread(installator);
-        Thread downloadThread = new Thread(downloader);
+        Thread installThread = new Thread(Installer.getInstance());
+        Thread downloadThread = new Thread(Downloader.getInstance());
         downloadThread.start();
         installThread.start();
-       // reload();
+    // reload();
     }
 
     public static PatchList getInstance() {
         return INSTANCE;
     }
+
     /***************************************************************************
      * Return count of installatortches
      * @return amount of installatortchItem in list
@@ -82,7 +79,7 @@ class PatchList {
                             reader.close();
                             return;
                         }
-                            sLine = br.readLine();
+                        sLine = br.readLine();
                         log.addDebug(sLine);
                         sItems = sLine.split(";");
                         patchItem = new PatchItem(sItems);
@@ -106,21 +103,22 @@ class PatchList {
      * @return wokring state of patchlist
      **************************************************************************/
     public boolean inProgress() {
-        return downloader.inProgress() | installator.inProgress();
+        return Downloader.getInstance().inProgress() | Installer.getInstance().inProgress();
     }
 
     /***************************************************************************
      * Cancel downloads and installations
      **************************************************************************/
     public void cancel() {
-        downloader.cancel();
-        installator.cancel();
+        Downloader.getInstance().cancel();
+        Installer.getInstance().cancel();
     }
 
     /***************************************************************************
      * Download other than patch item
      **************************************************************************/
-    public synchronized void downloadOther(PatchItem patchItem) {
+    public synchronized void downloadOnly(PatchItem patchItem) {
+        Downloader downloader = Downloader.getInstance();
         downloader.reset();
         downloader.addPatchItem(patchItem);
         downloader.startSafe();
@@ -130,6 +128,7 @@ class PatchList {
      * Start downloads and installations
      **************************************************************************/
     public synchronized void download() {
+        Downloader downloader = Downloader.getInstance();
         PatchItem patchItem;
         downloader.reset();
         for (int i = 0; i < patchData.size(); i++) {

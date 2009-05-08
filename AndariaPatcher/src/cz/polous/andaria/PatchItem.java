@@ -59,7 +59,7 @@ class PatchItem {
             //TODO: opravit parsovani datumu a casu !
             log.addDebug("Datum patche: |".concat(date.toString()).concat("| z |").concat(data[2]).concat("|."));
         } catch (ParseException e) {
-            log.addErr("Chyba rozpoznani datumu patche: ".concat(e.getMessage()));
+            log.addErr("Chyba rozpoznání datumu patche: ".concat(e.getMessage()));
         }
 
         description = data[7];
@@ -209,7 +209,7 @@ class PatchItem {
             BigInteger bigInt = new BigInteger(1, md5sum);
             //String md5 = bigInt.toString(16);
             if (0 != bigInt.compareTo(hash)) {
-                throw new IOException("Spatny hash stazeneho souboru.");
+                throw new IOException("Špatný kontrolní součet (MD5) staženého souboru.");
             }
 
             return (0 == bigInt.compareTo(hash));

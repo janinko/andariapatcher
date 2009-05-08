@@ -68,7 +68,7 @@ class Downloader extends PatcherQueue {
             String uri = p.getRemoteFileName();
 
             URL url = new URL(uri);
-            out = new BufferedOutputStream(new FileOutputStream(Settings.getOs().getExistingFileInstance(fileName)));
+            out = new BufferedOutputStream(new FileOutputStream(Settings.getInstance().getOs().getExistingFileInstance(fileName)));
             conn = url.openConnection();
             in = conn.getInputStream();
 

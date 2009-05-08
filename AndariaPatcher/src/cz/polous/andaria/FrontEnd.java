@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import java.io.File;
 import java.net.URL;
-import java.util.Vector;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.lobobrowser.html.gui.HtmlPanel;
@@ -20,11 +19,12 @@ public class FrontEnd extends JFrame {
 
     private Log log;
     private static final FrontEnd INSTANCE = new FrontEnd(); //representation of main class (this)
-    private PatchList patchList; // representation of patchlist, patch procedure control object    private final Settings settings = ;
+    //  private PatchList patchList; // representation of patchlist, patch procedure control object    private final Settings settings = ;
 
     public static FrontEnd getInstance() {
         return INSTANCE;
     }
+
     /***************************************************************************
      * Creates new form FrontEnd and call pl inicialization
      **************************************************************************/
@@ -42,7 +42,7 @@ public class FrontEnd extends JFrame {
         HtmlPanel htmlPNews = new HtmlPanel();
         jTPMain.insertTab(null, null, htmlPNews, "Tady se nachází novinky nejen ze světa...", 0);
         jTPMain.setTitleAt(0, "Novinky");
-        Browser news = new Browser(htmlPNews, Settings.getInstance().getValue(Settings.NEWS_URL));
+        final Browser news = new Browser(htmlPNews, Settings.getInstance().getValue(Settings.NEWS_URL));
 
         HtmlPanel htmlPAbout = new HtmlPanel();
         jTPMain.addTab(null, null, htmlPAbout, "Taky něco o programu samotném.");
@@ -51,6 +51,7 @@ public class FrontEnd extends JFrame {
 
         jTPMain.addChangeListener(new ChangeListener() {
 
+            @Override
             public void stateChanged(ChangeEvent changeEvent) {
                 //log.addDebug("Change of about changed.");
                 if (jTPMain.getSelectedIndex() == jTPMain.getComponentCount() - 1) {
@@ -61,13 +62,14 @@ public class FrontEnd extends JFrame {
 
         jTPMain.setSelectedIndex(0);
 
-        patchList = PatchList.getInstance();
+        //  patchList = PatchList.getInstance();
 
         if (Settings.getInstance().debugMode()) {
             log.addDebug(System.getProperty("os.name"));
             log.addDebug(System.getProperty("user.home"));
             log.addDebug(System.getProperty("java.io.tmpdir"));
         }
+        PatchList.getInstance().reload();
     }
 
     /***************************************************************************
@@ -77,8 +79,9 @@ public class FrontEnd extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
-                new FrontEnd().setVisible(true);
+                INSTANCE.setVisible(true);
             }
         });
     }
@@ -87,12 +90,14 @@ public class FrontEnd extends JFrame {
      * PatchList pl object inicialization, display list of patches at jPList panel.
      **************************************************************************/
     private void reloadPatchList() {
+        PatchList patchList = PatchList.getInstance();
         if (patchList.inProgress()) {
             patchList.cancel();
         }
         jBInstallSelection.setEnabled(false);
         jBInstall.setEnabled(false);
         patchList.reload();
+    //refreshPlPane();
     }
 
     /***************************************************************************
@@ -117,7 +122,6 @@ public class FrontEnd extends JFrame {
         Settings.getInstance().setValue(Settings.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
         Settings.getInstance().setValue(Settings.LOCAL_STORAGE, jTConfTempPath.getText());
         Settings.getInstance().setValue(Settings.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
-
         Settings.getInstance().save();
     }
 
@@ -150,23 +154,14 @@ public class FrontEnd extends JFrame {
         return jLInstall;
     }
 
-    /***************************************************************************
-     * Refresh patchlist tab content
-     *
-     * @link cz.polous.andaria.PatchList.getInaPanel()
-     **************************************************************************/
-    public void refreshPlPane() {
-        Vector jPlist = patchList.getInPanel();
-        jPPatchList.removeAll();
-        int i;
-        for (i = 0; i < jPlist.size(); i++) {
-            jPPatchList.add((JPanel) jPlist.get(i));
-        }
-        if (i > 0) {
-            jPPatchList.setLayout(new GridLayout(patchList.getCount(), 0));
-        }
+    @Override
+    public void pack() {
         updateButtons();
-        pack();
+        super.pack();
+    }
+
+    public javax.swing.JPanel getJPPatchList() {
+        return jPPatchList;
     }
 
     /***************************************************************************
@@ -178,7 +173,7 @@ public class FrontEnd extends JFrame {
      **************************************************************************/
     public void updateButtons() {
         try {
-            if (patchList.inProgress()) {
+            if (PatchList.getInstance().inProgress()) {
                 jBInstall.setEnabled(false);
                 jBInstallSelection.setEnabled(false);
                 jBCancel.setEnabled(true);
@@ -193,6 +188,7 @@ public class FrontEnd extends JFrame {
                 jBRefreshPatchList.setEnabled(true);
             }
         } catch (NullPointerException e) {
+            log.addEx(e);
         }
     }
 
@@ -252,6 +248,7 @@ public class FrontEnd extends JFrame {
         jBDeleteIntro = new javax.swing.JButton();
         jBConfBrowseUnRARCommand1 = new javax.swing.JButton();
         jBRenewRegistry = new javax.swing.JButton();
+        jBRemoveTempFiles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
@@ -696,6 +693,19 @@ public class FrontEnd extends JFrame {
         jBRenewRegistry.setVisible(false);
         else jBRenewRegistry.setVisible(true);
 
+        jBRemoveTempFiles.setBackground(getBackground());
+        jBRemoveTempFiles.setForeground(getForeground());
+        jBRemoveTempFiles.setText("Smazat všchny stažené patche (.rar) do úložiště souborů");
+        jBRemoveTempFiles.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBRemoveTempFiles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoveTempFilesActionPerformed(evt);
+            }
+        });
+        if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS"))
+        jBRenewRegistry.setVisible(false);
+        else jBRenewRegistry.setVisible(true);
+
         org.jdesktop.layout.GroupLayout jPSettingsTabLayout = new org.jdesktop.layout.GroupLayout(jPSettingsTab);
         jPSettingsTab.setLayout(jPSettingsTabLayout);
         jPSettingsTabLayout.setHorizontalGroup(
@@ -744,7 +754,8 @@ public class FrontEnd extends JFrame {
                     .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                     .add(jChDebug)
                     .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
-                    .add(jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE))
+                    .add(jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                    .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPSettingsTabLayout.setVerticalGroup(
@@ -781,7 +792,9 @@ public class FrontEnd extends JFrame {
                 .add(jBDeleteNWB)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBRenewRegistry)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 152, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jBRemoveTempFiles)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 123, Short.MAX_VALUE)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -808,7 +821,7 @@ public class FrontEnd extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void jBSetAllInstalledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSetAllInstalledActionPerformed
         if (0 == JOptionPane.showConfirmDialog(null, "Chceš opravdu nastavit všechny soubory jako nainastalové ?", "Zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
-            patchList.setAllInstalled();
+            PatchList.getInstance().setAllInstalled();
         }
     }//GEN-LAST:event_jBSetAllInstalledActionPerformed
 
@@ -828,7 +841,7 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBCloseActionPerformed
 
     private void jBCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelActionPerformed
-        patchList.cancel();
+        PatchList.getInstance().cancel();
     // updateButtons();
     }//GEN-LAST:event_jBCancelActionPerformed
 
@@ -857,7 +870,7 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBConfBrowseUltimaOnlinePathActionPerformed
 
     private void jBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallActionPerformed
-        patchList.download();
+        PatchList.getInstance().download();
         updateButtons();
         jTPMain.setSelectedIndex(1);
     }//GEN-LAST:event_jBInstallActionPerformed
@@ -881,25 +894,24 @@ public class FrontEnd extends JFrame {
 }//GEN-LAST:event_jBDeleteNWBActionPerformed
 
     private void jChDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChDebugActionPerformed
-    // TODO add your handling code here:
     }//GEN-LAST:event_jChDebugActionPerformed
 
     private void jBConfBrowseUnRARCommand1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUnRARCommand1ActionPerformed
 
-        
+
         if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS")) {
 
             JOptionPane.showMessageDialog(null, "Unrar si na linuxu musis zaridit sam :-P", "Chybka lenochu !", JOptionPane.WARNING_MESSAGE);
         } else {
             PatchItem patchItem = new PatchItem(Settings.getInstance().getOs().getUnrarPatchItem());
 
-            patchList.downloadOther(patchItem);
+            PatchList.getInstance().downloadOther(patchItem);
 
             jTConfUnRARCommand.setText(Settings.getInstance().getOs().getUltima_online_path() + File.separator + patchItem.getFileName());
-            
+
             saveSettings();
         }
-        
+
     }//GEN-LAST:event_jBConfBrowseUnRARCommand1ActionPerformed
 
     private void jBRenewRegistryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRenewRegistryActionPerformed
@@ -908,6 +920,26 @@ public class FrontEnd extends JFrame {
         winos.renewWindowsRegistry();
         loadSettings();
 }//GEN-LAST:event_jBRenewRegistryActionPerformed
+
+    private void jBRemoveTempFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveTempFilesActionPerformed
+        String dir = Settings.getInstance().getValue(Settings.LOCAL_STORAGE);
+        Object[] opts = {"Smaž to všechno", "Rozmyslel jsem si to"};
+        int potvrzeni = JOptionPane.showOptionDialog(null, "Opravdu si přeješ smazat obsah adresáře \"".concat(dir).concat("\" ?"), "Otázečka...", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
+        if (potvrzeni == JOptionPane.YES_OPTION) {
+
+            File tmpDir = new File(dir);
+            String[] fileList = tmpDir.list();
+            File file;
+            for (int i = 0; i < fileList.length; i++) {
+                file = new File(tmpDir.getAbsolutePath().concat(File.separator).concat(fileList[i]));
+                if (file.delete()) {
+                    log.addLine("Smazal jsem soubor: ".concat(file.getAbsolutePath()));
+                } else {
+                    log.addErr("Nepodařilo se smazat soubor: ".concat(file.getAbsolutePath()));
+                }
+            }
+        }
+}//GEN-LAST:event_jBRemoveTempFilesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
@@ -924,6 +956,7 @@ public class FrontEnd extends JFrame {
     private javax.swing.JButton jBInstall;
     private javax.swing.JButton jBInstallSelection;
     private javax.swing.JButton jBRefreshPatchList;
+    private javax.swing.JButton jBRemoveTempFiles;
     private javax.swing.JButton jBRenewRegistry;
     private javax.swing.JButton jBSetAllInstalled;
     private javax.swing.JCheckBox jChDebug;

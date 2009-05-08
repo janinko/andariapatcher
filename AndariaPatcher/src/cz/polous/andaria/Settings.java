@@ -13,9 +13,6 @@ import javax.swing.JOptionPane;
 import org.jdom.Document;
 import org.jdom.Element;
 
-
-
-
 /*******************************************************************************
  * Settings: Trida se statickyma metodama pro pristup k nastaveni a ukladani 
  * nastaveni.
@@ -25,25 +22,26 @@ import org.jdom.Element;
 class Settings {
 
     private static final Settings INSTANCE = new Settings();
+    private Document doc; // XML settings document
+    private Element root; // root element of document
+    private Element settings; // settings of patcher
+    private Element patches; // content of local stored patchlist
+    private OperatingSystem os;
 
-    private  Document doc; // XML settings document
-    private  Element root; // root element of document
-    private  Element settings; // settings of patcher
-    private  Element patches; // content of local stored patchlist
-    private static OperatingSystem os;
-
-    public static OperatingSystem getOs() {
+    public OperatingSystem getOs() {
         return os;
     }
     private static Log log;
 
     private Settings() {
         os = OperatingSystem.createOperatingSystemInstance();
-         log = new Log("Settings");
+        log = new Log("Settings");
     }
+
     public static Settings getInstance() {
         return INSTANCE;
     }
+
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
@@ -70,7 +68,7 @@ class Settings {
      * @param item  element to set
      * @param val   New value of item
      **************************************************************************/
-    public  void setValue(int item, String val) {
+    public void setValue(int item, String val) {
         setValue(getSettingName(item), val);
     }
 
@@ -79,7 +77,7 @@ class Settings {
      * @param item  Name of element to set
      * @param val   New value of item
      **************************************************************************/
-    public  void setValue(String item, String val) {
+    public void setValue(String item, String val) {
         if (settings == null) {
             return;
         }
@@ -94,8 +92,7 @@ class Settings {
      * Save a PatchItem object state into XML setting file.
      * @param p PatchItem to save.
      **************************************************************************/
-    public  void savePatchItem(PatchItem p) {
-        // if (patches == null) return;
+    public void savePatchItem(PatchItem p) {
         Element ch = patches.getChild(p.getFileName());
         if (ch == null) {
             ch = new Element(p.getFileName());
@@ -103,7 +100,7 @@ class Settings {
         }
         ch.setText(p.getHash());
         ch.setAttribute("version", p.getVersion());
-        ch.setAttribute("date", p.dateFormat.format(new Date()));
+        ch.setAttribute("date", p.getDateFormat().format(new Date()));
         ch.setAttribute("auto_install", p.getAutoInstallFlag() ? "1" : "0");
         ch.setAttribute("installed", p.isInstalled() ? "1" : "0");
         save();
@@ -114,7 +111,7 @@ class Settings {
      * @param item  Name of sub-element
      * @return      Return required element or new empty one.
      **************************************************************************/
-    private  Element getExistingElement(Element el, String item) {
+    private Element getExistingElement(Element el, String item) {
         List list;
         try {
             list = el.getChildren(item);
@@ -134,10 +131,11 @@ class Settings {
     /***************************************************************************
      * @return PatchItem data Element
      **************************************************************************/
-    public  Element getPatchData(String item) {
+    public Element getPatchData(String item) {
         return patches.getChild(item);
     }
- /***************************************************************************
+
+    /***************************************************************************
      * Open file dialog openner.
      * @param title Title of JFileCooser
      * @param defPath Default path of JFileChooser
@@ -156,10 +154,11 @@ class Settings {
         }
         return defPath;
     }
+
     /***************************************************************************
      * Load settings, doc, and paches objects from XML file
      **************************************************************************/
-    public  void load() {
+    public void load() {
         File f = os.getExistingFileInstance(os.getConfigPath());
         //Document newdoc = null;
         if (f.exists()) {
@@ -190,11 +189,11 @@ class Settings {
     /***************************************************************************
      * Save settings and paches objects into XML file
      **************************************************************************/
-    public  void save() {
+    public void save() {
         if (doc == null) {
             return;
         }
-      //  SAXBuilder parser = new SAXBuilder();
+        //  SAXBuilder parser = new SAXBuilder();
         File f = os.getExistingFileInstance(os.getConfigPath());
 
         try {
@@ -210,7 +209,7 @@ class Settings {
      * Determinate if program is in debug mode.
      * @return true if debug mode, false if not.
      **************************************************************************/
-    public  boolean debugMode() {
+    public boolean debugMode() {
         return getValue(DEBUG_MODE).equalsIgnoreCase("1") ? true : false;
     }
 
@@ -228,7 +227,7 @@ class Settings {
     public static final int FILE_LIST_URL = 8;
     private static final String[] settingList = {"run_command", "unrar_path", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url"};
 
-    private static String getDefaultValue(int item) {
+    private String getDefaultValue(int item) {
 
         switch (item) {
 

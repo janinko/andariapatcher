@@ -8,6 +8,7 @@ import java.util.Date;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -23,26 +24,32 @@ import org.jdom.Element;
  ******************************************************************************/
 class Settings {
 
-    private static Document doc; // XML settings document
-    private static Element root; // root element of document
-    private static Element settings; // settings of patcher
-    private static Element patches; // content of local stored patchlist
-    public static OperatingSystem os;
+    private static final Settings INSTANCE = new Settings();
+
+    private  Document doc; // XML settings document
+    private  Element root; // root element of document
+    private  Element settings; // settings of patcher
+    private  Element patches; // content of local stored patchlist
+    private static OperatingSystem os;
+
+    public static OperatingSystem getOs() {
+        return os;
+    }
     private static Log log;
-    static {
+
+    private Settings() {
         os = OperatingSystem.createOperatingSystemInstance();
-        log = new Log("Settings");
+         log = new Log("Settings");
     }
-
-    public Settings() {
+    public static Settings getInstance() {
+        return INSTANCE;
     }
-
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
      * @return      Required item (string)
      **************************************************************************/
-    public static String getValue(int item) {
+    public String getValue(int item) {
         String result = null;
         try {
             result = settings.getChildText(getSettingName(item));
@@ -63,7 +70,7 @@ class Settings {
      * @param item  element to set
      * @param val   New value of item
      **************************************************************************/
-    public static void setValue(int item, String val) {
+    public  void setValue(int item, String val) {
         setValue(getSettingName(item), val);
     }
 
@@ -72,7 +79,7 @@ class Settings {
      * @param item  Name of element to set
      * @param val   New value of item
      **************************************************************************/
-    public static void setValue(String item, String val) {
+    public  void setValue(String item, String val) {
         if (settings == null) {
             return;
         }
@@ -87,7 +94,7 @@ class Settings {
      * Save a PatchItem object state into XML setting file.
      * @param p PatchItem to save.
      **************************************************************************/
-    public static void savePatchItem(PatchItem p) {
+    public  void savePatchItem(PatchItem p) {
         // if (patches == null) return;
         Element ch = patches.getChild(p.getFileName());
         if (ch == null) {
@@ -107,7 +114,7 @@ class Settings {
      * @param item  Name of sub-element
      * @return      Return required element or new empty one.
      **************************************************************************/
-    private static Element getExistingElement(Element el, String item) {
+    private  Element getExistingElement(Element el, String item) {
         List list;
         try {
             list = el.getChildren(item);
@@ -127,14 +134,32 @@ class Settings {
     /***************************************************************************
      * @return PatchItem data Element
      **************************************************************************/
-    public static Element getPatchData(String item) {
+    public  Element getPatchData(String item) {
         return patches.getChild(item);
     }
+ /***************************************************************************
+     * Open file dialog openner.
+     * @param title Title of JFileCooser
+     * @param defPath Default path of JFileChooser
+     * @param ft Selection mode (ie. JFileCooser.DIRECTORY)
+     **************************************************************************/
+    public String openFile(String title, String defPath, int ft) {
+        final JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle(title);
+        fc.setCurrentDirectory(new File(defPath).getParentFile());
+        fc.setFileSelectionMode(ft);
+        fc.setFileHidingEnabled(false);
 
+        if (fc.showOpenDialog(FrontEnd.getInstance()) == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            return file.getAbsolutePath();
+        }
+        return defPath;
+    }
     /***************************************************************************
      * Load settings, doc, and paches objects from XML file
      **************************************************************************/
-    public static void load() {
+    public  void load() {
         File f = os.getExistingFileInstance(os.getConfigPath());
         //Document newdoc = null;
         if (f.exists()) {
@@ -165,7 +190,7 @@ class Settings {
     /***************************************************************************
      * Save settings and paches objects into XML file
      **************************************************************************/
-    public static void save() {
+    public  void save() {
         if (doc == null) {
             return;
         }
@@ -185,7 +210,7 @@ class Settings {
      * Determinate if program is in debug mode.
      * @return true if debug mode, false if not.
      **************************************************************************/
-    public static boolean debugMode() {
+    public  boolean debugMode() {
         return getValue(DEBUG_MODE).equalsIgnoreCase("1") ? true : false;
     }
 
@@ -230,7 +255,7 @@ class Settings {
         }
     }
 
-    public static boolean RenewWindowsRegistry() {
+    public boolean RenewWindowsRegistry() {
 
         return true;
     }

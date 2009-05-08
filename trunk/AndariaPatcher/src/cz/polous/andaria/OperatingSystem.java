@@ -15,6 +15,7 @@ import java.io.IOException;
  ******************************************************************************/
 abstract class OperatingSystem {
 
+   // private final OperatingSystem os;
     private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
     private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory";
     private final String about_url = "http://strazci.andaria.net/patcher/java.php";
@@ -83,7 +84,7 @@ abstract class OperatingSystem {
      * @return physical existing file instance
      * @see #getFileExistingInstance(File f)
      **************************************************************************/
-    public static File getExistingFileInstance(String fn) {
+    public File getExistingFileInstance(String fn) {
         return getFileExistingInstance(new File(fn));
     }
 
@@ -91,7 +92,7 @@ abstract class OperatingSystem {
      * Create a File instance and gurantee file existing
      * @return physical existing file instance
      **************************************************************************/
-    public static File getFileExistingInstance(File f) {
+    public  File getFileExistingInstance(File f) {
         if (f.exists()) {
             return f;
         } else {
@@ -110,9 +111,9 @@ abstract class OperatingSystem {
         return f;
     }
 
-    public static void deleteUOFile(String subDir, String fileName) {
+    public  void deleteUOFile(String subDir, String fileName) {
 
-        File f = new File(Settings.getValue(Settings.ULTIMA_ONINE_PATH) + File.separator + subDir + File.separator + fileName);
+        File f = new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH) + File.separator + subDir + File.separator + fileName);
         if (f.exists()) {
             f.delete();
         }

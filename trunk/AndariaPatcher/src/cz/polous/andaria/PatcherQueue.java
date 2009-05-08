@@ -11,12 +11,9 @@ package cz.polous.andaria;
  ******************************************************************************/
 
 
-import javax.swing.JProgressBar;
 import java.util.Vector;
-import javax.swing.JLabel;
 
 abstract class PatcherQueue  implements Runnable {
-
     protected Vector patchQueue;
     private double totalDone;
     private double totalAmount;
@@ -24,10 +21,6 @@ abstract class PatcherQueue  implements Runnable {
     private double singleAmount;
     private boolean inProgress;
     private boolean cancel;
-    private JProgressBar singleProgressBar; // single file download progressbar
-    private JProgressBar totalProgressBar; // single file download progressbar
-    private JLabel label; // single file donwload label (using for filename and status)
-
     protected Log log;
     /***************************************************************************
      * (abstract) Queue item processing method.
@@ -37,7 +30,7 @@ abstract class PatcherQueue  implements Runnable {
     /***************************************************************************
      * Creates a new instance of Patcher thread
      **************************************************************************/
-    public PatcherQueue() {
+    protected PatcherQueue() {
         log = new Log(this);
     }
 
@@ -68,12 +61,12 @@ abstract class PatcherQueue  implements Runnable {
                 log.addDebug("Cekam...");
                 
                 inProgress = false;
-                FrontEnd.instance.updateButtons();
+                FrontEnd.getInstance().updateButtons();
                 
                 wait();
                 
                 inProgress = true;
-                FrontEnd.instance.updateButtons();
+                FrontEnd.getInstance().updateButtons();
                 
                 updateSingleBar();
                 updateTotalBar();
@@ -121,7 +114,7 @@ abstract class PatcherQueue  implements Runnable {
     /***************************************************************************
      * Resume paused queue thread.
      **************************************************************************/
-    public synchronized void work() {
+    public synchronized void start() {
         // TODO: Control this method and callers for bugs
         //log.addLine(" -- prikaz k praci");
         //if (getState() == State.WAITING)
@@ -134,10 +127,10 @@ abstract class PatcherQueue  implements Runnable {
      *  Used to normal start of queue processing when execute method get object to wait() state.
      *  @see cz.polous.andaria.Installer#exec
      **************************************************************************/
-    public void safeWork() {
+    public void startSafe() {
         //log.addLine(">> bezpecne pracuj (" + this.inProgress + ")");
         if (!inProgress) {
-            work();
+            start();
         }
     }
 
@@ -223,32 +216,6 @@ abstract class PatcherQueue  implements Runnable {
     }
 
     /***************************************************************************
-     * inicialize Single Progress bar object reference
-     **************************************************************************/
-    JProgressBar getSingleBP() {
-        return singleProgressBar;
-    }
-
-    /***************************************************************************
-     * inicialize Total Progress bar object reference
-     **************************************************************************/
-    JProgressBar getTotalPB() {
-        return totalProgressBar;
-    }
-
-    void setSingleBP(JProgressBar pb) {
-        singleProgressBar = pb;
-    }
-
-    void setTotalBP(JProgressBar pb) {
-        totalProgressBar = pb;
-    }
-
-    void setLabel(JLabel l) {
-        label = l;
-    }
-
-    /***************************************************************************
      * Update total progressbar value
      * (count from totalDone / totalAmount percent).
      **************************************************************************/
@@ -256,11 +223,11 @@ abstract class PatcherQueue  implements Runnable {
         try {
             try {
                 double total = totalDone / totalAmount * 100;
-                totalProgressBar.setValue((int) total);
+                FrontEnd.getInstance().getjPBDownloadTotal().setValue((int) total);
             } catch (ArithmeticException e) {
-                totalProgressBar.setValue(0);
+                FrontEnd.getInstance().getjPBDownloadTotal().setValue(0);
             }
-            totalProgressBar.repaint();
+            FrontEnd.getInstance().getjPBDownloadTotal().repaint();
         } catch (NullPointerException e) {
             log.addEx(e);
         }
@@ -274,9 +241,9 @@ abstract class PatcherQueue  implements Runnable {
         try {
             try {
                 double total = singleDone / singleAmount * 100;
-                singleProgressBar.setValue((int) total);
+                FrontEnd.getInstance().getjPBDownloadSingle().setValue((int) total);
             } catch (ArithmeticException e) {
-                singleProgressBar.setValue(0);
+                FrontEnd.getInstance().getjPBDownloadSingle().setValue(0);
             }
         } catch (NullPointerException e) {
             log.addEx(e);
@@ -289,7 +256,7 @@ abstract class PatcherQueue  implements Runnable {
      **************************************************************************/
     void setLabelText(String s) {
         try {
-            label.setText(s);
+            FrontEnd.getInstance().getjLDownload().setText(s);
         } catch (Exception e) {
         }
     }
@@ -313,12 +280,12 @@ abstract class PatcherQueue  implements Runnable {
 
   //  void setInProgress() {
   //      inProgress = true;
- //       FrontEnd.instance.updateButtons();
+ //       FrontEnd.getInstance().updateButtons();
    // }
 
    // void resetInProgress() {
     //    inProgress = false;
-   //     FrontEnd.instance.updateButtons();
+   //     FrontEnd.getInstance().updateButtons();
    // }
 
     boolean notCanceled() {

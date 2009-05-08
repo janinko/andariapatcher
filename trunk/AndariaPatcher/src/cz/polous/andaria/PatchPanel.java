@@ -11,11 +11,11 @@ import javax.swing.*;
  * @author  Martin Polehla (andaria_patcher@polous.cz)
  * @version 0.1
  ******************************************************************************/
-
 class PatchPanel extends JPanel {
+
     Log log;
     private PatchItem patchItem;
-    
+
     /***************************************************************************
      * Create new panel PatchPanel and inicialize object
      * @param pi PatchItem linked to this instance of object
@@ -24,96 +24,90 @@ class PatchPanel extends JPanel {
         log = new Log(this);
         patchItem = pi;
         initComponents();
-        
+
         PatchItemMouseListener cl = new PatchItemMouseListener();
-        
+
         addMouseListener(cl);
         refresh();
     }
+
     /***************************************************************************
      * Re-set checkboxes state and panel colour
      **************************************************************************/
     public void refresh() {
-        jChAutoInstall.setSelected( patchItem.getAutoInstallFlag() );
-        
+        jChAutoInstall.setSelected(patchItem.getAutoInstallFlag());
+
 //        log.addDebug("installFlag= " + ( patchItem.getInstallFlag()?"true":"false" ) );
-        jChInstall.setSelected( patchItem.getInstallFlag() );
-        
-        jChRequired.setSelected( patchItem.isRequired() );
-        
+        jChInstall.setSelected(patchItem.getInstallFlag());
+
+        jChRequired.setSelected(patchItem.isRequired());
+
         // green 204,255,204 - installed
         // red 255,233,233 - required
         // white 255,255,255 - user choice
         if (patchItem.isRequired()) {
             if (patchItem.isInstalled()) {
-                setBg(new Color( 204,255,204 ));
+                setBg(new Color(204, 255, 204));
             } else {
-                setBg(new Color( 255,233,233 ));
+                setBg(new Color(255, 233, 233));
             }
         } else {
             if (patchItem.getAutoInstallFlag()) {
                 if (patchItem.isInstalled()) {
-                    setBg(new Color( 204,255,204 ));
+                    setBg(new Color(204, 255, 204));
                 } else {
-                    setBg(new Color( 255,233,233 ));
+                    setBg(new Color(255, 233, 233));
                 }
             } else {
-                setBg(new Color( 255,255,255 ));
+                setBg(new Color(255, 255, 255));
             }
         }
-        
-        
+
+
     }
-    
+
     /***************************************************************************
      * Set background colour of PatchItem panel. It should change colour of
      * every visible element of panel.
      * @param c New colour.
      **************************************************************************/
-    
     private void setBg(Color c) {
         // green 204,255,204 - installed
         // red 255,233,233 - required
         // white 255,255,255 - user choice
-        
+
         setBackground(c);
         jChRequired.setBackground(c);
         jChInstall.setBackground(c);
         jLSize.setBackground(c);
-        
+
         jSeparator1.setBackground(c);
         jSeparator2.setBackground(c);
         jSeparator3.setBackground(c);
         jSeparator1.setForeground(c);
         jSeparator2.setForeground(c);
         jSeparator3.setForeground(c);
-        
+
         jChAutoInstall.setBackground(c);
-        
+
         jTSize.setBackground(c);
-        
+
     }
+
     /***************************************************************************
      * Set jChWanted checkbox state.
      * @param b new state of checkbox
      **************************************************************************/
     //public void setWanted(boolean wanted) { jChInstallFlag.setSelected( wanted ); }
-    
     /***************************************************************************
      * Generate toolTip text for jPanel tooltip property.
      * @return a tooltip string value
      **************************************************************************/
     public String getToolTip() {
-        
-        return "<html><p><b>Jméno:</b> "+ patchItem.getName()
-        + "</p><p><b>Soubor:</b> " + patchItem.getFileName()
-        + "</p><p><b>Verze:</b> " + patchItem.getVersions()
-        + "</p><p><b>Datum vydání:</b> " + patchItem.getDates()
-        + "</p><p><b>Kontrolní součet:</b> " + patchItem.getHash()
-        + "</p><br><p><i>" + patchItem.getDescription()
-        + "</i></p></html>";
+
+        return "<html><p><b>Jméno:</b> " + patchItem.getName() + "</p><p><b>Soubor:</b> " + patchItem.getFileName() + "</p><p><b>Verze:</b> " + patchItem.getVersions() + "</p><p><b>Datum vydání:</b> " + patchItem.getDates() + "</p><p><b>Kontrolní součet:</b> " + patchItem.getHash() + "</p><br><p><i>" + patchItem.getDescription() + "</i></p></html>";
     }
-    
+
     /**
      * Implements item selection process.
      * When any elements of form sends onMouseClicked event, PatchItemMouseListener object
@@ -122,35 +116,48 @@ class PatchPanel extends JPanel {
      */
     class PatchItemMouseListener
             implements MouseListener {
-        
+
         PatchItemMouseListener() {
             jChRequired.addMouseListener(this);
             jChInstall.addMouseListener(this);
-            
+
             jLSize.addMouseListener(this);
             jTSize.addMouseListener(this);
-            
+
             jSeparator1.addMouseListener(this);
             jSeparator2.addMouseListener(this);
             jSeparator3.addMouseListener(this);
-            
+
         }
+
+        @Override
         public void mouseEntered(MouseEvent e) {
             JComponent jc = (JComponent) e.getComponent();
             Action action = jc.getActionMap().get("postTip");
-            
+
             if (action != null) {
                 action.actionPerformed(new ActionEvent(jc, ActionEvent.ACTION_PERFORMED, "postTip"));
             }
         }
+
+        @Override
         public void mouseClicked(MouseEvent e) {
             patchItem.switchInstallFlag();
         }
-        public void mousePressed(MouseEvent e) {}
-        public void mouseReleased(MouseEvent e) {}
-        public void mouseExited(MouseEvent e) {}
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         jChInstall = new javax.swing.JCheckBox();
@@ -278,11 +285,10 @@ class PatchPanel extends JPanel {
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jChAutoInstallStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jChAutoInstallStateChanged
-        patchItem.setAutoInstallFlag( jChAutoInstall.isSelected() );
+        patchItem.setAutoInstallFlag(jChAutoInstall.isSelected());
     }//GEN-LAST:event_jChAutoInstallStateChanged
-            
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jChAutoInstall;
     private javax.swing.JCheckBox jChInstall;

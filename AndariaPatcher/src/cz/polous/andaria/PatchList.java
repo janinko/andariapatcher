@@ -22,15 +22,16 @@ class PatchList {
     private Vector patchData; //= new Vector();
     private Thread t;
     private static Log log;
-
+    private Thread installThread;
+    private Thread downloadThread;
     /***************************************************************************
      * Creates a new instance of installatortchList
      **************************************************************************/
     private PatchList() {
         log = new Log(this);
 
-        Thread installThread = new Thread(Installer.getInstance());
-        Thread downloadThread = new Thread(Downloader.getInstance());
+        installThread = new Thread(Installer.getInstance());
+        downloadThread = new Thread(Downloader.getInstance());
         downloadThread.start();
         installThread.start();
     // reload();
@@ -38,6 +39,14 @@ class PatchList {
 
     public static PatchList getInstance() {
         return INSTANCE;
+    }
+
+    public Thread getDownloadThread() {
+        return downloadThread;
+    }
+
+    public Thread getInstallThread() {
+        return installThread;
     }
 
     /***************************************************************************

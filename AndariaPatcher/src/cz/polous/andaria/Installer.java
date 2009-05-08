@@ -89,7 +89,8 @@ class Installer extends PatcherQueue {
                     log.addEx(e);
                 } finally {
                     log.addDebug("Špuštěný program skončil.");
-                    start();
+                    //--PatchList.getInstance().getInstallThread().notify();
+                    Installer.getInstance().start();
                 }
             }
         };
@@ -161,7 +162,7 @@ class Installer extends PatcherQueue {
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");
         } else {
             // copy files into game directory
-            setLabelText("Kopiruju soubor: " + patchItem.getFileName() + " do adresáře s UO.");
+            setLabelText("Kopíruju soubor: " + patchItem.getFileName() + " do adresáře s UO.");
 
             final String uopath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
             File inFile = new File(patchItem.getLocalFileName());
@@ -192,8 +193,6 @@ class Installer extends PatcherQueue {
             } catch (IOException e) {
                 log.addEx(e);
             }
-
-
         }
 
         if (!failed) {

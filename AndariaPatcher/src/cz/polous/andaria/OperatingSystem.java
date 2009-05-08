@@ -6,9 +6,6 @@ import java.io.IOException;
 /*******************************************************************************
  * Provide operating system specific methods
  * 
- * Changlog:
- *      [0.2]   unrarPatchItem added
- * 
  * @author  Martin Polehla (andaria_patcher@polous.cz)
  * @version 0.2
  ******************************************************************************/
@@ -20,9 +17,14 @@ abstract class OperatingSystem {
     private final String about_url = "http://strazci.andaria.net/patcher/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";
+    private final String counter_url = "http://strazci.andaria.net/patcher/beta/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.txt";
     private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbalování .rar archivu."};
     private static Log log;
+
+    public String getCounter_url() {
+        return counter_url;
+    }
 
     public String[] getUnrarPatchItem() {
         return unrarPatchItem;

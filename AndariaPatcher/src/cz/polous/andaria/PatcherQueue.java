@@ -10,6 +10,7 @@ package cz.polous.andaria;
  * @author  Martin Polehla (andaria_patcher@polous.cz)
  ******************************************************************************/
 import java.util.Vector;
+import javax.swing.JProgressBar;
 
 abstract class PatcherQueue implements Runnable {
 
@@ -37,6 +38,7 @@ abstract class PatcherQueue implements Runnable {
     /***************************************************************************
      * Start Patcher thread
      **************************************************************************/
+    @Override
     public void run() {
         reset();
         execute();
@@ -115,11 +117,9 @@ abstract class PatcherQueue implements Runnable {
      * Resume paused queue thread.
      **************************************************************************/
     public synchronized void start() {
-        // TODO: Control this method and callers for bugs
-        //log.addLine(" -- prikaz k praci");
-        //if (getState() == State.WAITING)
+        log.addDebug("Startuj thread. inProgress = " + this.inProgress + ".");
+        //this.wait();
         notifyAll();
-    //this.inProgress = true;
     }
 
     /**
@@ -128,7 +128,7 @@ abstract class PatcherQueue implements Runnable {
      *  @see cz.polous.andaria.Installer#exec
      **************************************************************************/
     public void startSafe() {
-        //log.addLine(">> bezpecne pracuj (" + this.inProgress + ")");
+        //log.addDebug("Pracuje thread: (" + this.inProgress + ") ?");
         if (!inProgress) {
             start();
         }
@@ -220,14 +220,15 @@ abstract class PatcherQueue implements Runnable {
      * (count from totalDone / totalAmount percent).
      **************************************************************************/
     protected void updateTotalBar() {
+        JProgressBar pb = FrontEnd.getInstance().getjPBTotal(this);
         try {
             try {
                 double total = totalDone / totalAmount * 100;
-                FrontEnd.getInstance().getjPBDownloadTotal().setValue((int) total);
+                pb.setValue((int) total);
             } catch (ArithmeticException e) {
-                FrontEnd.getInstance().getjPBDownloadTotal().setValue(0);
+                pb.setValue(0);
             }
-            FrontEnd.getInstance().getjPBDownloadTotal().repaint();
+            pb.repaint();
         } catch (NullPointerException e) {
             log.addEx(e);
         }
@@ -238,12 +239,13 @@ abstract class PatcherQueue implements Runnable {
      * (count from totalDone / totalAmount percent).
      **************************************************************************/
     protected void updateSingleBar() {
+        JProgressBar pb = FrontEnd.getInstance().getjPBSingle(this);
         try {
             try {
                 double total = singleDone / singleAmount * 100;
-                FrontEnd.getInstance().getjPBDownloadSingle().setValue((int) total);
+                pb.setValue((int) total);
             } catch (ArithmeticException e) {
-                FrontEnd.getInstance().getjPBDownloadSingle().setValue(0);
+                pb.setValue(0);
             }
         } catch (NullPointerException e) {
             log.addEx(e);
@@ -256,7 +258,7 @@ abstract class PatcherQueue implements Runnable {
      **************************************************************************/
     void setLabelText(String s) {
         try {
-            FrontEnd.getInstance().getjLDownload().setText(s);
+            FrontEnd.getInstance().getjLabel(this).setText(s);
         } catch (Exception e) {
         }
     }
@@ -277,16 +279,7 @@ abstract class PatcherQueue implements Runnable {
     PatchItem getFirstItem() {
         return (PatchItem) patchQueue.get(0);
     }
-
-    //  void setInProgress() {
-    //      inProgress = true;
-    //       FrontEnd.getInstance().updateButtons();
-    // }
-
-    // void resetInProgress() {
-    //    inProgress = false;
-    //     FrontEnd.getInstance().updateButtons();
-    // }
+ 
     boolean notCanceled() {
         return !cancel;
     }

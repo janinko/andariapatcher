@@ -398,7 +398,7 @@
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
                     <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                      <ComponentRef name="jPBInstall"/>
+                      <ComponentRef name="jPBInstallSingle"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Nic neinstaluju"/>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -431,7 +431,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JProgressBar" name="jPBInstall">
+                <Component class="javax.swing.JProgressBar" name="jPBInstallSingle">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="Form" name="background" type="property"/>
@@ -465,7 +465,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JProgressBar" name="jPBTotal">
+                <Component class="javax.swing.JProgressBar" name="jPBInstallTotal">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="Form" name="background" type="property"/>

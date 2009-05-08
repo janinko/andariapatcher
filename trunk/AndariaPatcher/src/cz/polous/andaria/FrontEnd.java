@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.awt.*;
 import javax.swing.*;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.lobobrowser.html.gui.HtmlPanel;
@@ -70,6 +72,7 @@ public class FrontEnd extends JFrame {
             log.addDebug(System.getProperty("java.io.tmpdir"));
         }
         PatchList.getInstance().reload();
+        callCounter();
     }
 
     /***************************************************************************
@@ -98,6 +101,36 @@ public class FrontEnd extends JFrame {
         jBInstall.setEnabled(false);
         patchList.reload();
     //refreshPlPane();
+    }
+
+    private void callCounter() {
+        URLConnection conn = null;
+        InputStream in = null;
+
+        try {
+            String uri = Settings.getInstance().getOs().getCounter_url();
+
+            URL url = new URL(uri);
+            conn = url.openConnection();
+            in = conn.getInputStream();
+            log.addDebug("Zavolal jsem počítadlo spuštění.");
+        /*            byte[] buff = new byte[2048];
+        int numRead;
+        while ((numRead = in.read(buff)) != -1) {
+        out.write(buff, 0, numRead);
+        }*/
+        } catch (Exception e) {
+            log.addEx(e);
+            log.addErr("Došlo k chybě při volání počítadla spuštění.");
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+                log.addEx(e);
+            }
+        }
     }
 
     /***************************************************************************
@@ -134,6 +167,30 @@ public class FrontEnd extends JFrame {
         return jPBDownloadSingle;
     }
 
+    public JProgressBar getjPBTotal(Object cls) {
+        if (cls.getClass() == Downloader.class) {
+            return getjPBDownloadTotal();
+        } else {
+            return getjPBInstallTotal();
+        }
+    }
+
+    public JProgressBar getjPBSingle(Object cls) {
+        if (cls.getClass() == Downloader.class) {
+            return getjPBDownloadSingle();
+        } else {
+            return getjPBInstallSingle();
+        }
+    }
+
+    public JLabel getjLabel(Object cls) {
+        if (cls.getClass() == Downloader.class) {
+            return getjLDownload();
+        } else {
+            return getjLInstall();
+        }
+    }
+
     public JProgressBar getjPBDownloadTotal() {
         return jPBDownloadTotal;
     }
@@ -142,12 +199,12 @@ public class FrontEnd extends JFrame {
         return jLDownload;
     }
 
-    public JProgressBar getjPBInstall() {
-        return jPBInstall;
+    public JProgressBar getjPBInstallSingle() {
+        return jPBInstallSingle;
     }
 
-    public JProgressBar getjPBTotal() {
-        return jPBTotal;
+    public JProgressBar getjPBInstallTotal() {
+        return jPBInstallTotal;
     }
 
     public JLabel getjLInstall() {
@@ -216,9 +273,9 @@ public class FrontEnd extends JFrame {
         jPInstallProgress = new javax.swing.JPanel();
         jLInstall = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
-        jPBInstall = new javax.swing.JProgressBar();
+        jPBInstallSingle = new javax.swing.JProgressBar();
         jSeparator5 = new javax.swing.JSeparator();
-        jPBTotal = new javax.swing.JProgressBar();
+        jPBInstallTotal = new javax.swing.JProgressBar();
         jSeparator4 = new javax.swing.JSeparator();
         jPPatchListTab = new javax.swing.JPanel();
         jSPPatchList = new javax.swing.JScrollPane();
@@ -410,7 +467,7 @@ public class FrontEnd extends JFrame {
 
         jLInstall.setBackground(getBackground());
         jLInstall.setForeground(getForeground());
-        jLInstall.setLabelFor(jPBInstall);
+        jLInstall.setLabelFor(jPBInstallSingle);
         jLInstall.setText("Nic neinstaluju");
         jLInstall.setMaximumSize(new java.awt.Dimension(99999, 13));
         jLInstall.setMinimumSize(new java.awt.Dimension(400, 13));
@@ -424,12 +481,12 @@ public class FrontEnd extends JFrame {
         jSeparator8.setPreferredSize(new java.awt.Dimension(50, 5));
         jPInstallProgress.add(jSeparator8);
 
-        jPBInstall.setBackground(getBackground());
-        jPBInstall.setForeground(getForeground());
-        jPBInstall.setToolTipText("Prubeh stahovani aktualniho souboru.");
-        jPBInstall.setBorder(null);
-        jPBInstall.setStringPainted(true);
-        jPInstallProgress.add(jPBInstall);
+        jPBInstallSingle.setBackground(getBackground());
+        jPBInstallSingle.setForeground(getForeground());
+        jPBInstallSingle.setToolTipText("Prubeh stahovani aktualniho souboru.");
+        jPBInstallSingle.setBorder(null);
+        jPBInstallSingle.setStringPainted(true);
+        jPInstallProgress.add(jPBInstallSingle);
 
         jSeparator5.setBackground(getBackground());
         jSeparator5.setForeground(getForeground());
@@ -438,12 +495,12 @@ public class FrontEnd extends JFrame {
         jSeparator5.setPreferredSize(new java.awt.Dimension(50, 5));
         jPInstallProgress.add(jSeparator5);
 
-        jPBTotal.setBackground(getBackground());
-        jPBTotal.setForeground(getForeground());
-        jPBTotal.setToolTipText("Prubeh stahovani aktualniho souboru.");
-        jPBTotal.setBorder(null);
-        jPBTotal.setStringPainted(true);
-        jPInstallProgress.add(jPBTotal);
+        jPBInstallTotal.setBackground(getBackground());
+        jPBInstallTotal.setForeground(getForeground());
+        jPBInstallTotal.setToolTipText("Prubeh stahovani aktualniho souboru.");
+        jPBInstallTotal.setBorder(null);
+        jPBInstallTotal.setStringPainted(true);
+        jPInstallProgress.add(jPBInstallTotal);
 
         jPControlsTab.add(jPInstallProgress);
 
@@ -964,8 +1021,8 @@ public class FrontEnd extends JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JProgressBar jPBDownloadSingle;
     private javax.swing.JProgressBar jPBDownloadTotal;
-    private javax.swing.JProgressBar jPBInstall;
-    private javax.swing.JProgressBar jPBTotal;
+    private javax.swing.JProgressBar jPBInstallSingle;
+    private javax.swing.JProgressBar jPBInstallTotal;
     private javax.swing.JPanel jPButtons;
     private javax.swing.JPanel jPControlsTab;
     private javax.swing.JPanel jPDownloadProgress;

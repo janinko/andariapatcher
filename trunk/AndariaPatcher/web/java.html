@@ -1,0 +1,49 @@
+<font color="#A37D56" style="font-family: Verdana,Arial; font-size: 9pt">
+    <h3>O programu:</h3>
+    <p>Andaria patcher umožňuje hráčům oblíbené hry Ultima online jednoduše přizpůsobit sovu instalaci pro shard Andaria. Toto je druhá verze, která narozdíl <a href="http://www.andaria.net/index.php?link=../strazci/patcher/xul">od předchozí (psané v XUL)</a> je naprogramovaná v jazyce Java.
+    </p>
+    <p>
+        <b>Poslední vydaná verze: 1.1</b>
+    </p>
+    <h4>Novinky pro verizi 1.1</h4>
+    <ul>
+        <li>Umí si sám stahnout unrar.exe z internetu (se stránek andarie)
+        </li><li>Opravené tlačítko pro hledání unrar.exe na disku
+        </li><li>Opravené některé nedostatky diakritky
+        </li><li>Opraveno chybné hlášení o tom, že soubor nelze otevřít ke kontrole hash.
+    </li></ul>
+    
+    <h4>Jak to funguje ?</h4>
+    <ul>
+        <li>Stáhne se soubor ze serveru Andarie obsahující seznam patchů.
+        </li><li>Porovní se obsah souborů (MD5 součty) se seznamem
+            nainstalovaných patchů.
+        </li><li>Po stisknutí tlačítka "Instalovat" stáhne program všechny potřebné soubory ze serveru Andarie a začne je instalovat. Pokud instalovaný patch obsahuje instalační skript (start_a.bat || start_g.bat) bude spuštěn.
+        </li><li>Andaria patcher umožňuje spustit po zavření libovolný program (kupříkladu AndariaClient.exe).
+        </li><li>Andaria patcher obsahuje funkce, které usnadní řešení některých problémů a příčin pádů hry.
+        </li><li>Mezi další vymoženosti bude patřit možnost uložení profilu postavy (desktop, makra) a jejich snadné obnovení.
+        </li><li>Jako další vymoženost je plánované automatické spoušťění a update uomapy.
+    </li></ul>
+
+    <h4>Jak se mohu přidat k vývoji nebo ziskat zdrojové soubory patcheru ?</h4>
+    <ul>        
+        <li>Zdrojový kód patcheru verze 1.1 můžeš <a href="AndariaPatcher-src-1.1.tar.gz">stáhnout projekt pro NetBeans 6</a>.
+        <li>Pokud chceš k projektu jakkoliv přispět, kontaktuj mně (p0l0us/korneus) na fóru Andarie, přez JABBER, ICQ, IRC, mail....
+    </ul>
+
+    <h4>Instalace a spuštění:</h4>
+    <UL><p>Andaria patcher vyžaduje pro svůj chod <A href="http://java.sun.com/javase/downloads/index_jdk5.jsp">JRE 1.5 nebo novější</A>.</p>
+    </UL><h5>Dvě možnosti:</h5>
+    
+    <ul>
+        <SCRIPT language="JavaScript" type="text/javascript" src="javaws.js" ></SCRIPT>
+        
+        <li>Widnows + Linux: Andaria patcher můžeš spustit pomocí Java Web Start: <INPUT onclick="launchApp()" type="image" border="0" src="webstart.small.jpg" alt="Launch"></li>
+        <li>Windows + Linux: Nebo si můžeš stahnout samotný <a href="http://strazci.andaria.net/patcher/AndariaPatcher.jar">AndariaPatcher.jar</A> a spustit jej příkazem <b><i>java -jar AndariaPatcher.jar</i></b> (vyžaduje  <A href="http://java.sun.com/javase/downloads/index_jdk5.jsp">JRE 1.5 nebo novější</A>).</li>
+    </ul>
+    
+    <hr>
+    Autor patcheru: p0l0us alias Martin Polehla :-)
+    
+    
+</font>

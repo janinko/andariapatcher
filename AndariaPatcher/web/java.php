@@ -34,10 +34,17 @@
     function update_jre_version ()
     {
       	if (OSName == "Linux" || OSName == "Windows" ) {
-              txt = document.createTextNode('Tvá verze je: ' + java_version + ', což jest ' + (java_found?"v oukeji.":"špatnì a musíš to vylepšit !") );
-      		  	document.getElementById("java_detect_result").appendChild(txt);
-      		  	
-              if (java_found) {
+      	      var text = 'Tvá verze je: ' + java_version;
+
+              if (isOpera) {
+                  text = text + '. To ale v pøípadì prohlížeèe Opera nic neznamená. Klikni na spouštìcí odkaz a dej otevøít stažený JNLP soubor v programu javaws (pokud tedy máš JRE 1.6.0 nainstalované).';
+              } else {
+                  text = text + ', což jest ' + (java_found?"v oukeji.":"špatnì a musíš to vylepšit !") ;
+              }
+              txt = document.createTextNode(text);
+              document.getElementById("java_detect_result").appendChild(txt);
+              text = null;      		  	
+              if (java_found || isOpera) {
             		  	txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' mùžeš Andaria patcher spustit pomocí následujícího tlaèítka:');
             		  	document.getElementById("start_label").appendChild(txt);
            		} else {

@@ -1,154 +1,103 @@
-<script type="text/javascript">
-	//<![CDATA[
 
-var java_version =  "nezjištìná";
-var java_vendor = "-";
-var java_method = "-";
-var java_found = false;
-var jnlp_support = false;
-var jnlp_support_txt = "nepodporuje !";
-var txt;
+<script src="http://java.com/js/deployJava.js"></script>
+<script type="text/javascript" >
+    //<![CDATA[
+	  var appLink = "http://strazci.andaria.net/patcher/launch.jnlp";
+    var appBetaLink = "http://strazci.andaria.net/patcher/beta/launch.jnlp";
+    deployJava.launchButtonPNG = 'http://strazci.andaria.net/patcher/spustit.png';
+            
+    // os detection
+    var isIE = /*@cc_on!@*/false;
+    var isMoz = ( navigator.userAgent.toLowerCase().indexOf("firefox") != -1 );
+    var isOpera = ( navigator.userAgent.toLowerCase().indexOf("opera") != -1 );
+    
+    var OSName="Unknown OS";
+    if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+    if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+    if (navigator.appVersion.indexOf("X11")!=-1) OSName="Linux";
+    if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
 
-var appLink = "http://strazci.andaria.net/patcher/launch.jnlp";
-var appBetaLink = "http://strazci.andaria.net/patcher/beta/launch.jnlp";
-var cabURL = 'http://javadl-esd.sun.com/update/1.6.0/jinstall-6-windows-i586.cab';
-//	var cabURL = 'http://java.sun.com/update/1.5.0/jinstall-1_5_0_05-windows-i586.cab';
-var downloadURL = "http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com";
-
-var isIE = /*@cc_on!@*/false;
-var isMoz = ( navigator.userAgent.toLowerCase().indexOf("firefox") != -1 );
-var isOpera = ( navigator.userAgent.toLowerCase().indexOf("opera") != -1 );
-
-var OSName="Unknown OS";
-if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
-if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
-if (navigator.appVersion.indexOf("X11")!=-1) OSName="Linux";
-if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
-
-function launch(link) {
-	if (isIE && (OSName == "Windows") ) {
-		document.write("<OBJECT CODEBASE='"+ cabURL +"' CLASSID='clsid:5852F5ED-8BF4-11D4-A245-0080C6F74284' HEIGHT=0 WIDTH=0>");
-		document.write("<PARAM NAME=app VALUE="+ link +">");
-		document.write("<PARAM NAME=back VALUE=false>");
-		document.write("</OBJECT>");
-	} else {
-		if ( java_found ) {
-			window.location = link;
-		} else {
-			if (isMoz && (OSName == "Windows") ) {
-				installJRE();
-			} else {
-				window.location = link;
-			}
-		} 
-	}
-}
-
-function patcherCounter() {
-  if (document.getElementById() ) {
-    document.getElementById('patcherCounter').src = "http://strazci.andaria.net/patcher/counter.php";
-  }
-}
-function update_jre_version ()
-{
-// detect java and jnlp
-
-
-	try {
-		java_method = "LiveConnect";
-		java_version = java.lang.System.getProperty("java.version");
-		java_vendor = java.lang.System.getProperty("java.vendor");
-		java_found = true;
-	} catch (e1) {
-	  // prvni metoda selhala Apllet nefunguje v opere
-		if ( !isOpera ){
-			try {
-				java_method = "Applet";
-				document.getElementById("applet_holder").innerHTML = '<applet id="javaversion_applet" codebase="http://strazci.andaria.net/patcher" code="JavaVersion.class" mayscript="mayscript" width="0" height="0"></applet>';
-				java_version = document.javaversion_applet.getJavaVersion();
-				java_vendor = document.javaversion_applet.getJavaVendor();
-				java_found = true;
-				jnlp_support = true;
-			} catch (e2) {
-				java_found = false;
-			}
-		}
-	}
-
-	if (navigator.mimeTypes && navigator.mimeTypes.length && navigator.mimeTypes['application/x-java-jnlp-file']) {
-		jnlp_support = true;
-
-	}
-	if ( jnlp_support ) {
-		jnlp_support_txt = "podporuje.";
-	}
-
-// Display results
-	if (OSName == "Linux" || OSName == "Windows" ) {
-			txt = document.createTextNode('Tvá verze je: ' + java_version + ' (od ' + java_vendor + '). Formát Java Web Start tvùj prohlížeè ' + jnlp_support_txt);
-
-			document.getElementById("java_detect_result").appendChild(txt);
-		if (java_found) {
-			txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' mùžeš Andaria patcher spustit pomocí Java Web Start:');
-			document.getElementById("start_label").appendChild(txt);
-		} else {
-			if (isIE || isMoz)  { // kdyz msie
-				txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' mùžeš Andaria patcher spustit pomocí Java Web Start. Sice nemáš nainstalovanou javu, ale následujcí tlaèítko to napraví:');
-				document.getElementById("start_label").appendChild(txt);
-			} else {
-				txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' mùžeš Andaria patcher spustit pomocí Java Web Start. Sice nemáš nainstalovanou javu, ale následujcí tlaèítko ti instalaci JRE nabídne:');
-				document.getElementById("start_label").appendChild(txt);
-			}
-		}
-	}
-}
-
-
-// Process the result of the XPInstall.
-
-function checkInstall(name, result)
-{
-   // Installation failed.
-
-   if (result)
-   {
-      alert("Instalace balíèku " + name + " se nepodaøila ! \n(" + result + ")");
-   }
-
-   // Installation successful, so try to reload current page.
-
-   else
-   {
-      window.location.reload();
-   }
-}
-
-// Install the JRE with XPInstall verification.
-
-function installJRE()
-{
-   // The browser supports XPInstall.
-
-   if (InstallTrigger.enabled())
-   {
-      txt = "J2SE(TM) Runtime Environment 6 Update 3";
-      var xpi = new Object();
-      xpi[txt] = "http://java.sun.com/update/1.6.0/jre-6u3-windows-i586-jc.xpi";
-
-      // Try to install the package and process the results.
-
-      InstallTrigger.install(xpi, checkInstall);
-   }
-
-   // The browser does not support XPInstall.
-
-   else
-   {
-      alert("XPInstall nepodporuje tvùj prohlížeè. Myslel jsem že máš Firefox ?! hmmh..");
-   }
-}
-
-	//]]>
+	  // java detection
+    var java_required_version = '1.6.0+';
+    var java_version =  "nezjištìná";
+    var url = appBetaLink;        
+    var java_found = false;
+    var txt;  
+    
+    
+    var JREsList = deployJava.getJREs();
+    if ( JREsList.length > 0 )     {
+        java_version = JREsList[JREsList.length - 1];
+        java_found = (deployJava.versionCheck(java_required_version));
+    } 
+       
+    function update_jre_version ()
+    {
+      	if (OSName == "Linux" || OSName == "Windows" ) {
+              txt = document.createTextNode('Tvá verze je: ' + java_version + ', což jest ' + (java_found?"v oukeji.":"špatnì a musíš to vylepšit !") );
+      		  	document.getElementById("java_detect_result").appendChild(txt);
+      		  	
+              if (java_found) {
+            		  	txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' mùžeš Andaria patcher spustit pomocí následujícího tlaèítka:');
+            		  	document.getElementById("start_label").appendChild(txt);
+           		} else {
+                		txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' zatím nemùžeš Andaria patcher spustit pomocí Java Web Start, protože nemáš nainstalovanou správou verzi Javy. Ale následujcí tlaèítko ti instalaci JRE nabídne:');
+            				document.getElementById("start_label").appendChild(txt);
+           		}
+      	} else {
+            txt = document.createTextNode('Tvá verze je: ' + java_version + ', takže je to ' + (java_found?"teoreticky v oukeji.":"prakticky špatnì a musíš to vylepšit !") );
+    		  	document.getElementById("java_detect_result").appendChild(txt);
+    
+         		txt = document.createTextNode('AndariaPatcher neni urèený k bìhu pod operaèním systémem ' + OSName + '. Mùžeš to ale zkusit pomocí následujícího tlaèítka (dej vìdìt jak jsi dopadl):');
+        		document.getElementById("start_label").appendChild(txt);
+        }
+    } 
+    
+    function launch(link) {
+        if (isIE && (OSName == "Windows") ) {
+        document.write("<OBJECT CODEBASE='"+ cabURL +"' CLASSID='clsid:5852F5ED-8BF4-11D4-A245-0080C6F74284' HEIGHT=0 WIDTH=0>");
+        document.write("<PARAM NAME=app VALUE="+ link +">");
+        document.write("<PARAM NAME=back VALUE=false>");
+        document.write("</OBJECT>");
+        } else {
+            if ( java_found ) {
+                window.location = link;
+            } else {
+                if (isMoz && (OSName == "Windows") ) {
+                installJRE();
+            } else {
+                window.location = link;
+                }
+            } 
+        }
+    }
+    
+    // Process the result of the XPInstall.
+    function checkInstall(name, result) {
+        if (result) {
+            // Installation failed.
+            alert("Instalace balíèku " + name + " se nepodaøila ! \n(" + result + ")");
+        } else {
+            // Installation successful, so try to reload current page.
+            window.location.reload();
+        }
+    }
+    
+    // Install the JRE with XPInstall verification.
+    function installJRE() {    
+        // The browser supports XPInstall.
+        if (InstallTrigger.enabled()) {
+            txt = "J2SE(TM) Runtime Environment 6 Update 3";      
+            var xpi = new Object();
+            xpi[txt] = "http://java.sun.com/update/1.6.0/jre-6u3-windows-i586-jc.xpi";
+            // Try to install the package and process the results.
+            InstallTrigger.install(xpi, checkInstall);
+        } else {
+            // The browser does not support XPInstall.
+            alert("XPInstall nepodporuje tvùj prohlížeè. Myslel jsem že máš Firefox ?! hmmh..");
+        }
+    }    
+    //]]>
 </script>
 
 <font color="#A37D56" style="font-family: Verdana,Arial; font-size: 9pt">
@@ -177,11 +126,19 @@ function installJRE()
         <li>Pokud chceš k projektu jakkoliv pøispìt, kontaktuj mnì (p0l0us/korneus) na fóru Andarie, pøez JABBER, ICQ, IRC, mail.... Potøeba jsou obèas grafici a neustále programátoøi v Javì (nemusíš být žádný profík).
     </ul>
     <h4>Instalace a spuštìní:</h4>
-    <p>Andaria patcher vyžaduje pro svùj chod <A href="http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com" >JRE 1.5 nebo novìjší</A>. <span id="java_detect_result"></span>
+    <p>Andaria patcher vyžaduje pro svùj chod <A href="http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com" >JRE 1.6.0 nebo novìjší</A>. <span id="java_detect_result"></span>
 <p>            
 <span id="start_label"></span>
 <br><br><div align="center">
-<INPUT onclick="launch(appLink);" type="image" border="0" src="http://strazci.andaria.net/patcher/spustit.png" alt="Launch"></div><br>
+
+<script type="text/javascript">
+    //<![CDATA[
+    // display JNLP button
+    deployJava.createWebStartLaunchButton(appLink, '1.6.0');
+    //]]>
+</script>
+
+</div><br>
 
 <div align="center"><font size="-2">[<A ONCLICK="launch(appBetaLink);">betaverze 1.4<?PHP
 // nacte pocet spusteni patcheru v poslednim mesici
@@ -193,32 +150,17 @@ function installJRE()
 <div id="applet_holder"></div>
 
 <script type="text/javascript">
-	//<![CDATA[
-
-update_jre_version();
-
-
-if ( isOpera ) {
-	document.write("<p><DIV align='left' ><b>POZOR:</b> Máš nainstalovanou Operu. Bohužel nedokážu zjistit verzi tvé Javy, takže si to musíš pohlídat sám...</DIV></p>");
-}
-
-if ( isOpera &&  !jnlp_support ) {
-	document.write("<p><DIV align='left' ><b>POZOR:</b> Máš nainstalovanou Operu, ale ta neumí pracovat se soubory Java Web Start. Abys chybu napravil, postupuj podle následujících bodù:<UL><LI>V menu opery vyber: Nástroje Nastavení Pokroèilé volby Stahování.</LI><LI>Stiskni tlaèítko pøidat.</LI><LI>Vyplò údaje:<UL><LI>MIME Typ: x-java-jnlp-file</LI><LI>Pøípona souborù: jnlp</LI></UL></LI><LI>Zaškrtni pole \"Otevøít výchozí aplikací\"</LI><LI>Stiskni OK</LI><LI>Stiskni OK</LI></UL></DIV></p>");
-}
-
-if (OSName != "Linux" && OSName != "Windows" ) {
-	document.write("<p><DIV align='left' ><b>Je mi líto. Pro tvùj operaèní systém není Andaria patcher uzpoùsobený. Andaria patcher funguje jen na operaèních systémech Windows a Linux ! Ty máš podle všeho "+OSName+" takže budeš muset použít ruèní instalaci.</b></DIV></p>");
-
-}
-	//]]>
+    //<![CDATA[
+    update_jre_version();
+    
+    if (OSName != "Linux" && OSName != "Windows" ) {
+        document.write("<p><DIV align='left' ><b>Je mi líto. Pro tvùj operaèní systém není Andaria patcher uzpoùsobený. Andaria patcher funguje jen na operaèních systémech Windows a Linux ! Ty máš podle všeho "+OSName+" takže budeš muset použít ruèní instalaci. Ale zkusit to mùžeš .-)</b></DIV></p>");
+    }
+    //]]>
 
 </script>
-
             </div>
-
- 
             </p>
-
             <p><i><b>Tip:</b> Jestliže chceš mít <b>ikonku na spouštìní patcheru na ploše</b>, postupuj následovnì: 
                 <UL>
                     <LI>Nejdøíve si Andaria Patcher nainstaluj pomocí ikonky výše.</LI>

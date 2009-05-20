@@ -1,0 +1,135 @@
+package cz.polous.andaria;
+
+import java.io.OutputStream;
+import java.net.URLConnection;
+import java.io.InputStream;
+import java.net.URL;
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+/**
+ * Downloader se stara o stahovani souboru. Po uspesnem stazeni presune soubor
+ * do fronty installeru a spusti installer.
+ *
+ * Trida umoznuje pouze jednu instanci (singleton)
+ *
+ * @author Martin Polehla (andaria_patcher@polous.cz)
+ * 
+ */
+class Downloader extends PatcherQueue {
+    private static final Downloader INSTANCE = new Downloader();
+  
+    /***************************************************************************
+     * Creates a new instance of Downloader
+     ***************************************************************************/
+    private Downloader() { super(); }
+    public static Downloader getInstance() {
+        return INSTANCE;
+    }
+    /***************************************************************************
+     * Main download procedure
+     *  - SetTotal amount of install object to same like this (It suppose, user want install all files)
+     *  - Set progress
+     *  - Check if file exists at local storage (if yes, finish downloading)
+     *  - Downlaod file
+     *  - Check if file downloaded correct (if yes, finish downloading, else remove file from queue and print error message)
+     **************************************************************************/
+    @Override
+    synchronized void executeNext() {
+        //setInProgress();
+        //  - SetTotal amount of install object to same like this (It suppose, user want install all files)
+        PatchItem p = getFirstItem();
+        Installer.getInstance().setTotalAmount(getTotalAmount());
+
+        // - Set progress
+        resetSingleDone((double) p.getSize());
+
+        // - Check if file exists at local storage (if yes, finish downloading)
+        String fileName = p.getLocalFileName();
+        try {
+            p.checkHash();
+            setLabelText("Kontroluju soubor: " + p.getFileName());
+            log.addLine("Soubor: " + p.getFileName() + " je už stažený.");
+            startInstaller(p);
+            return;
+        } catch (IOException e) {
+        }
+
+        setLabelText("Stahuju soubor: " + p.getFileName());
+        log.addLine("Stahuju soubor: " + p.getFileName());
+        // - Downlaod file
+        OutputStream out = null;
+        URLConnection conn = null;
+        InputStream in = null;
+
+        try {
+            String uri = p.getRemoteFileName();
+
+            URL url = new URL(uri);
+            out = new BufferedOutputStream(new FileOutputStream(Settings.getInstance().getOs().getExistingFileInstance(fileName)));
+            conn = url.openConnection();
+            in = conn.getInputStream();
+
+            byte[] buff = new byte[2048];
+            int numRead;
+            while ((numRead = in.read(buff)) != -1) {
+                if (canceled()) {
+                    //singleDone((double) 0);
+                    return;
+                }
+                //done += numRead;
+                addSingleDone((double) numRead);
+                //singleDone((double) done);
+                out.write(buff, 0, numRead);
+            }
+
+        } catch (FileNotFoundException e) {
+            log.addErr("Soubor jsem na serveru Andarie nenašel. Zřejmě problém seznamu patchů. Prosím kontaktuj admina Andarie.\n (" + e + ")");
+        } catch (Exception e) {
+            log.addEx(e);
+            log.addErr("Došlo k chybě při stahování souboru: " + p.getRemoteFileName() + ". Soubor vynechávám, zkus to znova nebo požádej o pomoc na fóru Andarie.");
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                log.addEx(e);
+            } finally {
+
+                // - Check if file downloaded correct (if yes, finish downloading, else remove file from queue and print error message)
+                setLabelText("Kontroluju soubor: " + p.getFileName());
+                try {
+                    p.checkHash();
+                    startInstaller(p);
+                } catch (IOException e) {
+                    // p.checkHash() throws an exception.
+                    log.addEx(e);
+                    log.addErr("Nemůžu otevřít soubor nebo je špatně stažený ! Zkus to znova nebo požádej o pomoc na fóru Andarie.");
+                    Installer.getInstance().removeTotalAmount(p.getSize());
+                    singleDone((double) p.getSize());
+                    removeFirst();
+                }
+            }
+        }
+    }
+
+    /***************************************************************************
+     * Downlaod finish procedure
+     *  update download status
+     *  add item to installer queue and run pi using safeWork();
+     *  remove downlaoded file from download queue
+     **************************************************************************/
+    private void startInstaller(PatchItem p) {
+        p.setDownloaded(true);
+        singleDone((double) p.getSize());
+        Installer.getInstance().addPatchItem(p);
+        removeFirst();
+        Installer.getInstance().startSafe();
+    }
+}

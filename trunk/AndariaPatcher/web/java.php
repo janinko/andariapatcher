@@ -112,26 +112,21 @@
     <p>Andaria patcher umoòuje hráèùm oblíbené hry Ultima online jednoduše pøizpùsobit svou instalaci pro shard Andaria. Toto je druhá verze, která narozdíl od pøedchozí verze psané pomocí XUL je naprogramovaná v jazyce Java.
     </p>
 <p>
-        <b>Poslední vydaná verze: 1.3</b>
+        <b>Poslední vydaná verze: <?PHP require_once("D:\\Wwwroot\\andaria.net\\strazci\\patcher\\version.php"); echo $ap_version;?></b>. Informace o známıch chybách a plánovanıch úpravách najdete <a href='http://trac2.assembla.com/andariapatcher/report/3'>na stránkách projektu.</a>
     </p>
     
-    <h4>Jak to funguje, co to umí nebo bude umìt ?</h4>
+    <h4>Jak to funguje ?</h4>
     <ul>
         <li>Stáhne se soubor ze serveru Andarie obsahující seznam patchù.
-        </li><li>Porovnání se obsahu souborù (MD5 souèty) se seznamem ji nainstalovanıch patchù.
-        </li><li>Po stisknutí tlaèítka "Instalovat" stáhne program všechny potøebné soubory ze serveru Andarie a zaène je instalovat. Pokud instalovanı patch obsahuje instalaèní skript (start_a.bat || start_g.bat) bude spuštìn.
-        </li><li>Andaria patcher umoòuje spustit po zavøení libovolnı program (kupøíkladu AndariaClient.exe).
+        </li><li>Porovná seznam patchù z andarie se seznamem nainstalovanıch v tvojí ultimì (andariapacher.xml).
+        </li><li>Po stisknutí tlaèítka "Instalovat" stáhne program všechny potøebné soubory ze serveru Andarie a zaène je instalovat. Pokud instalovanı patch obsahuje instalaèní skript (start_a.bat || start_g.bat) bude automaticky spuštìnı jako pøi ruèní instalaci.
+        </li><li>Je moné nastavit aby se po ukonèení AndariaPatcheru spustil jinı libovolnı program (kupøíkladu AndariaClient.exe).
         </li><li>Andaria patcher obsahuje funkce, které usnadní øešení nìkterıch problémù a pøíèin pádù hry.
-        </li><li>Mezi další vymoenosti bude patøit monost uloení profilu postavy (desktop, makra) a jejich snadné obnovení.
-        </li><li>Jako další vymoenost je plánované automatické spoušìní a update uomapy.
+        </li><li><b>Novì (1.4)</b> AndariaPatcher má funkci na obnovení registrù Ultimy pro windows, podle vybraného umístìní.
+        </li><li><b>Novì (1.4)</b> AndariaPatcher umí smazat nepotøebné soubory staené z Andarie.
+        
     </li></ul>
     
-    <h4>Jak se mohu pøidat k vıvoji nebo ziskat zdrojové soubory aplikace ?</h4>
-    <ul>
-        <li>Zdrojovı kód patcheru aktuální i vıvojové verze je moné <a href="http://trac2.assembla.com/andariapatcher/">stáhnout a prohlíet na stránkách projektu</a>.
-        <li>Pokud chceš jen nahlédnout, je k dispozici také <a href="http://strazci.andaria.net/patcher/javadoc/index.html">JavaDoc</a>.
-        <li>Pokud chceš k projektu jakkoliv pøispìt, kontaktuj mnì (p0l0us/korneus) na fóru Andarie, pøez JABBER, ICQ, IRC, mail.... Potøeba jsou obèas grafici a neustále programátoøi v Javì (nemusíš bıt ádnı profík).
-    </ul>
     <h4>Instalace a spuštìní:</h4>
     <p>Andaria patcher vyaduje pro svùj chod <A href="http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com" >JRE 1.6.0 nebo novìjší</A>. <span id="java_detect_result"></span>
 <p>            
@@ -144,16 +139,18 @@
     deployJava.createWebStartLaunchButton(appLink, '1.6.0');
     //]]>
 </script>
+<?PHP
+        // nacte pocet spusteni patcheru v poslednim mesici
+        //try {
+            $countFile = "D:\\Wwwroot\\andaria.net\\strazci\\patcher\\hits\\".date("m-y").".txt";
+            $hits = file($countFile);
+            echo "<br><font size='-3'>(Poèet spuštìní za ".date("m. Y")." je ".$hits[0]."x)</font><br>";
+       // }// catch () {
+        //}
+?>
 
 </div><br>
 
-<div align="center"><font size="-2">[<A ONCLICK="launch(appBetaLink);">betaverze 1.4<?PHP
-// nacte pocet spusteni patcheru v poslednim mesici
-        $betaCountFile = "../strazci/patcher/beta/hits/".date("m-y").".txt";
-        $betaHits = file($betaCountFile);
-        echo " (".$betaHits[0].")";
-    //}
-?></A>]</FONT></DIV>
 <div id="applet_holder"></div>
 
 <script type="text/javascript">
@@ -182,24 +179,12 @@
             </i></p>
    
     <hr>
-    <h4>Novinky pro verzi 1.3</h4>
+        <h4>Jak se mohu pøidat k vıvoji nebo ziskat zdrojové soubory aplikace ?</h4>
     <ul>
-        <li>Opravené další chybky, u funguje jako hodinky</li>
-    </ul>
-    <h4>Novinky pro verzi 1.2</h4>
-    <ul>
-        <li>Byla opravena chyba stahování pøedešlé verze - dìkujme <b>Finwesovi</b> za nahlášení chyby a otestování opravy.</li>
-    </ul>
-    <h4>Novinky pro verzi 1.1</h4>
-    <ul>
-        <li>Umí si sám stáhnout unrar.exe z internetu (ze stránek Andarie).
-        </li><li>Opravené tlaèítko pro hledání unrar.exe na disku.
-        </li><li>Opravené nìkteré nedostatky diakritiky.
-        </li><li>Opraveno chybné hlášení o tom, e soubor nelze otevøít ke kontrole hash.
-        </li><li>Novı, moc krásnı splash screen - dìkujme Nasirovi, vládci elfù.
-        </li><li>Opraven pravopis této stránky - dìkujme Aquarkku :->.
-        </li><li>Nové, hezèí spouštìcí tlaèítko - dìkujme Kailovy a jeho novému tabletu.
-    </li>
+        <li>Všechny objevené chyby, novinky a prùbìh i plánování vıvoje je <a href='http://trac2.assembla.com/andariapatcher/report/6'>v tomto reportu.</a></li>
+        <li>Zdrojovı kód patcheru aktuální i vıvojové verze je moné <a href="http://trac2.assembla.com/andariapatcher/">stáhnout a prohlíet na stránkách projektu</a>.
+        <li>Pokud chceš jen nahlédnout, je k dispozici také <a href="http://strazci.andaria.net/patcher/javadoc/index.html">JavaDoc</a>.
+        <li>Pokud chceš k projektu jakkoliv pøispìt, kontaktuj mnì (p0l0us/korneus) na fóru Andarie, pøez JABBER, ICQ, IRC, mail.... Potøeba jsou obèas grafici a neustále programátoøi v Javì (nemusíš bıt ádnı profík).
     </ul>
     
     <hr>

@@ -72,7 +72,7 @@ public class FrontEnd extends JFrame {
             log.addDebug(System.getProperty("java.io.tmpdir"));
         }
         PatchList.getInstance().reload();
-        callCounter();
+       // callCounter();
     }
 
     /***************************************************************************

@@ -20,6 +20,7 @@ abstract class OperatingSystem {
     private final String counter_url = "http://strazci.andaria.net/patcher/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.txt";
     private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbalování .rar archivu."};
+    private final String[] unrar64PatchItem = {"unrar64.exe", "Unrar64", "12.4.2008, 12:00", "934d90fa7e7d48a38dc1062902da98be", "1", "117112", "313d", "Program pro rozbalování .rar archivu 64bit."};
     private static Log log;
 
     public String getCounter_url() {
@@ -27,7 +28,10 @@ abstract class OperatingSystem {
     }
 
     public String[] getUnrarPatchItem() {
-        return unrarPatchItem;
+        if (System.getProperty("sun.arch.data.model").indexOf("64") != -1)
+            return unrar64PatchItem;
+        else
+            return unrarPatchItem;
     }
 
     public String getAbout_url() {
@@ -53,7 +57,6 @@ abstract class OperatingSystem {
     public String getRemote_storage() {
         return remote_storage;
     }
-    //private static final String[] defaultSettings = {"", "unrar_command", "ultima_onine_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url"};
 
     abstract String getRun_command();
 

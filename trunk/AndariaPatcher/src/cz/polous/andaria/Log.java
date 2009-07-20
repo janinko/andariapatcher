@@ -55,9 +55,9 @@ class Log {
 
     private void add(String line) {
         if (Settings.getInstance().debugMode()) {
-            logArea.insert("[" + logOwnerClass + "]  " + line + "\n", 0);
+            logArea.append("[" + logOwnerClass + "]  " + line + "\n");
         } else {
-            logArea.insert(line + "\n", 0);
+            logArea.append(line + "\n");
         }
     }
 

@@ -433,7 +433,7 @@ public class FrontEnd extends JFrame {
 
         jPBDownloadSingle.setBackground(getBackground());
         jPBDownloadSingle.setForeground(getForeground());
-        jPBDownloadSingle.setToolTipText("Prubeh stahovani aktualniho souboru.");
+        jPBDownloadSingle.setToolTipText("Průběh stahování aktuálního souboru.");
         jPBDownloadSingle.setBorder(null);
         jPBDownloadSingle.setStringPainted(true);
         jPDownloadProgress.add(jPBDownloadSingle);
@@ -447,7 +447,7 @@ public class FrontEnd extends JFrame {
 
         jPBDownloadTotal.setBackground(getBackground());
         jPBDownloadTotal.setForeground(getForeground());
-        jPBDownloadTotal.setToolTipText("Prubeh stahovani aktualniho souboru.");
+        jPBDownloadTotal.setToolTipText("Průběh celkového stahování updatu.");
         jPBDownloadTotal.setBorder(null);
         jPBDownloadTotal.setStringPainted(true);
         jPDownloadProgress.add(jPBDownloadTotal);
@@ -483,7 +483,7 @@ public class FrontEnd extends JFrame {
 
         jPBInstallSingle.setBackground(getBackground());
         jPBInstallSingle.setForeground(getForeground());
-        jPBInstallSingle.setToolTipText("Prubeh stahovani aktualniho souboru.");
+        jPBInstallSingle.setToolTipText("Průběh instalace aktuálního patche.");
         jPBInstallSingle.setBorder(null);
         jPBInstallSingle.setStringPainted(true);
         jPInstallProgress.add(jPBInstallSingle);
@@ -497,7 +497,7 @@ public class FrontEnd extends JFrame {
 
         jPBInstallTotal.setBackground(getBackground());
         jPBInstallTotal.setForeground(getForeground());
-        jPBInstallTotal.setToolTipText("Prubeh stahovani aktualniho souboru.");
+        jPBInstallTotal.setToolTipText("Průběh instalace celého updatu.");
         jPBInstallTotal.setBorder(null);
         jPBInstallTotal.setStringPainted(true);
         jPInstallProgress.add(jPBInstallTotal);

@@ -27,6 +27,11 @@ public class FrontEnd extends JFrame {
         return INSTANCE;
     }
 
+    public static class LType {
+        public static final int TEXT = 0;
+        public static final int SPEED = 1;
+    }
+
     /***************************************************************************
      * Creates new form FrontEnd and call pl inicialization
      **************************************************************************/
@@ -41,6 +46,34 @@ public class FrontEnd extends JFrame {
 
         jSPPatchList.getVerticalScrollBar().setUnitIncrement(17);
 
+        // HTMLDocument doc = new HTMLDocument();
+        // doc.gethtmlre
+        // JEditorPane ta = new JEditorPane();
+        //  JScrollPane jsp = new JScrollPane(ta);
+
+
+        // try {
+        //     ta.setPage(Settings.getInstance().getValue(Settings.NEWS_URL));
+        // } catch (IOException ex) {
+        //     log.addEx(ex);
+        // }
+//Font font = new Font ("Serif", Font.ITALIC, 40);
+        // ta.setFont(font);
+        //JScrollPane jsp = new JScrollPane(ta);
+        // jTPMain.insertTab(null, null, jsp, "Tady se nachází novinky nejen ze světa...", 0);
+
+        /*  FileReader fr;
+        File f;
+        try {
+        f = new File("http://ip.katka.biz");
+        fr = new FileReader(f);
+        ta.read(fr, null);
+        fr.close();
+        } catch (IOException ex) {
+        log.addEx(ex);
+        }
+        // Browser2 newsPanel = new Browser2(Settings.getInstance().getValue(Settings.NEWS_URL));
+        //*/
         HtmlPanel htmlPNews = new HtmlPanel();
         jTPMain.insertTab(null, null, htmlPNews, "Tady se nachází novinky nejen ze světa...", 0);
         jTPMain.setTitleAt(0, "Novinky");
@@ -72,7 +105,7 @@ public class FrontEnd extends JFrame {
             log.addDebug(System.getProperty("java.io.tmpdir"));
         }
         PatchList.getInstance().reload();
-       // callCounter();
+    // callCounter();
     }
 
     /***************************************************************************
@@ -183,21 +216,28 @@ public class FrontEnd extends JFrame {
         }
     }
 
-    public JLabel getjLabel(Object cls) {
-        if (cls.getClass() == Downloader.class) {
-            return getjLDownload();
-        } else {
-            return getjLInstall();
+    public JLabel getjLabel(Object cls, int ltype) {
+        switch (ltype) {
+            case LType.TEXT:
+                if (cls.getClass() == Downloader.class) {
+                    return jLDownload;
+                } else {
+                    return jLInstall;
+                }
+            case LType.SPEED:
+                if (cls.getClass() == Downloader.class) {
+                    return jLDownloadSpeed;
+                } else {
+                    return jLInstallSpeed;
+                }
         }
+        return null;
     }
 
     public JProgressBar getjPBDownloadTotal() {
         return jPBDownloadTotal;
     }
 
-    public JLabel getjLDownload() {
-        return jLDownload;
-    }
 
     public JProgressBar getjPBInstallSingle() {
         return jPBInstallSingle;
@@ -207,9 +247,6 @@ public class FrontEnd extends JFrame {
         return jPBInstallTotal;
     }
 
-    public JLabel getjLInstall() {
-        return jLInstall;
-    }
 
     @Override
     public void pack() {
@@ -264,14 +301,18 @@ public class FrontEnd extends JFrame {
         jTLog = new javax.swing.JTextArea();
         jSeparator2 = new javax.swing.JSeparator();
         jPDownloadProgress = new javax.swing.JPanel();
+        jPDownloadProgressText = new javax.swing.JPanel();
         jLDownload = new javax.swing.JLabel();
+        jLDownloadSpeed = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
         jPBDownloadSingle = new javax.swing.JProgressBar();
         jSeparator6 = new javax.swing.JSeparator();
         jPBDownloadTotal = new javax.swing.JProgressBar();
         jSeparator3 = new javax.swing.JSeparator();
         jPInstallProgress = new javax.swing.JPanel();
+        jPInstallProgressText = new javax.swing.JPanel();
         jLInstall = new javax.swing.JLabel();
+        jLInstallSpeed = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         jPBInstallSingle = new javax.swing.JProgressBar();
         jSeparator5 = new javax.swing.JSeparator();
@@ -413,6 +454,9 @@ public class FrontEnd extends JFrame {
         jPDownloadProgress.setForeground(getForeground());
         jPDownloadProgress.setLayout(new javax.swing.BoxLayout(jPDownloadProgress, javax.swing.BoxLayout.Y_AXIS));
 
+        jPDownloadProgressText.setBackground(getBackground());
+        jPDownloadProgressText.setLayout(new javax.swing.BoxLayout(jPDownloadProgressText, javax.swing.BoxLayout.X_AXIS));
+
         jLDownload.setBackground(getBackground());
         jLDownload.setForeground(getForeground());
         jLDownload.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -422,7 +466,17 @@ public class FrontEnd extends JFrame {
         jLDownload.setMaximumSize(new java.awt.Dimension(99999, 13));
         jLDownload.setMinimumSize(new java.awt.Dimension(400, 13));
         jLDownload.setPreferredSize(new java.awt.Dimension(400, 13));
-        jPDownloadProgress.add(jLDownload);
+        jPDownloadProgressText.add(jLDownload);
+
+        jLDownloadSpeed.setBackground(getBackground());
+        jLDownloadSpeed.setForeground(getForeground());
+        jLDownloadSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLDownloadSpeed.setText("0 kbps");
+        jLDownloadSpeed.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLDownloadSpeed.setMaximumSize(new java.awt.Dimension(50, 14));
+        jPDownloadProgressText.add(jLDownloadSpeed);
+
+        jPDownloadProgress.add(jPDownloadProgressText);
 
         jSeparator7.setBackground(getBackground());
         jSeparator7.setForeground(getForeground());
@@ -447,7 +501,7 @@ public class FrontEnd extends JFrame {
 
         jPBDownloadTotal.setBackground(getBackground());
         jPBDownloadTotal.setForeground(getForeground());
-        jPBDownloadTotal.setToolTipText("Průběh celkového stahování updatu.");
+        jPBDownloadTotal.setToolTipText("Průběh celkového stahování vybraných updatů.");
         jPBDownloadTotal.setBorder(null);
         jPBDownloadTotal.setStringPainted(true);
         jPDownloadProgress.add(jPBDownloadTotal);
@@ -465,6 +519,9 @@ public class FrontEnd extends JFrame {
         jPInstallProgress.setForeground(getForeground());
         jPInstallProgress.setLayout(new javax.swing.BoxLayout(jPInstallProgress, javax.swing.BoxLayout.Y_AXIS));
 
+        jPInstallProgressText.setBackground(getBackground());
+        jPInstallProgressText.setLayout(new javax.swing.BoxLayout(jPInstallProgressText, javax.swing.BoxLayout.X_AXIS));
+
         jLInstall.setBackground(getBackground());
         jLInstall.setForeground(getForeground());
         jLInstall.setLabelFor(jPBInstallSingle);
@@ -472,7 +529,17 @@ public class FrontEnd extends JFrame {
         jLInstall.setMaximumSize(new java.awt.Dimension(99999, 13));
         jLInstall.setMinimumSize(new java.awt.Dimension(400, 13));
         jLInstall.setPreferredSize(new java.awt.Dimension(400, 13));
-        jPInstallProgress.add(jLInstall);
+        jPInstallProgressText.add(jLInstall);
+
+        jLInstallSpeed.setBackground(getBackground());
+        jLInstallSpeed.setForeground(getForeground());
+        jLInstallSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLInstallSpeed.setText("0 kbps");
+        jLInstallSpeed.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLInstallSpeed.setMaximumSize(new java.awt.Dimension(50, 14));
+        jPInstallProgressText.add(jLInstallSpeed);
+
+        jPInstallProgress.add(jPInstallProgressText);
 
         jSeparator8.setBackground(getBackground());
         jSeparator8.setForeground(getForeground());
@@ -497,7 +564,7 @@ public class FrontEnd extends JFrame {
 
         jPBInstallTotal.setBackground(getBackground());
         jPBInstallTotal.setForeground(getForeground());
-        jPBInstallTotal.setToolTipText("Průběh instalace celého updatu.");
+        jPBInstallTotal.setToolTipText("Celkový průběh instalace vybraných updatů.");
         jPBInstallTotal.setBorder(null);
         jPBInstallTotal.setStringPainted(true);
         jPInstallProgress.add(jPBInstallTotal);
@@ -701,7 +768,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.5 beta1");
+        jLabel1.setText("Verze programu: 1.5 beta2");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());
@@ -955,15 +1022,14 @@ public class FrontEnd extends JFrame {
 
     private void jBConfBrowseUnRARCommand1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUnRARCommand1ActionPerformed
 
-
-        if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS")) {
-            JOptionPane.showMessageDialog(null, "Unrar si na linuxu musíš zařídit sám :-P", "Chybka lenochu !", JOptionPane.WARNING_MESSAGE);
+        /*if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS")) {
+        JOptionPane.showMessageDialog(null, "Unrar si na linuxu musíš zařídit sám :-P", "Chybka lenochu !", JOptionPane.WARNING_MESSAGE);
         } else {
-            PatchItem patchItem = new PatchItem(Settings.getInstance().getOs().getUnrarPatchItem());
-            PatchList.getInstance().downloadOnly(patchItem);
-            jTConfUnRARCommand.setText(Settings.getInstance().getOs().getUltima_online_path() + File.separator + patchItem.getFileName());
-            saveSettings();
-        }
+        PatchItem patchItem = new PatchItem(Settings.getInstance().getOs().getUnrarPatchItem());
+        PatchList.getInstance().downloadOnly(patchItem);
+        jTConfUnRARCommand.setText(Settings.getInstance().getOs().getUltima_online_path() + File.separator + patchItem.getFileName());
+        saveSettings();
+        }*/
     }//GEN-LAST:event_jBConfBrowseUnRARCommand1ActionPerformed
 
     private void jBRenewRegistryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRenewRegistryActionPerformed
@@ -1017,7 +1083,9 @@ public class FrontEnd extends JFrame {
     private javax.swing.JLabel jLConfUltimaOnlinePath;
     private javax.swing.JLabel jLConfUnRARCommand;
     private javax.swing.JLabel jLDownload;
+    private javax.swing.JLabel jLDownloadSpeed;
     private javax.swing.JLabel jLInstall;
+    private javax.swing.JLabel jLInstallSpeed;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JProgressBar jPBDownloadSingle;
     private javax.swing.JProgressBar jPBDownloadTotal;
@@ -1026,7 +1094,9 @@ public class FrontEnd extends JFrame {
     private javax.swing.JPanel jPButtons;
     private javax.swing.JPanel jPControlsTab;
     private javax.swing.JPanel jPDownloadProgress;
+    private javax.swing.JPanel jPDownloadProgressText;
     private javax.swing.JPanel jPInstallProgress;
+    private javax.swing.JPanel jPInstallProgressText;
     private javax.swing.JPanel jPPatchList;
     private javax.swing.JPanel jPPatchListTab;
     private javax.swing.JPanel jPSettingsTab;

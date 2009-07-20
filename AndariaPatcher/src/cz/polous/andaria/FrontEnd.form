@@ -342,7 +342,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Prubeh stahovani aktualniho souboru."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pr&#x16f;b&#x11b;h stahov&#xe1;n&#xed; aktu&#xe1;ln&#xed;ho souboru."/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -376,7 +376,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Prubeh stahovani aktualniho souboru."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pr&#x16f;b&#x11b;h celkov&#xe9;ho stahov&#xe1;n&#xed; vybran&#xfd;ch updat&#x16f;."/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -497,7 +497,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Prubeh stahovani aktualniho souboru."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pr&#x16f;b&#x11b;h instalace aktu&#xe1;ln&#xed;ho patche."/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -531,7 +531,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Prubeh stahovani aktualniho souboru."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Celkov&#xfd; pr&#x16f;b&#x11b;h instalace vybran&#xfd;ch updat&#x16f;."/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>

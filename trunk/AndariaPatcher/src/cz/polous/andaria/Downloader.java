@@ -8,6 +8,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Downloader se stara o stahovani souboru. Po uspesnem stazeni presune soubor
@@ -15,51 +16,61 @@ import java.io.IOException;
  *
  * Trida umoznuje pouze jednu instanci (singleton)
  *
+ * Class is singleton.
+ * 
  * @author Martin Polehla (andaria_patcher@polous.cz)
  * 
  */
 class Downloader extends PatcherQueue {
+
     private static final Downloader INSTANCE = new Downloader();
-  
+
     /***************************************************************************
      * Creates a new instance of Downloader
      ***************************************************************************/
-    private Downloader() { super(); }
+    private Downloader() {
+        super();
+    }
+
     public static Downloader getInstance() {
         return INSTANCE;
     }
+
     /***************************************************************************
      * Main download procedure
-     *  - SetTotal amount of install object to same like this (It suppose, user want install all files)
-     *  - Set progress
-     *  - Check if file exists at local storage (if yes, finish downloading)
-     *  - Downlaod file
-     *  - Check if file downloaded correct (if yes, finish downloading, else remove file from queue and print error message)
+     *  - Set total size of install object to same like download size.
+     *      (I suppose, user want install all downloaded files)
+     *  - Update progress during downloading.
+     *  - Check if file exists at local storage (if exists, try continue downloading).
+     *  - Download file.
+     *  - Check if file downloaded correct.
+     *  - Aftre a file correctly downloaded, move it to Installer queue.
      **************************************************************************/
     @Override
     synchronized void executeNext() {
-        //setInProgress();
-        //  - SetTotal amount of install object to same like this (It suppose, user want install all files)
         PatchItem p = getFirstItem();
-        Installer.getInstance().setTotalAmount(getTotalAmount());
+        // ProgressBars
 
-        // - Set progress
-        resetSingleDone((double) p.getSize());
+        resetSingleProgress((double) p.getSize());
 
-        // - Check if file exists at local storage (if yes, finish downloading)
+        // Check if wanted file exists at local storage
         String fileName = p.getLocalFileName();
         try {
             p.checkHash();
             setLabelText("Kontroluju soubor: " + p.getFileName());
             log.addLine("Soubor: " + p.getFileName() + " je už stažený.");
             startInstaller(p);
-            return;
+            return; // file exists, don't need download
+        } catch (FileNotFoundException e) {
+            log.addDebug("Soubor ".concat(p.getFileName()).concat(" není ještě stažený."));
         } catch (IOException e) {
+            log.addEx(e);
         }
 
-        setLabelText("Stahuju soubor: " + p.getFileName());
-        log.addLine("Stahuju soubor: " + p.getFileName());
-        // - Downlaod file
+        setLabelText("Stahuji soubor: " + p.getFileName());
+        log.addLine("Stahuji soubor: " + p.getFileName());
+
+        // start download
         OutputStream out = null;
         URLConnection conn = null;
         InputStream in = null;
@@ -74,15 +85,22 @@ class Downloader extends PatcherQueue {
 
             byte[] buff = new byte[2048];
             int numRead;
+            Date start = new Date();
+            long size = 0;
             while ((numRead = in.read(buff)) != -1) {
                 if (canceled()) {
-                    //singleDone((double) 0);
                     return;
                 }
-                //done += numRead;
-                addSingleDone((double) numRead);
-                //singleDone((double) done);
                 out.write(buff, 0, numRead);
+                //addToSingleProgress((double) numRead);
+                size += numRead;
+                setSingleProgress(size);
+                try {
+                    setLabelSpeed(0.50 * size / ((new Date()).getTime() - start.getTime()));
+                    //log.addDebug(Double.toString((new Date()).getTime() - start.getTime()));
+                } catch (ArithmeticException e) {
+                }
+
             }
 
         } catch (FileNotFoundException e) {
@@ -101,18 +119,16 @@ class Downloader extends PatcherQueue {
             } catch (IOException e) {
                 log.addEx(e);
             } finally {
-
-                // - Check if file downloaded correct (if yes, finish downloading, else remove file from queue and print error message)
-                setLabelText("Kontroluju soubor: " + p.getFileName());
+                setLabelText("Kontroluji soubor: " + p.getFileName());
                 try {
                     p.checkHash();
                     startInstaller(p);
                 } catch (IOException e) {
-                    // p.checkHash() throws an exception.
+
                     log.addEx(e);
                     log.addErr("Nemůžu otevřít soubor nebo je špatně stažený ! Zkus to znova nebo požádej o pomoc na fóru Andarie.");
-                    Installer.getInstance().removeTotalAmount(p.getSize());
-                    singleDone((double) p.getSize());
+                    Installer.getInstance().removeFromTotalProgress(p.getSize());
+                    setSingleProgressPercents(100);
                     removeFirst();
                 }
             }
@@ -120,14 +136,14 @@ class Downloader extends PatcherQueue {
     }
 
     /***************************************************************************
-     * Downlaod finish procedure
-     *  update download status
-     *  add item to installer queue and run pi using safeWork();
-     *  remove downlaoded file from download queue
+     * Finish download procedure
+     *  - update download status
+     *  - add item to install queue and run Installer
+     *  - remove downlaoded file from download queue
      **************************************************************************/
     private void startInstaller(PatchItem p) {
         p.setDownloaded(true);
-        singleDone((double) p.getSize());
+        setSingleProgressPercents(100);
         Installer.getInstance().addPatchItem(p);
         removeFirst();
         Installer.getInstance().startSafe();

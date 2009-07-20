@@ -16,7 +16,7 @@ import org.jdom.Element;
 
 /*******************************************************************************
  * PatchItem: Object of one patch file and procedures to control it.
- * 
+ *
  * @author  Martin Polehla (andaria_patcher@polous.cz)
  ******************************************************************************/
 class PatchItem {
@@ -37,7 +37,8 @@ class PatchItem {
     private Boolean downloaded;             // is file downloaded and ready for instalation ?
     private static Log log;
     public PatchPanel panel;
-    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    //private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
 
     public DateFormat getDateFormat() {
         return dateFormat;
@@ -159,7 +160,7 @@ class PatchItem {
     }
 
     public boolean isPacked() {
-        return fileName.endsWith(".rar");
+        return fileName.endsWith(".7z");
     }
 
     public boolean isRequired() {

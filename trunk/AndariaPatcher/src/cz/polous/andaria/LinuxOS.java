@@ -21,15 +21,14 @@ class LinuxOS extends OperatingSystem {
     String getUltima_online_path() {
         return ultima_online_path;
     }
-
-    @Override
+    /*@Override
     String getUnrar_path() {
-        return unrar_path;
-    }
+    return unrar_path;
+    }*/
 
-    @Override
+    /*@Override
     public void downloadUnrar() {
-    }
+    }*/
 
     /** Creates a new instance of LinuxOS
      **************************************************************************/
@@ -57,14 +56,14 @@ class LinuxOS extends OperatingSystem {
      * TODO: Java unrar implementation (using unrar native library).
      * @param file to extract
      **************************************************************************/
-    @Override
+    /*@Override
     public void unrar(File file) {
-    }
+    }*/
 
     /***************************************************************************
      * TODO: Unrar library inicialization
      **************************************************************************/
-    @Override
+    /*@Override
     public void unrarInit() {
-    }
+    }*/
 }

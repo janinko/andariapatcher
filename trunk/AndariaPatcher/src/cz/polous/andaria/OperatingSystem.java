@@ -13,27 +13,36 @@ abstract class OperatingSystem {
 
     // private final OperatingSystem os;
     private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
-    private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory";
+    private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory_7zip";
     private final String about_url = "http://strazci.andaria.net/patcher/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";
-    private final String counter_url = "http://strazci.andaria.net/patcher/counter.php";
-    private final String filelist_url = "http://www.andaria.net/admin/patcher.txt";
-    private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbalování .rar archivu."};
-    private final String[] unrar64PatchItem = {"unrar64.exe", "Unrar64", "12.4.2008, 12:00", "934d90fa7e7d48a38dc1062902da98be", "1", "117112", "313d", "Program pro rozbalování .rar archivu 64bit."};
+    private final String counter_url = "http://strazci.andaria.net/patcher/beta/counter.php";
+    private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
+    //private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbalování .rar archivu."};
+    //private final String[] unrar64PatchItem = {"unrar64.exe", "Unrar64", "12.4.2008, 12:00", "934d90fa7e7d48a38dc1062902da98be", "1", "117112", "313d", "Program pro rozbalování .rar archivu 64bit."};
     private static Log log;
 
     public String getCounter_url() {
         return counter_url;
     }
 
+   /* public boolean is64bit() {
+        boolean result = (System.getProperty("os.arch").indexOf("64") != -1);
+        if (result) {
+            log.addDebug("Operační systém je 64bitový. (" + System.getProperty("sun.arch.data.model") + ", "+System.getProperty("os.arch")+")");
+        } else {
+            log.addDebug("Operační systém je 32bitový. (" + System.getProperty("sun.arch.data.model") + ", "+System.getProperty("os.arch")+")");
+        }
+        return result;
+    }
     public String[] getUnrarPatchItem() {
-        if (System.getProperty("sun.arch.data.model").indexOf("64") != -1)
+        if (is64bit())
             return unrar64PatchItem;
         else
             return unrarPatchItem;
     }
-
+*/
     public String getAbout_url() {
         return about_url;
     }
@@ -62,9 +71,9 @@ abstract class OperatingSystem {
 
     abstract String getUltima_online_path();
 
-    abstract String getUnrar_path();
+   // abstract String getUnrar_path();
 
-    abstract void downloadUnrar();
+   // abstract void downloadUnrar();
 
     /***************************************************************************
      * Creates a new instance of current operating system
@@ -139,10 +148,10 @@ abstract class OperatingSystem {
      * TODO: Java unrar implementation (using unrar native library).
      * @param file to extract
      **************************************************************************/
-    abstract void unrar(File file);
+  //  abstract void unrar(File file);
 
     /***************************************************************************
      * TODO: Unrar library inicialization
      **************************************************************************/
-    abstract void unrarInit();
+   // abstract void unrarInit();
 }

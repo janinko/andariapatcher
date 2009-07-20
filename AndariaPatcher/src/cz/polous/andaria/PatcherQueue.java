@@ -5,20 +5,16 @@ package cz.polous.andaria;
  * tridy Downloader a Installer, ktere zajisti konkretni zpracovani patchu
  * ve fronte.
  * 
- * Resi update statusbaru, monitorovani thready a pod.
- * 
+ * Statusbar updates and counting moved to ProgressBar class.
+ *
+ * Class is singleton.
  * @author  Martin Polehla (andaria_patcher@polous.cz)
  ******************************************************************************/
 import java.util.Vector;
-import javax.swing.JProgressBar;
 
-abstract class PatcherQueue implements Runnable {
+abstract class PatcherQueue extends ProgressBar implements Runnable  {
 
-    protected Vector patchQueue;
-    private double totalDone;
-    private double totalAmount;
-    private double singleDone;
-    private double singleAmount;
+    protected Vector patchQueue = new Vector();
     private boolean inProgress;
     private boolean cancel;
     protected Log log;
@@ -70,8 +66,8 @@ abstract class PatcherQueue implements Runnable {
                 inProgress = true;
                 FrontEnd.getInstance().updateButtons();
 
-                updateSingleBar();
-                updateTotalBar();
+ //               updateSingleBar();
+ //               updateTotalBar();
 
                 while (patchQueue.size() > 0 && !cancel) {
                     log.addDebug("Volání executeNext. Ve frontš je ještě: " + patchQueue.size() + " souborů.");
@@ -93,13 +89,12 @@ abstract class PatcherQueue implements Runnable {
      * Reset queue state
      **************************************************************************/
     void reset() {
-        setTotalDone(0);
-        setTotalAmount(0);
         cancel = false;
         inProgress = false;
-        patchQueue = new Vector();
-        updateSingleBar();
-        updateTotalBar();
+        resetSingleProgress();
+        setSingleMax(0);
+        setTotalProgress(0);
+        setTotalMax(0);
     }
 
     /***************************************************************************
@@ -134,134 +129,7 @@ abstract class PatcherQueue implements Runnable {
         }
     }
 
-    double getTotalDone() {
-        return totalDone;
-    }
-
-    double getTotalAmount() {
-        return totalAmount;
-    }
-
-    double getSingleDone() {
-        return singleDone;
-    }
-
-    double getSingleAmount() {
-        return singleAmount;
-    }
-
-    /***************************************************************************
-     * Add number to single file length
-     * @param i (double) addition to singleDone amount.
-     **************************************************************************/
-    protected void addSingleDone(double i) {
-        setSingleDone(singleDone + i);
-        setTotalDone(totalDone + i);
-        updateSingleBar();
-        updateTotalBar();
-    }
-
-    /***************************************************************************
-     * Substract number from total length of all files in queue.
-     * @param i (double) substract amount
-     **************************************************************************/
-    public void removeTotalAmount(double i) {
-        setTotalAmount(totalAmount - i);
-        updateTotalBar();
-    }
-
-    /***************************************************************************
-     * Set single file done amount (progress done) to a value
-     * (i shouldn't be more than singlDoneAmount). Also correct totalDone value.
-     * @param i (double) value
-     **************************************************************************/
-    void singleDone(double i) {
-        setTotalDone(totalDone - singleDone + i);
-        setSingleDone(i);
-        updateTotalBar();
-        updateSingleBar();
-    }
-
-    /***************************************************************************
-     * Reset current file progress and set SingleDone to a value.
-     * @param i (double) value
-     **************************************************************************/
-    void resetSingleDone(double i) {
-        setSingleAmount(i);
-        resetSingleDone();
-    }
-
-    /***************************************************************************
-     * Reset current file progress.
-     **************************************************************************/
-    void resetSingleDone() {
-        setSingleDone(0);
-        updateSingleBar();
-    }
-
-    public void setTotalAmount(double i) {
-        totalAmount = i;
-    }
-
-    private void setTotalDone(double i) {
-        totalDone = i;
-    }
-
-    public void setSingleAmount(double i) {
-        singleAmount = i;
-    }
-
-    private void setSingleDone(double i) {
-        singleDone = i;
-    }
-
-    /***************************************************************************
-     * Update total progressbar value
-     * (count from totalDone / totalAmount percent).
-     **************************************************************************/
-    protected void updateTotalBar() {
-        JProgressBar pb = FrontEnd.getInstance().getjPBTotal(this);
-        try {
-            try {
-                double total = totalDone / totalAmount * 100;
-                pb.setValue((int) total);
-            } catch (ArithmeticException e) {
-                pb.setValue(0);
-            }
-            pb.repaint();
-        } catch (NullPointerException e) {
-            log.addEx(e);
-        }
-    }
-
-    /***************************************************************************
-     * Update single progressbar value
-     * (count from totalDone / totalAmount percent).
-     **************************************************************************/
-    protected void updateSingleBar() {
-        JProgressBar pb = FrontEnd.getInstance().getjPBSingle(this);
-        try {
-            try {
-                double total = singleDone / singleAmount * 100;
-                pb.setValue((int) total);
-            } catch (ArithmeticException e) {
-                pb.setValue(0);
-            }
-        } catch (NullPointerException e) {
-            log.addEx(e);
-        }
-    }
-
-    /***************************************************************************
-     * Set process Label
-     * @param s (String) New text
-     **************************************************************************/
-    void setLabelText(String s) {
-        try {
-            FrontEnd.getInstance().getjLabel(this).setText(s);
-        } catch (Exception e) {
-        }
-    }
+   
 
     /***************************************************************************
      * Add new PatchItem to queue.
@@ -269,7 +137,9 @@ abstract class PatcherQueue implements Runnable {
      **************************************************************************/
     protected void addPatchItem(PatchItem p) {
         patchQueue.add(p);
-        setTotalAmount(totalAmount + p.getSize());
+        setTotalMax(getTotalMax() + p.getSize());
+        Installer.getInstance().setTotalMax(getTotalMax());
+        log.addDebug("TotalMax = ".concat(Double.toString(getTotalMax())));
     }
 
     /***************************************************************************
@@ -290,9 +160,13 @@ abstract class PatcherQueue implements Runnable {
 
     void removeFirst() {
         patchQueue.remove(0);
+        
     }
 
     void cancel() {
         cancel = true;
     }
+
+
+   
 }

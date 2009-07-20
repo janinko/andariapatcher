@@ -234,7 +234,7 @@ class Settings {
             case 0:
                 return os.getRun_command();
             case 1:
-                return os.getUnrar_path();
+//                return os.getUnrar_path();
             case 2:
                 return os.getUltima_online_path();
             case 3:

@@ -83,6 +83,7 @@ class PatchList {
                     JPanel jPPatchList = FrontEnd.getInstance().getJPPatchList();
                     jPPatchList.removeAll(); // clean frontend patchlist
                     PatchItem patchItem;
+                    //CSVReade
                     for (int i = 0; br.ready(); i++) {
                         if (canceled) {
                             reader.close();
@@ -91,6 +92,9 @@ class PatchList {
                         sLine = br.readLine();
                         log.addDebug(sLine);
                         sItems = sLine.split(";");
+                        for (int k =0; k<sItems.length ; k++) {
+                           sItems[k] = sItems[k].substring(1, sItems[k].length()-1);
+                        }
                         patchItem = new PatchItem(sItems);
                         patchData.add(patchItem);
                         jPPatchList.add(patchItem.getInFrame());
@@ -101,6 +105,7 @@ class PatchList {
                     log.addLine("Seznam patchu byl nahran z internetu.");
                 } catch (IOException e) {
                     log.addEx(e);
+                    log.addErr("Nejspíš se nepodařilo připojit k webovému serveru http://www.andaria.net !");
                 }
             }
         };
@@ -140,6 +145,7 @@ class PatchList {
         Downloader downloader = Downloader.getInstance();
         PatchItem patchItem;
         downloader.reset();
+        Installer.getInstance().reset();
         for (int i = 0; i < patchData.size(); i++) {
             patchItem = (PatchItem) patchData.get(i);
             if (patchItem.getInstallFlag()) {

@@ -194,7 +194,7 @@ class PatchItem {
      * Control local if local file hash (md5) is rigth
      * @return If hash check passed. If an error ocures, returned value will be false too.
      **************************************************************************/
-    synchronized public boolean checkHash() throws IOException {
+    synchronized public boolean checkHash() throws IOException, Exception {
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
             File f = new File(getLocalFileName());
@@ -211,7 +211,7 @@ class PatchItem {
             BigInteger bigInt = new BigInteger(1, md5sum);
             //String md5 = bigInt.toString(16);
             if (0 != bigInt.compareTo(hash)) {
-                throw new IOException("Špatný kontrolní součet (MD5) staženého souboru.");
+                throw new Exception("Špatně stažený soubor: ".concat(f.getName()));
             }
 
             return (0 == bigInt.compareTo(hash));

@@ -40,7 +40,7 @@ class Log {
             e.printStackTrace();
             add(e.getStackTrace().toString());
         }
-        add("VNITŘNÍ CHYBA: " + e.getMessage() + "!!!!!!!");
+        add("VNITŘNÍ CHYBA: " + e.getMessage() + "! Není třeba panikařit! Nahlašte však prosím danou chybu na fóru andaria.net a vývojaři se ji pokusí co nejdříve vyřešit.");
 
     }
 

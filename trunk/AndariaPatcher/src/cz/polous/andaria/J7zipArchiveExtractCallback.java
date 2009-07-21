@@ -28,7 +28,7 @@ public class J7zipArchiveExtractCallback implements IArchiveExtractCallback // ,
     public J7zipArchiveExtractCallback() {
         log = new Log(this);
         PasswordIsDefined = false;
-        _filePath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
+        _diskFilePath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
     }
 
     class OutputStream extends java.io.OutputStream {
@@ -89,8 +89,10 @@ public class J7zipArchiveExtractCallback implements IArchiveExtractCallback // ,
     }
 
     public void PrintNewLine() {
-        log.addLine(printLine);
-        printLine = new String();
+        if (!printLine.trim().isEmpty()) {
+            log.addLine(printLine);
+            printLine = new String();
+        }
     }
 
     @Override
@@ -163,7 +165,7 @@ public class J7zipArchiveExtractCallback implements IArchiveExtractCallback // ,
         outStream[0] = null;
 
         SevenZipEntry item = _archiveHandler.getEntry(index);
-        _filePath = item.getName();
+        _filePath = _diskFilePath.concat(File.separator).concat(item.getName());
 
         File file = new File(_filePath);
 

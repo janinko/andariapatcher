@@ -106,6 +106,7 @@ public class ProgressBar {
     }
 
     void resetSingleProgress() {
+        setLabelSpeed(0);
         singleProgress = 0;
         updateProgressBar(Bars.SINGLE);
     }

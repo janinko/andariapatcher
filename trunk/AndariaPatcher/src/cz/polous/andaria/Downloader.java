@@ -65,6 +65,8 @@ class Downloader extends PatcherQueue {
             log.addDebug("Soubor ".concat(p.getFileName()).concat(" není ještě stažený."));
         } catch (IOException e) {
             log.addEx(e);
+        } catch (Exception e) {
+            log.addLine(e.getMessage().concat(" Zkusím to znova."));
         }
 
         setLabelText("Stahuji soubor: " + p.getFileName());
@@ -96,11 +98,10 @@ class Downloader extends PatcherQueue {
                 size += numRead;
                 setSingleProgress(size);
                 try {
-                    setLabelSpeed(0.50 * size / ((new Date()).getTime() - start.getTime()));
-                    //log.addDebug(Double.toString((new Date()).getTime() - start.getTime()));
+                    setLabelSpeed(1.00 * size / ((new Date()).getTime() - start.getTime()));
+                //log.addDebug(Double.toString((new Date()).getTime() - start.getTime()));
                 } catch (ArithmeticException e) {
                 }
-
             }
 
         } catch (FileNotFoundException e) {
@@ -119,17 +120,18 @@ class Downloader extends PatcherQueue {
             } catch (IOException e) {
                 log.addEx(e);
             } finally {
+                setLabelSpeed(0);
                 setLabelText("Kontroluji soubor: " + p.getFileName());
                 try {
                     p.checkHash();
                     startInstaller(p);
                 } catch (IOException e) {
-
                     log.addEx(e);
-                    log.addErr("Nemůžu otevřít soubor nebo je špatně stažený ! Zkus to znova nebo požádej o pomoc na fóru Andarie.");
                     Installer.getInstance().removeFromTotalProgress(p.getSize());
                     setSingleProgressPercents(100);
                     removeFirst();
+                } catch (Exception e) {
+                    log.addErr(e.getMessage().concat(" Zkus to znova a pokud se ani pak nezadaří, napiš to prosím na fórum andarie."));
                 }
             }
         }

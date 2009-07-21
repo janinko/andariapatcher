@@ -5,6 +5,7 @@ import SevenZip.Archive.IInArchive;
 import SevenZip.Archive.SevenZip.Handler;
 import SevenZip.Archive.SevenZipEntry;
 import SevenZip.HRESULT;
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -31,6 +32,7 @@ public class J7zipBinding {
             return;
         }
         //Installer.getInstance().setExtractedTotal( getExtractedSize(archive));
+        log.addLine("Rozbaluji soubor: ".concat(new File(fileName).getName()));
         testOrExtract(archive, listOfNames, IInArchive.NExtract_NAskMode_kExtract);
         archive.close();
 

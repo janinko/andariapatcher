@@ -137,7 +137,8 @@ class Installer extends PatcherQueue {
             } catch (Exception ex) {
                 log.addEx(ex);
             }
-
+            
+            setLabelSpeed(0);
             log.addDebug("Soubor je rozbalený, hledám instalační skripty.");
             File f = new File(uopath + File.separator + "start_a.bat");
             log.addDebug("Hledám:" + f.getAbsolutePath());

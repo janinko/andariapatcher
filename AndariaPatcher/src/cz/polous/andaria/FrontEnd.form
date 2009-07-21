@@ -223,6 +223,7 @@
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
                   <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DefaultCaret caret = (DefaultCaret) jTLog.getCaret();&#xa;caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);"/>
                     <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="AndariaPatcher_jTLog"/>
                   </AuxValues>
                 </Component>

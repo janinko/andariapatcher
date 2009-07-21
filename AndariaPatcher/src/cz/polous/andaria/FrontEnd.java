@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.DefaultCaret;
 import org.lobobrowser.html.gui.HtmlPanel;
 
 /*******************************************************************************
@@ -40,6 +41,7 @@ public class FrontEnd extends JFrame {
 
         initComponents();
         Log.logArea = jTLog;
+        
         log = new Log(this);
 
         loadSettings();
@@ -439,6 +441,8 @@ public class FrontEnd extends JFrame {
         jTLog.setColumns(20);
         jTLog.setForeground(getForeground());
         jTLog.setRows(5);
+        DefaultCaret caret = (DefaultCaret) jTLog.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         jSPLog.setViewportView(jTLog);
 
         jPControlsTab.add(jSPLog);

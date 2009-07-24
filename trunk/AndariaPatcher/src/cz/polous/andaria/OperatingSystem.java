@@ -11,21 +11,21 @@ import java.io.IOException;
  ******************************************************************************/
 abstract class OperatingSystem {
 
+	 private static Log log;
+	 
     // private final OperatingSystem os;
-    private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
+    /*
+     * TODO: Zmena #36
+     * LJK
+	private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
     private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory_7zip";
     private final String about_url = "http://strazci.andaria.net/patcher/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";
     private final String counter_url = "http://strazci.andaria.net/patcher/beta/counter.php";
-    private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
+    private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";*/
     //private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbalování .rar archivu."};
     //private final String[] unrar64PatchItem = {"unrar64.exe", "Unrar64", "12.4.2008, 12:00", "934d90fa7e7d48a38dc1062902da98be", "1", "117112", "313d", "Program pro rozbalování .rar archivu 64bit."};
-    private static Log log;
-
-    public String getCounter_url() {
-        return counter_url;
-    }
 
    /* public boolean is64bit() {
         boolean result = (System.getProperty("os.arch").indexOf("64") != -1);
@@ -43,6 +43,14 @@ abstract class OperatingSystem {
             return unrarPatchItem;
     }
 */
+    /*
+     * TODO: Zmena #36
+     * LJK
+
+    public String getCounter_url() {
+        return counter_url;
+    }
+    
     public String getAbout_url() {
         return about_url;
     }
@@ -66,10 +74,12 @@ abstract class OperatingSystem {
     public String getRemote_storage() {
         return remote_storage;
     }
+    */
 
     abstract String getRun_command();
 
     abstract String getUltima_online_path();
+
 
    // abstract String getUnrar_path();
 

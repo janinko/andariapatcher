@@ -28,9 +28,17 @@ class Settings {
     private Element patches; // content of local stored patchlist
     private OperatingSystem os;
 
-    public OperatingSystem getOs() {
-        return os;
-    }
+    /**
+     * Adresy URL
+     */
+    private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
+    private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory_7zip";
+    private final String about_url = "http://strazci.andaria.net/patcher/java.php";
+    private final String news_url = "http://www.andaria.net/novinky_updater.php";
+    private final String debug_log = "0";
+    private final String counter_url = "http://strazci.andaria.net/patcher/beta/counter.php";
+    private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
+    
     private static Log log;
 
     private Settings() {
@@ -41,7 +49,43 @@ class Settings {
     public static Settings getInstance() {
         return INSTANCE;
     }
+    
+    public OperatingSystem getOs() {
+        return os;
+    }
+    
+    /*
+     * Get URL's method
+     */
+    
+    public String getCounter_url() {
+        return counter_url;
+    }
+    
+    public String getAbout_url() {
+        return about_url;
+    }
 
+    public String getDebug_log() {
+        return debug_log;
+    }
+
+    public String getFilelist_url() {
+        return filelist_url;
+    }
+
+    public String getLocal_storage() {
+        return local_storage;
+    }
+
+    public String getNews_url() {
+        return news_url;
+    }
+
+    public String getRemote_storage() {
+        return remote_storage;
+    }
+    
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
@@ -238,17 +282,17 @@ class Settings {
             case 2:
                 return os.getUltima_online_path();
             case 3:
-                return os.getLocal_storage();
+                return getLocal_storage();
             case 4:
-                return os.getRemote_storage();
+                return getRemote_storage();
             case 5:
-                return os.getAbout_url();
+                return getAbout_url();
             case 6:
-                return os.getNews_url();
+                return getNews_url();
             case 7:
-                return os.getDebug_log();
+                return getDebug_log();
             case 8:
-                return os.getFilelist_url();
+                return getFilelist_url();
             default:
                 return "";
         }

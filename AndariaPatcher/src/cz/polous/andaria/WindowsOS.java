@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
  ******************************************************************************/
 class WindowsOS extends OperatingSystem {
 
-    private static final String unrar_path = "C:\\Program Files\\WinRAR\\unrar.exe";
     private static final String regOriginFileName = "UO_Registry_Origin.reg";
     private static Log log;
     private String uoPath;
@@ -101,15 +100,6 @@ class WindowsOS extends OperatingSystem {
         System.out.println("Rozpoznaný adresář s ultimou: ".concat(uoPath));
         return uoPath;
     }
-
-    /*@Override
-    String getUnrar_path() {
-    return unrar_path;
-    }*/
-
-    /*@Override
-    public void downloadUnrar() {
-    }*/
 
     /***************************************************************************
      * Creates a new instance of WindowsOS
@@ -217,21 +207,4 @@ class WindowsOS extends OperatingSystem {
         return uoPath;
 
     }
-
-    /***************************************************************************
-     * 
-     * @param file to extract
-     **************************************************************************/
-    /*@Override
-    public void unrar(File file) {
-    // TODO: Java unrar implementation (using unrar native library).
-    }*/
-
-    /***************************************************************************
-     * TODO: Unrar library inicialization
-     **************************************************************************/
-    /*@Override
-    public void unrarInit() {
-    // TODO: Java unrar implementation (using unrar native library).
-    }*/
 }

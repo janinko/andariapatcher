@@ -181,7 +181,6 @@ public class FrontEnd extends JFrame {
         Settings.getInstance().load();
 
         jTConfRunCommand.setText(Settings.getInstance().getValue(Settings.RUN_COMMAND));
-        jTConfUnRARCommand.setText(Settings.getInstance().getValue(Settings.UNRAR_PATH));
         jTConfUltimaOnlinePath.setText(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH));
         jTConfTempPath.setText(Settings.getInstance().getValue(Settings.LOCAL_STORAGE));
         jChDebug.setSelected(Settings.getInstance().debugMode());
@@ -192,7 +191,6 @@ public class FrontEnd extends JFrame {
      **************************************************************************/
     private void saveSettings() {
         Settings.getInstance().setValue(Settings.RUN_COMMAND, jTConfRunCommand.getText());
-        Settings.getInstance().setValue(Settings.UNRAR_PATH, jTConfUnRARCommand.getText());
         Settings.getInstance().setValue(Settings.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
         Settings.getInstance().setValue(Settings.LOCAL_STORAGE, jTConfTempPath.getText());
         Settings.getInstance().setValue(Settings.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
@@ -340,9 +338,6 @@ public class FrontEnd extends JFrame {
         jLConfRunCommand = new javax.swing.JLabel();
         jTConfRunCommand = new javax.swing.JTextField();
         jBConfBrowseRunCommand = new javax.swing.JButton();
-        jLConfUnRARCommand = new javax.swing.JLabel();
-        jTConfUnRARCommand = new javax.swing.JTextField();
-        jBConfBrowseUnRARCommand = new javax.swing.JButton();
         jBConfLoad = new javax.swing.JButton();
         jBConfSave = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JSeparator();
@@ -352,14 +347,13 @@ public class FrontEnd extends JFrame {
         jSeparator10 = new javax.swing.JSeparator();
         jBDeleteNWB = new javax.swing.JButton();
         jBDeleteIntro = new javax.swing.JButton();
-        jBConfBrowseUnRARCommand1 = new javax.swing.JButton();
         jBRenewRegistry = new javax.swing.JButton();
         jBRemoveTempFiles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
         setBackground(java.awt.Color.white);
-        setFont(new java.awt.Font("Verdana", 1, 12));
+        setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         setForeground(new java.awt.Color(163, 125, 86));
         setIconImage(getIcon("andaria.png"));
         setLocationByPlatform(true);
@@ -698,27 +692,6 @@ public class FrontEnd extends JFrame {
             }
         });
 
-        jLConfUnRARCommand.setBackground(getBackground());
-        jLConfUnRARCommand.setForeground(getForeground());
-        jLConfUnRARCommand.setLabelFor(jTConfUnRARCommand);
-        jLConfUnRARCommand.setText("Cesta k unrar.exe");
-        jLConfUnRARCommand.setToolTipText("Příkaz, kterým AndariaPatcher bude rozbalovat .rar soubory. Program musí být nastaven tak aby rozbalil soubory do aktuálního adresáře. Jméno souboru k rozbalení nahraď slovem %rar% (včetně znaků %). Běžně používaný unrar má parametry: -o+ e %rar%.");
-
-        jTConfUnRARCommand.setBackground(getBackground());
-        jTConfUnRARCommand.setColumns(30);
-        jTConfUnRARCommand.setForeground(getForeground());
-        jTConfUnRARCommand.setToolTipText("Příkaz, kterým AndariaPatcher bude rozbalovat .rar soubory. Program musí být nastaven tak aby rozbalil soubory do aktuálního adresáře. Jméno souboru k rozbalení nahraď slovem %rar% (včetně znaků %). Běžně používaný unrar má parametry: -o+ e %rar%.");
-        jTConfUnRARCommand.setMinimumSize(new java.awt.Dimension(20, 19));
-
-        jBConfBrowseUnRARCommand.setBackground(getBackground());
-        jBConfBrowseUnRARCommand.setForeground(getForeground());
-        jBConfBrowseUnRARCommand.setText("Procházet");
-        jBConfBrowseUnRARCommand.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBConfBrowseUnRARCommandActionPerformed(evt);
-            }
-        });
-
         jBConfLoad.setBackground(getBackground());
         jBConfLoad.setForeground(getForeground());
         jBConfLoad.setText("Načti nastavení");
@@ -805,15 +778,6 @@ public class FrontEnd extends JFrame {
             }
         });
 
-        jBConfBrowseUnRARCommand1.setBackground(getBackground());
-        jBConfBrowseUnRARCommand1.setForeground(getForeground());
-        jBConfBrowseUnRARCommand1.setText("Stáhnout");
-        jBConfBrowseUnRARCommand1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBConfBrowseUnRARCommand1ActionPerformed(evt);
-            }
-        });
-
         jBRenewRegistry.setBackground(getBackground());
         jBRenewRegistry.setForeground(getForeground());
         jBRenewRegistry.setText("Obnovit registry windows (vybereš adresář ve kterém je ultima nainstalovaná)");
@@ -829,8 +793,9 @@ public class FrontEnd extends JFrame {
 
         jBRemoveTempFiles.setBackground(getBackground());
         jBRemoveTempFiles.setForeground(getForeground());
-        jBRemoveTempFiles.setText("Smazat všchny stažené patche (.rar) do úložiště souborů");
+        jBRemoveTempFiles.setText("Smazat z dočasného úložiště všechny stažené soubory.");
         jBRemoveTempFiles.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBRemoveTempFiles.setActionCommand("Smazat z dočasného úložiště všechny stažené soubory.");
         jBRemoveTempFiles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBRemoveTempFilesActionPerformed(evt);
@@ -858,11 +823,11 @@ public class FrontEnd extends JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jLConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jLConfUnRARCommand))
+                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                .add(jLConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
@@ -873,20 +838,13 @@ public class FrontEnd extends JFrame {
                                 .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jBConfBrowseUltimaOnlinePath))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                        .add(jTConfUnRARCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jBConfBrowseUnRARCommand1)))
+                            .add(jPSettingsTabLayout.createSequentialGroup()
+                                .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBConfBrowseUnRARCommand)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBConfBrowseRunCommand)))))
+                                .add(jBConfBrowseRunCommand))))
+                    .add(jChDebug)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                     .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
-                    .add(jChDebug)
                     .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                     .add(jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                     .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE))
@@ -905,20 +863,14 @@ public class FrontEnd extends JFrame {
                     .add(jBConfBrowseTempPath)
                     .add(jLConfTempPath)
                     .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(4, 4, 4)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jBConfBrowseUnRARCommand)
-                    .add(jLConfUnRARCommand)
-                    .add(jBConfBrowseUnRARCommand1)
-                    .add(jTConfUnRARCommand, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jBConfBrowseRunCommand)
+                    .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLConfRunCommand)
-                    .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(jBConfBrowseRunCommand))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jChDebug)
-                .add(12, 12, 12)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jBSetAllInstalled)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBDeleteIntro)
@@ -928,7 +880,7 @@ public class FrontEnd extends JFrame {
                 .add(jBRenewRegistry)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBRemoveTempFiles)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 150, Short.MAX_VALUE)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -942,8 +894,8 @@ public class FrontEnd extends JFrame {
                 .addContainerGap())
         );
 
-        jLConfUnRARCommand.getAccessibleContext().setAccessibleDescription("Umístění souboru unrar.exe. Používá se k rozbalení .rar souborů. Najdete ho ke stažení na http://www.winrar.cz/download.php?area=rarother");
-        jTConfUnRARCommand.getAccessibleContext().setAccessibleDescription("Umístění souboru unrar.exe. Používá se k rozbalení .rar souborů. Najdete ho ke stažení na http://www.winrar.cz/download.php?area=rarother");
+        jBRemoveTempFiles.getAccessibleContext().setAccessibleName("Smazat z dočasného úložiště všechny stažené soubory.");
+        jBRemoveTempFiles.getAccessibleContext().setAccessibleDescription("Pomůže uvolnit nějaké to místo na disku. ");
 
         jTPMain.addTab("Nastavení", null, jPSettingsTab, "Klikni pro zobrazení panelu s nastavením Andaria Patcheru...");
 
@@ -978,10 +930,6 @@ public class FrontEnd extends JFrame {
         PatchList.getInstance().cancel();
     // updateButtons();
     }//GEN-LAST:event_jBCancelActionPerformed
-
-    private void jBConfBrowseUnRARCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUnRARCommandActionPerformed
-        jTConfUnRARCommand.setText(Settings.getInstance().openFile("Vyber unrar", jTConfUnRARCommand.getText(), JFileChooser.FILES_ONLY));
-    }//GEN-LAST:event_jBConfBrowseUnRARCommandActionPerformed
 
     private void jBConfLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfLoadActionPerformed
         loadSettings();
@@ -1030,18 +978,6 @@ public class FrontEnd extends JFrame {
     private void jChDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChDebugActionPerformed
     }//GEN-LAST:event_jChDebugActionPerformed
 
-    private void jBConfBrowseUnRARCommand1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUnRARCommand1ActionPerformed
-
-        /*if (Settings.getInstance().getOs().getClass().toString().endsWith("LinuxOS")) {
-        JOptionPane.showMessageDialog(null, "Unrar si na linuxu musíš zařídit sám :-P", "Chybka lenochu !", JOptionPane.WARNING_MESSAGE);
-        } else {
-        PatchItem patchItem = new PatchItem(Settings.getInstance().getOs().getUnrarPatchItem());
-        PatchList.getInstance().downloadOnly(patchItem);
-        jTConfUnRARCommand.setText(Settings.getInstance().getOs().getUltima_online_path() + File.separator + patchItem.getFileName());
-        saveSettings();
-        }*/
-    }//GEN-LAST:event_jBConfBrowseUnRARCommand1ActionPerformed
-
     private void jBRenewRegistryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRenewRegistryActionPerformed
         // button can't be visible on linux machines
         WindowsOS winos = (WindowsOS) Settings.getInstance().getOs();
@@ -1075,8 +1011,6 @@ public class FrontEnd extends JFrame {
     private javax.swing.JButton jBConfBrowseRunCommand;
     private javax.swing.JButton jBConfBrowseTempPath;
     private javax.swing.JButton jBConfBrowseUltimaOnlinePath;
-    private javax.swing.JButton jBConfBrowseUnRARCommand;
-    private javax.swing.JButton jBConfBrowseUnRARCommand1;
     private javax.swing.JButton jBConfLoad;
     private javax.swing.JButton jBConfSave;
     private javax.swing.JButton jBDeleteIntro;
@@ -1091,7 +1025,6 @@ public class FrontEnd extends JFrame {
     private javax.swing.JLabel jLConfRunCommand;
     private javax.swing.JLabel jLConfTempPath;
     private javax.swing.JLabel jLConfUltimaOnlinePath;
-    private javax.swing.JLabel jLConfUnRARCommand;
     private javax.swing.JLabel jLDownload;
     private javax.swing.JLabel jLDownloadSpeed;
     private javax.swing.JLabel jLInstall;
@@ -1125,7 +1058,6 @@ public class FrontEnd extends JFrame {
     private javax.swing.JTextField jTConfRunCommand;
     private javax.swing.JTextField jTConfTempPath;
     private javax.swing.JTextField jTConfUltimaOnlinePath;
-    private javax.swing.JTextField jTConfUnRARCommand;
     private javax.swing.JTextArea jTLog;
     private javax.swing.JTabbedPane jTPMain;
     // End of variables declaration//GEN-END:variables

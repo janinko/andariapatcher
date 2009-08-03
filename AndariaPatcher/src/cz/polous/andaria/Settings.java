@@ -261,7 +261,8 @@ class Settings {
         return settingList[val];
     }
     public static final int RUN_COMMAND = 0;
-    public static final int UNRAR_PATH = 1;
+    //NOTE: use this first
+    public static final int UNUSED_CONST = 1;
     public static final int ULTIMA_ONINE_PATH = 2;
     public static final int LOCAL_STORAGE = 3;
     public static final int REMOTE_STORAGE = 4;
@@ -269,7 +270,7 @@ class Settings {
     public static final int NEWS_URL = 6;
     public static final int DEBUG_MODE = 7;
     public static final int FILE_LIST_URL = 8;
-    private static final String[] settingList = {"run_command", "unrar_path", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url"};
+    private static final String[] settingList = {"run_command", "", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url"};
 
     private String getDefaultValue(int item) {
 
@@ -278,7 +279,7 @@ class Settings {
             case 0:
                 return os.getRun_command();
             case 1:
-//                return os.getUnrar_path();
+                return null;
             case 2:
                 return os.getUltima_online_path();
             case 3:

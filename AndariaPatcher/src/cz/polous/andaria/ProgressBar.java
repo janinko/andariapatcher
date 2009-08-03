@@ -1,7 +1,6 @@
 package cz.polous.andaria;
 
 import java.text.NumberFormat;
-import java.util.Date;
 import javax.swing.JProgressBar;
 
 /**
@@ -78,6 +77,7 @@ public class ProgressBar {
         }
     }
 
+    @Deprecated
     protected void addToSingleProgress(double i) {
         setSingleProgress(singleProgress + i);
     }

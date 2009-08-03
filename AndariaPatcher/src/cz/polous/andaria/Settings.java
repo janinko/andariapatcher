@@ -33,10 +33,10 @@ class Settings {
      */
     private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
     private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory_7zip";
-    private final String about_url = "http://strazci.andaria.net/patcher/java.php";
+    private final String about_url = "http://patcher.andaria.net/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";
-    private final String counter_url = "http://strazci.andaria.net/patcher/beta/counter.php";
+    private final String counter_url = "http://patcher.andaria.net/beta/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
     
     private static Log log;

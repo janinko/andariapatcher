@@ -164,7 +164,7 @@ class Installer extends PatcherQueue {
 
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");
-            setSingleProgressPercents(100);
+           // setSingleProgressPercents(100);
         } else {
             // copy raw downloaded file into game directory
             // probably not used, after unrar - 7zip migration.
@@ -207,6 +207,7 @@ class Installer extends PatcherQueue {
         if (!failed) {
             patchItem.setInstalled();
         }
+        setSingleProgressPercents(100);
         removeFirst();
     }
 

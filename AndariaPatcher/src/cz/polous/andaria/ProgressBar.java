@@ -19,7 +19,7 @@ public class ProgressBar {
     private NumberFormat speedFormat;
 
   
-    public static class Bars {
+    public static class BARS {
         static final int SINGLE = 0;
         static final int TOTAL = 1;
     }
@@ -57,7 +57,7 @@ public class ProgressBar {
 
     void setLabelText(String s) {
         try {
-            FrontEnd.getInstance().getjLabel(this, FrontEnd.LType.TEXT).setText(s);
+            FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.TEXT).setText(s);
         } catch (Exception e) {
         }
     }
@@ -72,7 +72,7 @@ public class ProgressBar {
 
         String s = speedFormat.format(speed).concat(" kB/s");
         try {
-            FrontEnd.getInstance().getjLabel(this, FrontEnd.LType.SPEED).setText(s);
+            FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.SPEED).setText(s);
         } catch (Exception e) {
         }
     }
@@ -100,7 +100,7 @@ public class ProgressBar {
 
         setTotalProgress(totalProgress - singleProgress + i);
         singleProgress = i;
-        updateProgressBar(Bars.SINGLE);
+        updateProgressBar(BARS.SINGLE);
     }
 
     void resetSingleProgress(long i) {
@@ -111,7 +111,7 @@ public class ProgressBar {
     void resetSingleProgress() {
         setLabelSpeed(0);
         singleProgress = 0;
-        updateProgressBar(Bars.SINGLE);
+        updateProgressBar(BARS.SINGLE);
     }
 
     public void removeFromTotalProgress(long i) {
@@ -149,17 +149,17 @@ public class ProgressBar {
 
     public void setTotalProgress(long i) {
         totalProgress = i;
-        updateProgressBar(Bars.TOTAL);
+        updateProgressBar(BARS.TOTAL);
     }
 
     public void setTotalMax(long i) {
         totalMax = i;
-        updateProgressBar(Bars.TOTAL);
+        updateProgressBar(BARS.TOTAL);
     }
 
     public void setSingleMax(long i) {
         singleMax = i;
-        updateProgressBar(Bars.SINGLE);
+        updateProgressBar(BARS.SINGLE);
     }
 
     void setSingleProgressPercents(int perc) {

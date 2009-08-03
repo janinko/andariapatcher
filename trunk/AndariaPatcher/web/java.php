@@ -152,7 +152,17 @@ $countBetaFile = "/home/wwwroot/andaria.net/patcher/beta/hits/".date("m-y").".tx
        // }// catch () {
         //}
 ?>
+<br><br>
+<b>Beta Patcheru verze 1.5 (7zip)</b><br>
 
+<script type="text/javascript">
+    //<![CDATA[
+    // display JNLP button
+    deployJava.createWebStartLaunchButton(appBetaLink, '1.6.0');
+    //]]>
+</script>
+<br>
+<font size=-2>mùže být nestabilní, nefunkèní, ale nemìla by poškodit ultimu jako takovou ani nic ostatního</font>
 </div><br>
 
 <div id="applet_holder"></div>

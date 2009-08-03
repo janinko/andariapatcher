@@ -28,7 +28,7 @@ public class FrontEnd extends JFrame {
         return INSTANCE;
     }
 
-    public static class LType {
+    public static class LABEL_TYPES {
         public static final int TEXT = 0;
         public static final int SPEED = 1;
     }
@@ -226,13 +226,13 @@ public class FrontEnd extends JFrame {
 
     public JLabel getjLabel(Object cls, int ltype) {
         switch (ltype) {
-            case LType.TEXT:
+            case LABEL_TYPES.TEXT:
                 if (cls.getClass() == Downloader.class) {
                     return jLDownload;
                 } else {
                     return jLInstall;
                 }
-            case LType.SPEED:
+            case LABEL_TYPES.SPEED:
                 if (cls.getClass() == Downloader.class) {
                     return jLDownloadSpeed;
                 } else {
@@ -778,7 +778,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.5 beta - 7zip1");
+        jLabel1.setText("Verze programu: 1.5 beta - 7zip2");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());

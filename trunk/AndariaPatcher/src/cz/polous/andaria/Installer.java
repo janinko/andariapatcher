@@ -227,7 +227,7 @@ class Installer extends PatcherQueue {
             log.addDebug("Podle progressbaru jsou všechny patche jsou nainstalované.");
         }
         removeFirst();
-        updateProgressBar(Bars.TOTAL);
+        updateProgressBar(BARS.TOTAL);
     }
 
     /***************************************************************************

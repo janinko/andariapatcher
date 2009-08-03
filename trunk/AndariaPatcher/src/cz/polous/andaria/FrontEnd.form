@@ -692,13 +692,14 @@
                               <Component id="jBConfSave" min="-2" pref="160" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLConfUltimaOnlinePath" alignment="0" max="32767" attributes="1"/>
+                                      <Component id="jLConfTempPath" alignment="0" max="32767" attributes="1"/>
+                                  </Group>
                                   <Component id="jLConfRunCommand" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jLConfUltimaOnlinePath" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jLConfTempPath" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="jLConfUnRARCommand" alignment="0" min="-2" max="-2" attributes="1"/>
                               </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jTConfTempPath" pref="521" max="32767" attributes="0"/>
@@ -710,26 +711,16 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jBConfBrowseUltimaOnlinePath" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jTConfRunCommand" pref="521" max="32767" attributes="0"/>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="jTConfUnRARCommand" pref="436" max="32767" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jBConfBrowseUnRARCommand1" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jTConfRunCommand" pref="521" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jBConfBrowseUnRARCommand" alignment="1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jBConfBrowseRunCommand" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="jBConfBrowseRunCommand" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
+                          <Component id="jChDebug" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jBDeleteIntro" alignment="1" pref="702" max="32767" attributes="0"/>
                           <Component id="jBDeleteNWB" alignment="0" pref="702" max="32767" attributes="0"/>
-                          <Component id="jChDebug" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jBSetAllInstalled" alignment="0" pref="702" max="32767" attributes="0"/>
                           <Component id="jBRenewRegistry" alignment="0" pref="702" max="32767" attributes="0"/>
                           <Component id="jBRemoveTempFiles" alignment="0" pref="702" max="32767" attributes="0"/>
@@ -753,22 +744,15 @@
                           <Component id="jLConfTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTConfTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jBConfBrowseUnRARCommand" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLConfUnRARCommand" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jBConfBrowseUnRARCommand1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTConfUnRARCommand" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jBConfBrowseRunCommand" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLConfRunCommand" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTConfRunCommand" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLConfRunCommand" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBConfBrowseRunCommand" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jChDebug" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jBSetAllInstalled" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jBDeleteIntro" min="-2" max="-2" attributes="0"/>
@@ -778,7 +762,7 @@
                       <Component id="jBRenewRegistry" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jBRemoveTempFiles" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="123" max="32767" attributes="0"/>
+                      <EmptySpace pref="150" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jBConfLoad" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -929,56 +913,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBConfBrowseRunCommandActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLConfUnRARCommand">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="foreground" type="property"/>
-                </Property>
-                <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="jTConfUnRARCommand"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cesta k unrar.exe"/>
-                <Property name="toolTipText" type="java.lang.String" value="P&#x159;&#xed;kaz, kter&#xfd;m AndariaPatcher bude rozbalovat .rar soubory. Program mus&#xed; b&#xfd;t nastaven tak aby rozbalil soubory do aktu&#xe1;ln&#xed;ho adres&#xe1;&#x159;e. Jm&#xe9;no souboru k rozbalen&#xed; nahra&#x10f; slovem %rar% (v&#x10d;etn&#x11b; znak&#x16f; %). B&#x11b;&#x17e;n&#x11b; pou&#x17e;&#xed;van&#xfd; unrar m&#xe1; parametry: -o+ e %rar%."/>
-              </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Um&#xed;st&#x11b;n&#xed; souboru unrar.exe. Pou&#x17e;&#xed;v&#xe1; se k rozbalen&#xed; .rar soubor&#x16f;. Najdete ho ke sta&#x17e;en&#xed; na http://www.winrar.cz/download.php?area=rarother"/>
-              </AccessibilityProperties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTConfUnRARCommand">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="columns" type="int" value="30"/>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="foreground" type="property"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="P&#x159;&#xed;kaz, kter&#xfd;m AndariaPatcher bude rozbalovat .rar soubory. Program mus&#xed; b&#xfd;t nastaven tak aby rozbalil soubory do aktu&#xe1;ln&#xed;ho adres&#xe1;&#x159;e. Jm&#xe9;no souboru k rozbalen&#xed; nahra&#x10f; slovem %rar% (v&#x10d;etn&#x11b; znak&#x16f; %). B&#x11b;&#x17e;n&#x11b; pou&#x17e;&#xed;van&#xfd; unrar m&#xe1; parametry: -o+ e %rar%."/>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[20, 19]"/>
-                </Property>
-              </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Um&#xed;st&#x11b;n&#xed; souboru unrar.exe. Pou&#x17e;&#xed;v&#xe1; se k rozbalen&#xed; .rar soubor&#x16f;. Najdete ho ke sta&#x17e;en&#xed; na http://www.winrar.cz/download.php?area=rarother"/>
-              </AccessibilityProperties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jBConfBrowseUnRARCommand">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="foreground" type="property"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Proch&#xe1;zet"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBConfBrowseUnRARCommandActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBConfLoad">
@@ -1134,20 +1068,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDeleteIntroActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jBConfBrowseUnRARCommand1">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="foreground" type="property"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="St&#xe1;hnout"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBConfBrowseUnRARCommand1ActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="jBRenewRegistry">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -1174,9 +1094,14 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Smazat v&#x161;chny sta&#x17e;en&#xe9; patche (.rar) do &#xfa;lo&#x17e;i&#x161;t&#x11b; soubor&#x16f;"/>
+                <Property name="text" type="java.lang.String" value="Smazat z do&#x10d;asn&#xe9;ho &#xfa;lo&#x17e;i&#x161;t&#x11b; v&#x161;echny sta&#x17e;en&#xe9; soubory."/>
                 <Property name="toolTipText" type="java.lang.String" value="Opravuje chybu spou&#x161;t&#x11b;n&#xed; ultimy online, p&#x159;i kter&#xe9; hra spadne hned po spu&#x161;t&#x11b;n&#xed;."/>
+                <Property name="actionCommand" type="java.lang.String" value="Smazat z do&#x10d;asn&#xe9;ho &#xfa;lo&#x17e;i&#x161;t&#x11b; v&#x161;echny sta&#x17e;en&#xe9; soubory."/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Smazat z do&#x10d;asn&#xe9;ho &#xfa;lo&#x17e;i&#x161;t&#x11b; v&#x161;echny sta&#x17e;en&#xe9; soubory."/>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Pom&#x16f;&#x17e;e uvolnit n&#x11b;jak&#xe9; to m&#xed;sto na disku. "/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBRemoveTempFilesActionPerformed"/>
               </Events>

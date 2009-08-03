@@ -113,22 +113,24 @@ $countBetaFile = "/home/wwwroot/andaria.net/patcher/beta/hits/".date("m-y").".tx
 
 <font color="#A37D56" style="font-family: Verdana,Arial; font-size: 9pt">
     <h3>O programu:</h3>
-    <p>Andaria patcher umožòuje hráèùm oblíbené hry Ultima online jednoduše pøizpùsobit svou instalaci pro shard Andaria. Toto je druhá verze, která narozdíl od pøedchozí verze psané pomocí XUL je naprogramovaná v jazyce Java.
+    <p>Andaria patcher umožòuje hráèùm oblíbené hry Ultima online jednoduše pøizpùsobit svou instalaci pro shard Andaria. 
     </p>
 <p>
-        <b>Poslední vydaná verze: <?PHP require_once($VERSION_FILE); echo $ap_version;?></b>. Informace o známých chybách a plánovaných úpravách najdete <a href='http://trac2.assembla.com/andariapatcher/report/3'>na stránkách projektu.</a>
+        <b>Poslední vydaná verze: <?PHP require_once($VERSION_FILE); echo $ap_version;?></b>. Informace o známých chybách a plánovaných úpravách najdete <a href='http://trac2.assembla.com/andariapatcher/report/3'>na stránkách projektu.</a><br>Po svìtì pobíhá i stará verze patcheru - XUL. Tu již nepoužívejte.
     </p>
 
     <h4>Jak to funguje ?</h4>
     <ul>
-        <li>Stáhne se soubor ze serveru Andarie obsahující seznam patchù.
-        </li><li>Porovná seznam patchù z andarie se seznamem nainstalovaných v tvojí ultimì (andariapacher.xml).
-        </li><li>Po stisknutí tlaèítka "Instalovat" stáhne program všechny potøebné soubory ze serveru Andarie a zaène je instalovat. Pokud instalovaný patch obsahuje instalaèní skript (start_a.bat || start_g.bat) bude automaticky spuštìný jako pøi ruèní instalaci.
-        </li><li>Je možné nastavit aby se po ukonèení AndariaPatcheru spustil jiný libovolný program (kupøíkladu AndariaClient.exe).
-        </li><li>Andaria patcher obsahuje funkce, které usnadní øešení nìkterých problémù a pøíèin pádù hry.
-        </li><li><b>Novì (1.4)</b> AndariaPatcher má funkci na obnovení registrù Ultimy pro windows, podle vybraného umístìní.
-        </li><li><b>Novì (1.4)</b> AndariaPatcher umí smazat nepotøebné soubory stažené z Andarie.
-
+    <li>V první øadì patcher na poèítaèi hráèe <b>NEDÌLÁ</b> nic jiného, než by udìlal sám hráè (stáhne soubor, rozbalí do adresáøe ultimy, spustí start_?.bat). Tedy neprobíhá žádné špehování ani otevírání zadních vrátek (jak se nìkteøí paranoici obávají). Jedinout informaci, kterou pøedává patcher serveru andarie je "+1", kterým zvýší poèítadlo použití. Ostatní komunikace probíhá smìrem k uživateli.
+    </li><li> Patcher je projekt otevøený, zdrojové kódy jsou k dispozici všem (GNU GPL) a tudíž tato tvrzení tedy mùže ovìøit každý programátor, jenž se trošku vyzná v Javì.
+    </li><li>Veškerá dùležitá èinnost je ukládána do logovacího okna a je možné si zobrazit detailní informace pomocí zaškrtávátka "Debug režim"</li>
+    </ul><ul>
+    <b>Potrobnìji k èinnosti:</b>
+        <li> stáhne se soubor ze serveru Andarie obsahující seznam patchù (obsah sekce download).
+        </li><li>Seznam patchù z andarie je porovnán se seznamem nainstalovaných v tvojí ultimì (informace jsou uložené v AndariaPatcher.xml v adresáøi uo).
+        </li><li>Po stisknutí tlaèítka "Instalovat" stáhne program všechny potøebné (vybrané) soubory ze serveru Andarie na doèasné úložištì a zároveò stažené zaène instalovat. Pokud instalovaný patch obsahuje instalaèní skript (start_a.bat nebo start_g.bat) bude automaticky spuštìný - jako pøi ruèní instalaci.
+        </li><li>Je možné nastavit aby se po ukonèení AndariaPatcheru spustil jiný libovolný program (kupøíkladu AndariaClient.exe). To funguje pouze v pøípadì zavøení tlaèítkem "Zavøít". Zavøení køížkem a pod. tento krok vynechá.
+        </li><li>AndariaPatcher obsahuje funkce, které usnadní øešení nìkterých problémù a pøíèin pádù hry (odstranìní .nwb, obnovit registry windows).
     </li></ul>
 
     <h4>Instalace a spuštìní:</h4>

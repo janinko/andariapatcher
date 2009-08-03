@@ -32,7 +32,7 @@ class Settings {
      * Adresy URL
      */
     private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
-    private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory_7zip";
+    private final String remote_storage = "http://space.andaria.net/data/andaria_soubory_7zip";
     private final String about_url = "http://patcher.andaria.net/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";

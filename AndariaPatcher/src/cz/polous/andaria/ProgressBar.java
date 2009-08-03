@@ -12,13 +12,13 @@ import javax.swing.JProgressBar;
 public class ProgressBar {
 
     private Log log;
-    private double totalProgress;
-    private double totalMax;
-    private double singleProgress;
-    private double singleMax;
+    private long totalProgress;
+    private long totalMax;
+    private long singleProgress;
+    private long singleMax;
     private NumberFormat speedFormat;
 
-
+  
     public static class Bars {
         static final int SINGLE = 0;
         static final int TOTAL = 1;
@@ -77,10 +77,10 @@ public class ProgressBar {
         }
     }
 
-    @Deprecated
+    /*@Deprecated
     protected void addToSingleProgress(double i) {
-        setSingleProgress(singleProgress + i);
-    }
+    setSingleProgress(singleProgress + i);
+    }*/
 
     /***************************************************************************
      * Set single file progress to a value
@@ -90,17 +90,20 @@ public class ProgressBar {
      *
      * @param i (double) value
      **************************************************************************/
-    public void setSingleProgress(double i) {
+    public void setSingleProgress(long i) {
         if (i > singleMax) {
             i = singleMax;
+            log.addErr("Chyba počítání velikosti souborů.");
         }
+
+
 
         setTotalProgress(totalProgress - singleProgress + i);
         singleProgress = i;
         updateProgressBar(Bars.SINGLE);
     }
 
-    void resetSingleProgress(double i) {
+    void resetSingleProgress(long i) {
         setSingleMax(i);
         resetSingleProgress();
     }
@@ -111,7 +114,7 @@ public class ProgressBar {
         updateProgressBar(Bars.SINGLE);
     }
 
-    public void removeFromTotalProgress(double i) {
+    public void removeFromTotalProgress(long i) {
         setTotalMax(totalMax - i);
     }
 
@@ -128,33 +131,33 @@ public class ProgressBar {
         speedFormat.setMinimumFractionDigits(2);
     }
 
-    double getTotalProgress() {
+    long getTotalProgress() {
         return totalProgress;
     }
 
-    double getTotalMax() {
+    long getTotalMax() {
         return totalMax;
     }
 
-    double getSingleProgress() {
+    long getSingleProgress() {
         return singleProgress;
     }
 
-    double getSingleMax() {
+    long getSingleMax() {
         return singleMax;
     }
 
-    public void setTotalProgress(double i) {
+    public void setTotalProgress(long i) {
         totalProgress = i;
         updateProgressBar(Bars.TOTAL);
     }
 
-    public void setTotalMax(double i) {
+    public void setTotalMax(long i) {
         totalMax = i;
         updateProgressBar(Bars.TOTAL);
     }
 
-    public void setSingleMax(double i) {
+    public void setSingleMax(long i) {
         singleMax = i;
         updateProgressBar(Bars.SINGLE);
     }

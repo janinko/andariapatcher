@@ -1,16 +1,20 @@
-
+<?PHP
+$VERSION_FILE = "/home/wwwroot/andaria.net/patcher/version.php";
+$countFile = "/home/wwwroot/andaria.net/patcher/hits/".date("m-y").".txt";
+$countBetaFile = "/home/wwwroot/andaria.net/patcher/beta/hits/".date("m-y").".txt";
+?>
 <script src="http://java.com/js/deployJava.js"></script>
 <script type="text/javascript" >
     //<![CDATA[
-	  var appLink = "http://strazci.andaria.net/patcher/launch.jnlp";
-    var appBetaLink = "http://strazci.andaria.net/patcher/beta/launch.jnlp";
-    deployJava.launchButtonPNG = 'http://strazci.andaria.net/patcher/spustit.png';
-            
+	var appLink = "http://patcher.andaria.net/launch.jnlp";
+    var appBetaLink = "http://patcher.andaria.net/beta/launch.jnlp";
+    deployJava.launchButtonPNG = 'http://patcher.andaria.net/spustit.png';
+
     // os detection
     var isIE = /*@cc_on!@*/false;
     var isMoz = ( navigator.userAgent.toLowerCase().indexOf("firefox") != -1 );
     var isOpera = ( navigator.userAgent.toLowerCase().indexOf("opera") != -1 );
-    
+
     var OSName="Unknown OS";
     if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
     if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
@@ -19,47 +23,47 @@
 
 	  // java detection
     var java_required_version = '1.6.0+';
-    var java_version =  "nezjištìná";
-    var url = appBetaLink;        
+    var java_version =  "nezjiï¿½tï¿½nï¿½";
+    var url = appBetaLink;
     var java_found = false;
-    var txt;  
-    
-    
+    var txt;
+
+
     var JREsList = deployJava.getJREs();
     if ( JREsList.length > 0 )     {
         java_version = JREsList[JREsList.length - 1];
         java_found = (deployJava.versionCheck(java_required_version));
-    } 
-       
+    }
+
     function update_jre_version ()
     {
       	if (OSName == "Linux" || OSName == "Windows" ) {
-      	      var text = 'Tvá verze je: ' + java_version;
+      	      var text = 'Tvï¿½ verze je: ' + java_version;
 
               if (isOpera) {
-                  text = text + '. To ale v pøípadì prohlížeèe Opera nic neznamená. Klikni na spouštìcí odkaz a dej otevøít stažený JNLP soubor v programu javaws (pokud tedy máš JRE 1.6.0 nainstalované).';
+                  text = text + '. To ale v pï¿½ï¿½padï¿½ prohlï¿½eï¿½e Opera nic neznamenï¿½. Klikni na spouï¿½tï¿½cï¿½ odkaz a dej otevï¿½ï¿½t staï¿½enï¿½ JNLP soubor v programu javaws (pokud tedy mï¿½ JRE 1.6.0 nainstalovanï¿½).';
               } else {
-                  text = text + ', což jest ' + (java_found?"v oukeji.":"špatnì a musíš to vylepšit !") ;
+                  text = text + ', coï¿½ jest ' + (java_found?"v oukeji.":"ï¿½patnï¿½ a musï¿½ to vylepï¿½it !") ;
               }
               txt = document.createTextNode(text);
               document.getElementById("java_detect_result").appendChild(txt);
-              text = null;      		  	
+              text = null;
               if (java_found || isOpera) {
-            		  	txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' mùžeš Andaria patcher spustit pomocí následujícího tlaèítka:');
+            		  	txt = document.createTextNode('Pod operaï¿½nï¿½m systï¿½mem ' + OSName + ' mï¿½eï¿½ Andaria patcher spustit pomocï¿½ nï¿½sledujï¿½cï¿½ho tlaï¿½ï¿½tka:');
             		  	document.getElementById("start_label").appendChild(txt);
            		} else {
-                		txt = document.createTextNode('Pod operaèním systémem ' + OSName + ' zatím nemùžeš Andaria patcher spustit pomocí Java Web Start, protože nemáš nainstalovanou správou verzi Javy. Ale následujcí tlaèítko ti instalaci JRE nabídne:');
+                		txt = document.createTextNode('Pod operaï¿½nï¿½m systï¿½mem ' + OSName + ' zatï¿½m nemï¿½eï¿½ Andaria patcher spustit pomocï¿½ Java Web Start, protoï¿½e nemï¿½ nainstalovanou sprï¿½vou verzi Javy. Ale nï¿½sledujcï¿½ tlaï¿½ï¿½tko ti instalaci JRE nabï¿½dne:');
             				document.getElementById("start_label").appendChild(txt);
            		}
       	} else {
-            txt = document.createTextNode('Tvá verze je: ' + java_version + ', takže je to ' + (java_found?"teoreticky v oukeji.":"prakticky špatnì a musíš to vylepšit !") );
+            txt = document.createTextNode('Tvï¿½ verze je: ' + java_version + ', takï¿½e je to ' + (java_found?"teoreticky v oukeji.":"prakticky ï¿½patnï¿½ a musï¿½ to vylepï¿½it !") );
     		  	document.getElementById("java_detect_result").appendChild(txt);
-    
-         		txt = document.createTextNode('AndariaPatcher neni urèený k bìhu pod operaèním systémem ' + OSName + '. Mùžeš to ale zkusit pomocí následujícího tlaèítka (dej vìdìt jak jsi dopadl):');
+
+         		txt = document.createTextNode('AndariaPatcher neni urï¿½enï¿½ k bï¿½hu pod operaï¿½nï¿½m systï¿½mem ' + OSName + '. Mï¿½eï¿½ to ale zkusit pomocï¿½ nï¿½sledujï¿½cï¿½ho tlaï¿½ï¿½tka (dej vï¿½dï¿½t jak jsi dopadl):');
         		document.getElementById("start_label").appendChild(txt);
         }
-    } 
-    
+    }
+
     function launch(link) {
         if (isIE && (OSName == "Windows") ) {
         document.write("<OBJECT CODEBASE='"+ cabURL +"' CLASSID='clsid:5852F5ED-8BF4-11D4-A245-0080C6F74284' HEIGHT=0 WIDTH=0>");
@@ -75,61 +79,61 @@
             } else {
                 window.location = link;
                 }
-            } 
+            }
         }
     }
-    
+
     // Process the result of the XPInstall.
     function checkInstall(name, result) {
         if (result) {
             // Installation failed.
-            alert("Instalace balíèku " + name + " se nepodaøila ! \n(" + result + ")");
+            alert("Instalace balï¿½ï¿½ku " + name + " se nepodaï¿½ila ! \n(" + result + ")");
         } else {
             // Installation successful, so try to reload current page.
             window.location.reload();
         }
     }
-    
+
     // Install the JRE with XPInstall verification.
-    function installJRE() {    
+    function installJRE() {
         // The browser supports XPInstall.
         if (InstallTrigger.enabled()) {
-            txt = "J2SE(TM) Runtime Environment 6 Update 3";      
+            txt = "J2SE(TM) Runtime Environment 6 Update 3";
             var xpi = new Object();
             xpi[txt] = "http://java.sun.com/update/1.6.0/jre-6u3-windows-i586-jc.xpi";
             // Try to install the package and process the results.
             InstallTrigger.install(xpi, checkInstall);
         } else {
             // The browser does not support XPInstall.
-            alert("XPInstall nepodporuje tvùj prohlížeè. Myslel jsem že máš Firefox ?! hmmh..");
+            alert("XPInstall nepodporuje tvï¿½j prohlï¿½eï¿½. Myslel jsem ï¿½e mï¿½ Firefox ?! hmmh..");
         }
-    }    
+    }
     //]]>
 </script>
 
 <font color="#A37D56" style="font-family: Verdana,Arial; font-size: 9pt">
     <h3>O programu:</h3>
-    <p>Andaria patcher umožòuje hráèùm oblíbené hry Ultima online jednoduše pøizpùsobit svou instalaci pro shard Andaria. Toto je druhá verze, která narozdíl od pøedchozí verze psané pomocí XUL je naprogramovaná v jazyce Java.
+    <p>Andaria patcher umoï¿½ï¿½uje hrï¿½ï¿½ï¿½m oblï¿½benï¿½ hry Ultima online jednoduï¿½e pï¿½izpï¿½sobit svou instalaci pro shard Andaria. Toto je druhï¿½ verze, kterï¿½ narozdï¿½l od pï¿½edchozï¿½ verze psanï¿½ pomocï¿½ XUL je naprogramovanï¿½ v jazyce Java.
     </p>
 <p>
-        <b>Poslední vydaná verze: <?PHP require_once("D:\\Wwwroot\\andaria.net\\strazci\\patcher\\version.php"); echo $ap_version;?></b>. Informace o známých chybách a plánovaných úpravách najdete <a href='http://trac2.assembla.com/andariapatcher/report/3'>na stránkách projektu.</a>
+        <b>Poslednï¿½ vydanï¿½ verze: <?PHP require_once($VERSION_FILE); echo $ap_version;?></b>. Informace o znï¿½mï¿½ch chybï¿½ch a plï¿½novanï¿½ch ï¿½pravï¿½ch najdete <a href='http://trac2.assembla.com/andariapatcher/report/3'>na strï¿½nkï¿½ch projektu.</a>
     </p>
-    
+
     <h4>Jak to funguje ?</h4>
     <ul>
-        <li>Stáhne se soubor ze serveru Andarie obsahující seznam patchù.
-        </li><li>Porovná seznam patchù z andarie se seznamem nainstalovaných v tvojí ultimì (andariapacher.xml).
-        </li><li>Po stisknutí tlaèítka "Instalovat" stáhne program všechny potøebné soubory ze serveru Andarie a zaène je instalovat. Pokud instalovaný patch obsahuje instalaèní skript (start_a.bat || start_g.bat) bude automaticky spuštìný jako pøi ruèní instalaci.
-        </li><li>Je možné nastavit aby se po ukonèení AndariaPatcheru spustil jiný libovolný program (kupøíkladu AndariaClient.exe).
-        </li><li>Andaria patcher obsahuje funkce, které usnadní øešení nìkterých problémù a pøíèin pádù hry.
-        </li><li><b>Novì (1.4)</b> AndariaPatcher má funkci na obnovení registrù Ultimy pro windows, podle vybraného umístìní.
-        </li><li><b>Novì (1.4)</b> AndariaPatcher umí smazat nepotøebné soubory stažené z Andarie.
-        
+        <li>Stï¿½hne se soubor ze serveru Andarie obsahujï¿½cï¿½ seznam patchï¿½.
+        </li><li>Porovnï¿½ seznam patchï¿½ z andarie se seznamem nainstalovanï¿½ch v tvojï¿½ ultimï¿½ (andariapacher.xml).
+        </li><li>Po stisknutï¿½ tlaï¿½ï¿½tka "Instalovat" stï¿½hne program vï¿½echny potï¿½ebnï¿½ soubory ze serveru Andarie a zaï¿½ne je instalovat. Pokud instalovanï¿½ patch obsahuje instalaï¿½nï¿½ skript (start_a.bat || start_g.bat) bude automaticky spuï¿½tï¿½nï¿½ jako pï¿½i ruï¿½nï¿½ instalaci.
+        </li><li>Je moï¿½nï¿½ nastavit aby se po ukonï¿½enï¿½ AndariaPatcheru spustil jinï¿½ libovolnï¿½ program (kupï¿½ï¿½kladu AndariaClient.exe).
+        </li><li>Andaria patcher obsahuje funkce, kterï¿½ usnadnï¿½ ï¿½eï¿½enï¿½ nï¿½kterï¿½ch problï¿½mï¿½ a pï¿½ï¿½ï¿½in pï¿½dï¿½ hry.
+        </li><li><b>Novï¿½ (1.4)</b> AndariaPatcher mï¿½ funkci na obnovenï¿½ registrï¿½ Ultimy pro windows, podle vybranï¿½ho umï¿½stï¿½nï¿½.
+        </li><li><b>Novï¿½ (1.4)</b> AndariaPatcher umï¿½ smazat nepotï¿½ebnï¿½ soubory staï¿½enï¿½ z Andarie.
+
     </li></ul>
-    
-    <h4>Instalace a spuštìní:</h4>
-    <p>Andaria patcher vyžaduje pro svùj chod <A href="http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com" >JRE 1.6.0 nebo novìjší</A>. <span id="java_detect_result"></span>
-<p>            
+
+    <h4>Instalace a spuï¿½tï¿½nï¿½:</h4>
+    <p>Andaria patcher vyï¿½aduje pro svï¿½j chod <A href="http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com" >JRE 1.6.0 nebo novï¿½jï¿½ï¿½</A>. <span id="java_detect_result"></span>
+<p>
 <span id="start_label"></span>
 <br><br><div align="center">
 
@@ -142,9 +146,9 @@
 <?PHP
         // nacte pocet spusteni patcheru v poslednim mesici
         //try {
-            $countFile = "D:\\Wwwroot\\andaria.net\\strazci\\patcher\\hits\\".date("m-y").".txt";
+            
             $hits = file($countFile);
-            echo "<br><font size='-3'>(Poèet spuštìní za ".date("m. Y")." je ".$hits[0]."x)</font><br>";
+            echo "<br><font size='-3'>(Poï¿½et spuï¿½tï¿½nï¿½ za ".date("m. Y")." je ".$hits[0]."x)</font><br>";
        // }// catch () {
         //}
 ?>
@@ -156,40 +160,40 @@
 <script type="text/javascript">
     //<![CDATA[
     update_jre_version();
-    
+
     if (OSName != "Linux" && OSName != "Windows" ) {
-        document.write("<p><DIV align='left' ><b>Je mi líto. Pro tvùj operaèní systém není Andaria patcher uzpoùsobený. Andaria patcher funguje jen na operaèních systémech Windows a Linux ! Ty máš podle všeho "+OSName+" takže budeš muset použít ruèní instalaci. Ale zkusit to mùžeš .-)</b></DIV></p>");
+        document.write("<p><DIV align='left' ><b>Je mi lï¿½to. Pro tvï¿½j operaï¿½nï¿½ systï¿½m nenï¿½ Andaria patcher uzpoï¿½sobenï¿½. Andaria patcher funguje jen na operaï¿½nï¿½ch systï¿½mech Windows a Linux ! Ty mï¿½ podle vï¿½eho "+OSName+" takï¿½e budeï¿½ muset pouï¿½ï¿½t ruï¿½nï¿½ instalaci. Ale zkusit to mï¿½eï¿½ .-)</b></DIV></p>");
     }
     //]]>
 
 </script>
             </div>
             </p>
-            <p><i><b>Tip:</b> Jestliže chceš mít <b>ikonku na spouštìní patcheru na ploše</b>, postupuj následovnì: 
+            <p><i><b>Tip:</b> Jestliï¿½e chceï¿½ mï¿½t <b>ikonku na spouï¿½tï¿½nï¿½ patcheru na ploï¿½e</b>, postupuj nï¿½sledovnï¿½:
                 <UL>
-                    <LI>Nejdøíve si Andaria Patcher nainstaluj pomocí ikonky výše.</LI>
-                    <LI>Stistkni Tlaèítko start -> Spustit -> Pøíkaz: <b>javaws -viewer</b></LI>
-                    <LI>Spustí se ti program <b>Java Web Start</b> a v nìm bys mìl najít Andaria Patcher.</LI>
-                    <LI>Nyní ho mùžeš buï spustit poklikáním.</LI>
-                    <LI>Nebo pravým tlaèítkem otevøít menu a vytvoøit si na ploše ikonu Andaria patcheru pomocí položky <b>"Install shortcuts"</b></LI>
+                    <LI>Nejdï¿½ï¿½ve si Andaria Patcher nainstaluj pomocï¿½ ikonky vï¿½e.</LI>
+                    <LI>Stistkni Tlaï¿½ï¿½tko start -> Spustit -> Pï¿½ï¿½kaz: <b>javaws -viewer</b></LI>
+                    <LI>Spustï¿½ se ti program <b>Java Web Start</b> a v nï¿½m bys mï¿½l najï¿½t Andaria Patcher.</LI>
+                    <LI>Nynï¿½ ho mï¿½eï¿½ buï¿½ spustit poklikï¿½nï¿½m.</LI>
+                    <LI>Nebo pravï¿½m tlaï¿½ï¿½tkem otevï¿½ï¿½t menu a vytvoï¿½it si na ploï¿½e ikonu Andaria patcheru pomocï¿½ poloï¿½ky <b>"Install shortcuts"</b></LI>
                 </UL>
             </i></p>
-            <p><i><b>Tip:</b> Máš už instalaci UO opatchovanou a <b>nechceš patchovat vše znova</b> ?
-            <UL>V položce nastavení je tlaèítko, které umožní øíct Andaria patcheru, že všechny dostupné soubory už byly ze serveru Andarie nainstalované. </UL>
+            <p><i><b>Tip:</b> Mï¿½ uï¿½ instalaci UO opatchovanou a <b>nechceï¿½ patchovat vï¿½e znova</b> ?
+            <UL>V poloï¿½ce nastavenï¿½ je tlaï¿½ï¿½tko, kterï¿½ umoï¿½nï¿½ ï¿½ï¿½ct Andaria patcheru, ï¿½e vï¿½echny dostupnï¿½ soubory uï¿½ byly ze serveru Andarie nainstalovanï¿½. </UL>
             </i></p>
-   
+
     <hr>
-        <h4>Jak se mohu pøidat k vývoji nebo ziskat zdrojové soubory aplikace ?</h4>
+        <h4>Jak se mohu pï¿½idat k vï¿½voji nebo ziskat zdrojovï¿½ soubory aplikace ?</h4>
     <ul>
-        <li>Všechny objevené chyby, novinky a prùbìh i plánování vývoje je <a href='http://trac2.assembla.com/andariapatcher/report/6'>v tomto reportu.</a></li>
-        <li>Zdrojový kód patcheru aktuální i vývojové verze je možné <a href="http://trac2.assembla.com/andariapatcher/">stáhnout a prohlížet na stránkách projektu</a>.
-        <li>Pokud chceš jen nahlédnout, je k dispozici také <a href="http://strazci.andaria.net/patcher/javadoc/index.html">JavaDoc</a>.
-        <li>Pokud chceš k projektu jakkoliv pøispìt, kontaktuj mnì (p0l0us/korneus) na fóru Andarie, pøez JABBER, ICQ, IRC, mail.... Potøeba jsou obèas grafici a neustále programátoøi v Javì (nemusíš být žádný profík).
+        <li>Vï¿½echny objevenï¿½ chyby, novinky a prï¿½bï¿½h i plï¿½novï¿½nï¿½ vï¿½voje je <a href='http://trac2.assembla.com/andariapatcher/report/6'>v tomto reportu.</a></li>
+        <li>Zdrojovï¿½ kï¿½d patcheru aktuï¿½lnï¿½ i vï¿½vojovï¿½ verze je moï¿½nï¿½ <a href="http://trac2.assembla.com/andariapatcher/">stï¿½hnout a prohlï¿½et na strï¿½nkï¿½ch projektu</a>.
+        <li>Pokud chceï¿½ jen nahlï¿½dnout, je k dispozici takï¿½ <a href="http://patcher.andaria.net/javadoc/index.html">JavaDoc</a>.
+        <li>Pokud chceï¿½ k projektu jakkoliv pï¿½ispï¿½t, kontaktuj mnï¿½ (p0l0us/korneus) na fï¿½ru Andarie, pï¿½ez JABBER, ICQ, IRC, mail.... Potï¿½eba jsou obï¿½as grafici a neustï¿½le programï¿½toï¿½i v Javï¿½ (nemusï¿½ bï¿½t ï¿½ï¿½dnï¿½ profï¿½k).
     </ul>
-    
+
     <hr>
     Autor patcheru: p0l0us alias Martin Polehla :-)
-    
-    
+
+
 </font>
 <iframe width=0 height=0 id='patcherCounter' style="width:0px; height:0px; border: 0px"></iframe>

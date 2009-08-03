@@ -13,11 +13,11 @@ abstract class OperatingSystem {
 
     // private final OperatingSystem os;
     private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
-    private final String remote_storage = "http://space.andaria.net/data/Andaria_Soubory";
-    private final String about_url = "http://strazci.andaria.net/patcher/java.php";
+    private final String remote_storage = "http://space.andaria.net/data/andaria_soubory";
+    private final String about_url = "http://patcher.andaria.net/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";
-    private final String counter_url = "http://strazci.andaria.net/patcher/counter.php";
+    private final String counter_url = "http://patcher.andaria.net/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.txt";
     private final String[] unrarPatchItem = {"unrar.exe", "Unrar", "12.4.2008, 12:00", "15d03a204e1781629fdb463cb1f36a0d", "1", "117112", "313d", "Program pro rozbalování .rar archivu."};
     private static Log log;

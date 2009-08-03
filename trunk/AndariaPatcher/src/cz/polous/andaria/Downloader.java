@@ -51,7 +51,7 @@ class Downloader extends PatcherQueue {
         PatchItem p = getFirstItem();
         // ProgressBars
 
-        resetSingleProgress((double) p.getSize());
+        resetSingleProgress(p.getSize());
 
         // Check if wanted file exists at local storage
         String fileName = p.getLocalFileName();

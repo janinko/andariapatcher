@@ -24,8 +24,11 @@ class Installer extends PatcherQueue {
 
     private static final Installer INSTANCE = new Installer();
     private boolean failed;
-    private double extractTotalSize;
-    private double extractProgressPart;
+    private long extractTotalSize;
+    private long extractProgressPart;
+    long totalsize = 0;
+    long totalsizeEnd = 0;
+    long singlediv = 0;
 
     //public static Log log;
     public void setFailed(boolean failed) {
@@ -122,9 +125,12 @@ class Installer extends PatcherQueue {
         // progress will be counted by 65% for extracting files
         // and  35% for installing patches.
         resetSingleProgress(patchItem.getSize());
-        extractProgressPart = patchItem.getSize() * 65 / 100.00;
+        extractProgressPart = Math.round(patchItem.getSize() * 65 / 100.00);
 
-        log.addDebug("Pracuju se souborem: " + patchItem.getLocalFileName());
+        log.addDebug("Pracuju se souborem: ".concat(patchItem.getLocalFileName()));
+        log.addDebug("...jeho velikost je: ".concat(Double.toString(patchItem.getSize())));
+        totalsize += patchItem.getSize();
+
         if (patchItem.isPacked()) {
             final String uopath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
 
@@ -137,7 +143,7 @@ class Installer extends PatcherQueue {
             } catch (Exception ex) {
                 log.addEx(ex);
             }
-            
+
             setLabelSpeed(0);
             log.addDebug("Soubor je rozbalený, hledám instalační skripty.");
             File f = new File(uopath + File.separator + "start_a.bat");
@@ -164,7 +170,7 @@ class Installer extends PatcherQueue {
 
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");
-           // setSingleProgressPercents(100);
+        // setSingleProgressPercents(100);
         } else {
             // copy raw downloaded file into game directory
             // probably not used, after unrar - 7zip migration.
@@ -208,7 +214,20 @@ class Installer extends PatcherQueue {
             patchItem.setInstalled();
         }
         setSingleProgressPercents(100);
+        //TODO: odstranit tyhle kontroly velikosti a jejich promenne. Jsou celkem zbytecne.
+        log.addDebug("Spočítaná velikost doinstalovaného souboru: ".concat(Double.toString(getSingleProgress())));
+        totalsizeEnd += patchItem.getSize();
+        if (totalsizeEnd != totalsize) {
+            log.addErr("Nevychází velikost celkově nainstalovaných patchů na začátku a konci instalačního procesu.");
+        }
+        if (getTotalProgress() != totalsize) {
+            log.addErr("Nevychází velikost celkově nainstalovaných patchů a stropu progressBaru.");
+        }
+        if (getTotalMax() == getTotalProgress()) {
+            log.addDebug("Podle progressbaru jsou všechny patche jsou nainstalované.");
+        }
         removeFirst();
+        updateProgressBar(Bars.TOTAL);
     }
 
     /***************************************************************************
@@ -219,7 +238,7 @@ class Installer extends PatcherQueue {
      * files.
      **************************************************************************/
     public void setExtractedProgress(long value) {
-        setSingleProgress(1.00 * value / extractTotalSize * extractProgressPart);
+       setSingleProgress(Math.round(value * extractProgressPart / extractTotalSize));
     }
 
     /***************************************************************************

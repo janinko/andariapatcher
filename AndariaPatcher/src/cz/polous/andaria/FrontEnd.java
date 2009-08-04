@@ -952,6 +952,7 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBConfBrowseUltimaOnlinePathActionPerformed
 
     private void jBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallActionPerformed
+        Settings.removeRarFiles();
         PatchList.getInstance().download();
         updateButtons();
         jTPMain.setSelectedIndex(1);

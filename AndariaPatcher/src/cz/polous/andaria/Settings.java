@@ -303,4 +303,35 @@ class Settings {
 
         return true;
     }
+
+    /*
+     * Funkce urcena ke zruseni ve verzi 1.7 ci pozdeji.
+     */
+    @Deprecated
+    public static void removeRarFiles() {
+        String dir = Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE);
+
+        FilenameFilter rarFilter = new FilenameFilter() {
+
+            @Override
+            public boolean accept(File dir, String name) {
+                if (name.endsWith(".rar")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        File tmpDir = new File(dir);
+        String[] fileList = tmpDir.list(rarFilter);
+        File file;
+        for (int i = 0; i < fileList.length; i++) {
+            file = new File(tmpDir.getAbsolutePath().concat(File.separator).concat(fileList[i]));
+            if (file.delete()) {
+                log.addLine("Smazal jsem soubor: ".concat(file.getAbsolutePath()));
+            } else {
+                log.addErr("Nepodařilo se smazat soubor: ".concat(file.getAbsolutePath()));
+            }
+        }
+    }
 }

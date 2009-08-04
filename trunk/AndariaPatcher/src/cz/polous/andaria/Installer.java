@@ -74,7 +74,7 @@ class Installer extends PatcherQueue {
             public void run() {
                 try {
                     log.addDebug("Před spuštěním");
-                    Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH)));
+                    Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
                     log.addDebug("Výstup procesu:");
                     String line;
 
@@ -132,7 +132,7 @@ class Installer extends PatcherQueue {
         totalsize += patchItem.getSize();
 
         if (patchItem.isPacked()) {
-            final String uopath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
+            final String uopath = Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
 
             setLabelText("Rozbaluju patch: " + patchItem.getFileName());
             J7zipBinding sevenZip = new J7zipBinding();
@@ -177,7 +177,7 @@ class Installer extends PatcherQueue {
             extractProgressPart = patchItem.getSize();
             setLabelText("Kopíruju soubor: " + patchItem.getFileName() + " do adresáře s UO.");
 
-            final String uopath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
+            final String uopath = Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
             File inFile = new File(patchItem.getLocalFileName());
             File outFile = new File(uopath + File.separator + patchItem.getFileName());
 

@@ -2,6 +2,7 @@ package cz.polous.andaria;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import org.jdom.output.XMLOutputter;
 import java.io.IOException;
 import java.util.Date;
@@ -27,7 +28,6 @@ class Settings {
     private Element settings; // settings of patcher
     private Element patches; // content of local stored patchlist
     private OperatingSystem os;
-
     /**
      * Adresy URL
      */
@@ -38,7 +38,6 @@ class Settings {
     private final String debug_log = "0";
     private final String counter_url = "http://patcher.andaria.net/beta/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
-    
     private static Log log;
 
     private Settings() {
@@ -49,19 +48,18 @@ class Settings {
     public static Settings getInstance() {
         return INSTANCE;
     }
-    
+
     public OperatingSystem getOs() {
         return os;
     }
-    
+
     /*
      * Get URL's method
      */
-    
     public String getCounter_url() {
         return counter_url;
     }
-    
+
     public String getAbout_url() {
         return about_url;
     }
@@ -85,7 +83,7 @@ class Settings {
     public String getRemote_storage() {
         return remote_storage;
     }
-    
+
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
@@ -254,32 +252,34 @@ class Settings {
      * @return true if debug mode, false if not.
      **************************************************************************/
     public boolean debugMode() {
-        return getValue(DEBUG_MODE).equalsIgnoreCase("1") ? true : false;
+        return getValue(VALUES.DEBUG_MODE).equalsIgnoreCase("1") ? true : false;
     }
 
     public static String getSettingName(int val) {
         return settingList[val];
     }
-    public static final int RUN_COMMAND = 0;
-    //NOTE: use this first
-    public static final int UNUSED_CONST = 1;
-    public static final int ULTIMA_ONINE_PATH = 2;
-    public static final int LOCAL_STORAGE = 3;
-    public static final int REMOTE_STORAGE = 4;
-    public static final int ABOUT_URL = 5;
-    public static final int NEWS_URL = 6;
-    public static final int DEBUG_MODE = 7;
-    public static final int FILE_LIST_URL = 8;
+
+    class VALUES {
+
+        public static final int RUN_COMMAND = 0;
+        //NOTE: use this first
+        public static final int UNUSED_CONST = 1;
+        public static final int ULTIMA_ONINE_PATH = 2;
+        public static final int LOCAL_STORAGE = 3;
+        public static final int REMOTE_STORAGE = 4;
+        public static final int ABOUT_URL = 5;
+        public static final int NEWS_URL = 6;
+        public static final int DEBUG_MODE = 7;
+        public static final int FILE_LIST_URL = 8;
+    }
     private static final String[] settingList = {"run_command", "", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url"};
 
     private String getDefaultValue(int item) {
-
         switch (item) {
-
             case 0:
                 return os.getRun_command();
             case 1:
-                return null;
+                return "";
             case 2:
                 return os.getUltima_online_path();
             case 3:

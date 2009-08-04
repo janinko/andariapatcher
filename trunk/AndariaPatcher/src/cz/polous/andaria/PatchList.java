@@ -71,7 +71,7 @@ class PatchList {
             public void run() {
                 try {
                     log.addLine("Zacinam stahovat seznam patchu z internetu.");
-                    URL url = new URL(Settings.getInstance().getValue(Settings.FILE_LIST_URL));
+                    URL url = new URL(Settings.getInstance().getValue(Settings.VALUES.FILE_LIST_URL));
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     Reader reader = new InputStreamReader(in, "UTF-8");

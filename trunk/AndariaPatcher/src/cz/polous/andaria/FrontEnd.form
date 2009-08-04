@@ -1096,10 +1096,8 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Smazat z do&#x10d;asn&#xe9;ho &#xfa;lo&#x17e;i&#x161;t&#x11b; v&#x161;echny sta&#x17e;en&#xe9; soubory."/>
                 <Property name="toolTipText" type="java.lang.String" value="Opravuje chybu spou&#x161;t&#x11b;n&#xed; ultimy online, p&#x159;i kter&#xe9; hra spadne hned po spu&#x161;t&#x11b;n&#xed;."/>
-                <Property name="actionCommand" type="java.lang.String" value="Smazat z do&#x10d;asn&#xe9;ho &#xfa;lo&#x17e;i&#x161;t&#x11b; v&#x161;echny sta&#x17e;en&#xe9; soubory."/>
               </Properties>
               <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Smazat z do&#x10d;asn&#xe9;ho &#xfa;lo&#x17e;i&#x161;t&#x11b; v&#x161;echny sta&#x17e;en&#xe9; soubory."/>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Pom&#x16f;&#x17e;e uvolnit n&#x11b;jak&#xe9; to m&#xed;sto na disku. "/>
               </AccessibilityProperties>
               <Events>

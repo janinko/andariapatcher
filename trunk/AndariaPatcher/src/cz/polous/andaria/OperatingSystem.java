@@ -69,7 +69,7 @@ abstract class OperatingSystem {
 
     public void deleteUOFile(String subDir, String fileName) {
 
-        File f = new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH) + File.separator + subDir + File.separator + fileName);
+        File f = new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH) + File.separator + subDir + File.separator + fileName);
         if (f.exists()) {
             f.delete();
         }

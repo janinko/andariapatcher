@@ -28,7 +28,7 @@ public class J7zipArchiveExtractCallback implements IArchiveExtractCallback // ,
     public J7zipArchiveExtractCallback() {
         log = new Log(this);
         PasswordIsDefined = false;
-        _diskFilePath = Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH);
+        _diskFilePath = Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
     }
 
     class OutputStream extends java.io.OutputStream {

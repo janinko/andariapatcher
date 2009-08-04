@@ -107,11 +107,11 @@ class PatchItem {
     }
 
     public String getLocalFileName() {
-        return Settings.getInstance().getValue(Settings.LOCAL_STORAGE) + File.separator + fileName;
+        return Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE) + File.separator + fileName;
     }
 
     public String getRemoteFileName() {
-        return Settings.getInstance().getValue(Settings.REMOTE_STORAGE) + "/" + fileName;
+        return Settings.getInstance().getValue(Settings.VALUES.REMOTE_STORAGE) + "/" + fileName;
     }
 
     public String getName() {

@@ -79,12 +79,12 @@ public class FrontEnd extends JFrame {
         HtmlPanel htmlPNews = new HtmlPanel();
         jTPMain.insertTab(null, null, htmlPNews, "Tady se nachází novinky nejen ze světa...", 0);
         jTPMain.setTitleAt(0, "Novinky");
-        final Browser news = new Browser(htmlPNews, Settings.getInstance().getValue(Settings.NEWS_URL));
+        final Browser news = new Browser(htmlPNews, Settings.getInstance().getValue(Settings.VALUES.NEWS_URL));
 
         HtmlPanel htmlPAbout = new HtmlPanel();
         jTPMain.addTab(null, null, htmlPAbout, "Taky něco o programu samotném.");
         jTPMain.setTitleAt(jTPMain.getComponentCount() - 1, "O programu");
-        final Browser about = new Browser(htmlPAbout, Settings.getInstance().getValue(Settings.ABOUT_URL));
+        final Browser about = new Browser(htmlPAbout, Settings.getInstance().getValue(Settings.VALUES.ABOUT_URL));
 
         jTPMain.addChangeListener(new ChangeListener() {
 
@@ -180,9 +180,9 @@ public class FrontEnd extends JFrame {
     private void loadSettings() {
         Settings.getInstance().load();
 
-        jTConfRunCommand.setText(Settings.getInstance().getValue(Settings.RUN_COMMAND));
-        jTConfUltimaOnlinePath.setText(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH));
-        jTConfTempPath.setText(Settings.getInstance().getValue(Settings.LOCAL_STORAGE));
+        jTConfRunCommand.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND));
+        jTConfUltimaOnlinePath.setText(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH));
+        jTConfTempPath.setText(Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE));
         jChDebug.setSelected(Settings.getInstance().debugMode());
     }
 
@@ -190,10 +190,10 @@ public class FrontEnd extends JFrame {
      * Store application Settings.getInstance().
      **************************************************************************/
     private void saveSettings() {
-        Settings.getInstance().setValue(Settings.RUN_COMMAND, jTConfRunCommand.getText());
-        Settings.getInstance().setValue(Settings.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
-        Settings.getInstance().setValue(Settings.LOCAL_STORAGE, jTConfTempPath.getText());
-        Settings.getInstance().setValue(Settings.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
+        Settings.getInstance().setValue(Settings.VALUES.RUN_COMMAND, jTConfRunCommand.getText());
+        Settings.getInstance().setValue(Settings.VALUES.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
+        Settings.getInstance().setValue(Settings.VALUES.LOCAL_STORAGE, jTConfTempPath.getText());
+        Settings.getInstance().setValue(Settings.VALUES.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
         Settings.getInstance().save();
     }
 
@@ -917,7 +917,7 @@ public class FrontEnd extends JFrame {
 
     private void jBCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCloseActionPerformed
         try {
-            Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.RUN_COMMAND).split(" "), null, new File(Settings.getInstance().getValue(Settings.ULTIMA_ONINE_PATH)));
+            Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
         } catch (IOException ex) {
             log.addErr("Chyba při spouštění externího programu !");
             ex.printStackTrace();
@@ -986,7 +986,7 @@ public class FrontEnd extends JFrame {
 }//GEN-LAST:event_jBRenewRegistryActionPerformed
 
     private void jBRemoveTempFilesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoveTempFilesActionPerformed
-        String dir = Settings.getInstance().getValue(Settings.LOCAL_STORAGE);
+        String dir = Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE);
         Object[] opts = {"Smaž to všechno", "Rozmyslel jsem si to"};
         int potvrzeni = JOptionPane.showOptionDialog(null, "Opravdu si přeješ smazat obsah adresáře \"".concat(dir).concat("\" ?"), "Otázečka...", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
         if (potvrzeni == JOptionPane.YES_OPTION) {

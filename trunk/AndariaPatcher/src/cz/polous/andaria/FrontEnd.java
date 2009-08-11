@@ -103,6 +103,9 @@ public class FrontEnd extends JFrame {
                 } else {
                     ToolTipManager.sharedInstance().setInitialDelay(defaultToolTipSpeed);
                 }
+                if (jTPMain.getSelectedIndex() == jTPMain.getComponentCount() - 2) {
+                    Settings.getInstance().updateTempSize();
+                }
 
 
             }
@@ -149,8 +152,9 @@ public class FrontEnd extends JFrame {
         }
         jBInstallSelection.setEnabled(false);
         jBInstall.setEnabled(false);
-        patchList.reload();  
+        patchList.reload();
     }
+
     public void setJBPatchListEnabled(boolean state) {
         jBRefreshPatchList.setEnabled(state);
     }
@@ -1093,15 +1097,14 @@ public class FrontEnd extends JFrame {
             String[] fileList = tmpDir.list();
             File file;
 
-            for (int i = 0; i <
-                    fileList.length; i++) {
+            for (int i = 0; i < fileList.length; i++) {
                 file = new File(tmpDir.getAbsolutePath().concat(File.separator).concat(fileList[i]));
                 if (file.delete()) {
                     log.addLine("Smazal jsem soubor: ".concat(file.getAbsolutePath()));
                 } else {
                     log.addErr("Nepodařilo se smazat soubor: ".concat(file.getAbsolutePath()));
                 }
-
+                Settings.getInstance().updateTempSize();
             }
         }
 }//GEN-LAST:event_jBRemoveTempFilesActionPerformed

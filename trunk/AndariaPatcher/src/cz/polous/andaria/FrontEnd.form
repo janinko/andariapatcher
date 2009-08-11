@@ -129,6 +129,7 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Obnovit seznam"/>
                     <Property name="toolTipText" type="java.lang.String" value="Obnov&#xed; seznam soubor&#x16f; ze serveru a vybere soubory doporu&#x10d;en&#xe9; ke sta&#x17e;en&#xed;."/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBRefreshPatchListActionPerformed"/>

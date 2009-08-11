@@ -149,8 +149,10 @@ public class FrontEnd extends JFrame {
         }
         jBInstallSelection.setEnabled(false);
         jBInstall.setEnabled(false);
-        patchList.reload();
-    //refreshPlPane();
+        patchList.reload();  
+    }
+    public void setJBPatchListEnabled(boolean state) {
+        jBRefreshPatchList.setEnabled(state);
     }
 
     private void callCounter() {
@@ -420,6 +422,7 @@ public class FrontEnd extends JFrame {
         jBRefreshPatchList.setForeground(getForeground());
         jBRefreshPatchList.setText("Obnovit seznam");
         jBRefreshPatchList.setToolTipText("Obnoví seznam souborů ze serveru a vybere soubory doporučené ke stažení.");
+        jBRefreshPatchList.setEnabled(false);
         jBRefreshPatchList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBRefreshPatchListActionPerformed(evt);

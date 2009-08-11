@@ -72,6 +72,7 @@ class PatchList {
             public void run() {
                 try {
                     log.addLine("Zacinam stahovat seznam patchu z internetu.");
+                    FrontEnd.getInstance().setJBPatchListEnabled(false);
                     URL url = new URL(Settings.getInstance().getValue(Settings.VALUES.FILE_LIST_URL));
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
@@ -88,6 +89,7 @@ class PatchList {
                     for (int i = 0; br.ready(); i++) {
                         if (canceled) {
                             reader.close();
+                            FrontEnd.getInstance().setJBPatchListEnabled(true);
                             return;
                         }
                         sLine = br.readLine();
@@ -107,6 +109,8 @@ class PatchList {
                 } catch (IOException e) {
                     log.addEx(e);
                     log.addErr("Nejspíš se nepodařilo připojit k webovému serveru http://www.andaria.net !");
+                } finally {
+                    FrontEnd.getInstance().setJBPatchListEnabled(true);
                 }
             }
         };

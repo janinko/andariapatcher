@@ -1,7 +1,7 @@
 <?PHP
 $VERSION_FILE = "/home/wwwroot/andaria.net/patcher/version.php";
-$countFile = "/home/wwwroot/andaria.net/patcher/hits/".date("m-y").".txt";
-$countBetaFile = "/home/wwwroot/andaria.net/patcher/beta/hits/".date("m-y").".txt";
+$countFile = "/home/wwwroot/andaria.net/patcher/hits/hits.txt";
+$countBetaFile = "/home/wwwroot/andaria.net/patcher/hits/.txt";
 
 include_once($VERSION_FILE);
 ?>

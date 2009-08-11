@@ -22,6 +22,7 @@ public class FrontEnd extends JFrame {
 
     private Log log;
     private static final FrontEnd INSTANCE = new FrontEnd(); //representation of main class (this)
+    private int defaultToolTipSpeed;
     //  private PatchList patchList; // representation of patchlist, patch procedure control object    private final Settings settings = ;
 
     public static FrontEnd getInstance() {
@@ -29,6 +30,7 @@ public class FrontEnd extends JFrame {
     }
 
     public static class LABEL_TYPES {
+
         public static final int TEXT = 0;
         public static final int SPEED = 1;
         public static final int TEMP_SIZE = 2;
@@ -46,7 +48,7 @@ public class FrontEnd extends JFrame {
         log = new Log(this);
 
         loadSettings();
-
+        defaultToolTipSpeed = ToolTipManager.sharedInstance().getInitialDelay();
         jSPPatchList.getVerticalScrollBar().setUnitIncrement(17);
 
         // HTMLDocument doc = new HTMLDocument();
@@ -86,15 +88,23 @@ public class FrontEnd extends JFrame {
         jTPMain.addTab(null, null, htmlPAbout, "Taky něco o programu samotném.");
         jTPMain.setTitleAt(jTPMain.getComponentCount() - 1, "O programu");
         final Browser about = new Browser(htmlPAbout, Settings.getInstance().getValue(Settings.VALUES.ABOUT_URL));
-
         jTPMain.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
                 //log.addDebug("Change of about changed.");
                 if (jTPMain.getSelectedIndex() == jTPMain.getComponentCount() - 1) {
+                    // TODO: change about page to static
                     about.reload();
                 }
+                // tooltip speed manager
+                if (jTPMain.getSelectedIndex() == jTPMain.getComponentCount() - 3) {
+                    ToolTipManager.sharedInstance().setInitialDelay(0);
+                } else {
+                    ToolTipManager.sharedInstance().setInitialDelay(defaultToolTipSpeed);
+                }
+
+
             }
         });
 
@@ -1062,8 +1072,7 @@ public class FrontEnd extends JFrame {
 }//GEN-LAST:event_jBRemoveTempFilesActionPerformed
 
     private void jTPMainStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTPMainStateChanged
-        // TODO add your handling code here:
-
+        // TODO add your handling code here
     }//GEN-LAST:event_jTPMainStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

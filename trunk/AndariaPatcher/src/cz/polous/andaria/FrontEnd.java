@@ -822,7 +822,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.5 beta - 7zip3");
+        jLabel1.setText("Verze programu: 1.5 beta - 7zip4");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());

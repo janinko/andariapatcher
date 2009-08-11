@@ -103,7 +103,6 @@ class PatchList {
                         jPPatchList.add(patchItem.getInFrame());
                     }
                     jPPatchList.setLayout(new GridLayout(patchData.size(), 0));
-                    FrontEnd.getInstance().pack();
                     reader.close();
                     log.addLine("Seznam patchu byl nahran z internetu.");
                 } catch (IOException e) {

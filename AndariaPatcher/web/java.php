@@ -2,13 +2,18 @@
 $VERSION_FILE = "/home/wwwroot/andaria.net/patcher/version.php";
 $countFile = "/home/wwwroot/andaria.net/patcher/hits/".date("m-y").".txt";
 $countBetaFile = "/home/wwwroot/andaria.net/patcher/beta/hits/".date("m-y").".txt";
+
+include_once($VERSION_FILE);
 ?>
 <script src="http://java.com/js/deployJava.js"></script>
 <script type="text/javascript" >
     //<![CDATA[
-	var appLink = "http://patcher.andaria.net/launch.jnlp";
+  	var appLink = "http://patcher.andaria.net/launch.jnlp";
     var appBetaLink = "http://patcher.andaria.net/beta/launch.jnlp";
-    deployJava.launchButtonPNG = 'http://patcher.andaria.net/spustit.png';
+    var appLaunchButton = 'http://patcher.andaria.net/spustit.png';
+    var appBetaLaunchButton = 'http://patcher.andaria.net/spustitSmall.png';
+    
+    deployJava.launchButtonPNG = appLaunchButton;
 
     // os detection
     var isIE = /*@cc_on!@*/false;
@@ -155,11 +160,12 @@ $countBetaFile = "/home/wwwroot/andaria.net/patcher/beta/hits/".date("m-y").".tx
         //}
 ?>
 <br><br>
-<b>Beta Patcheru verze 1.5 (7zip)</b><br>
+<b>Beta Patcheru verze <?php echo $ap_versionBeta;?></b><br>
 
 <script type="text/javascript">
     //<![CDATA[
     // display JNLP button
+     deployJava.launchButtonPNG = appBetaLaunchButton;
     deployJava.createWebStartLaunchButton(appBetaLink, '1.6.0');
     //]]>
 </script>

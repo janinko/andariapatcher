@@ -327,12 +327,14 @@ class Settings {
         File tmpDir = new File(dir);
         String[] fileList = tmpDir.list(rarFilter);
         File file;
-        for (int i = 0; i < fileList.length; i++) {
-            file = new File(tmpDir.getAbsolutePath().concat(File.separator).concat(fileList[i]));
-            if (file.delete()) {
-                log.addLine("Smazal jsem soubor: ".concat(file.getAbsolutePath()));
-            } else {
-                log.addErr("Nepodařilo se smazat soubor: ".concat(file.getAbsolutePath()));
+        if (fileList != null) {
+            for (int i = 0; i < fileList.length; i++) {
+                file = new File(tmpDir.getAbsolutePath().concat(File.separator).concat(fileList[i]));
+                if (file.delete()) {
+                    log.addLine("Smazal jsem soubor: ".concat(file.getAbsolutePath()));
+                } else {
+                    log.addErr("Nepodařilo se smazat soubor: ".concat(file.getAbsolutePath()));
+                }
             }
         }
     }
@@ -346,7 +348,7 @@ class Settings {
         for (int i = 0; i < files.length; i++) {
             size += files[i].length();
         }
-        JLabel label= FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.TEMP_SIZE);
-        label.setText(Long.toString(Math.round(size/1024)).concat(" MB"));
+        JLabel label = FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.TEMP_SIZE);
+        label.setText(Long.toString(Math.round(size / 1024)).concat(" MB"));
     }
 }

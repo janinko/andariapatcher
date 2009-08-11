@@ -5,11 +5,13 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import org.jdom.output.XMLOutputter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -333,5 +335,18 @@ class Settings {
                 log.addErr("Nepodařilo se smazat soubor: ".concat(file.getAbsolutePath()));
             }
         }
+    }
+
+    public void updateTempSize() {
+        long size = 0;
+        String dir = Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE);
+        File tmpDir = new File(dir);
+        File[] files = tmpDir.listFiles();
+
+        for (int i = 0; i < files.length; i++) {
+            size += files[i].length();
+        }
+        JLabel label= FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.TEMP_SIZE);
+        label.setText(Long.toString(Math.round(size/1024)).concat(" MB"));
     }
 }

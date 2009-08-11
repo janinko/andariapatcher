@@ -18,7 +18,6 @@ public class ProgressBar {
     private long singleMax;
     private NumberFormat speedFormat;
 
-  
     public static class BARS {
         static final int SINGLE = 0;
         static final int TOTAL = 1;
@@ -68,19 +67,12 @@ public class ProgressBar {
      * @param i (double) speed in bytes per second
      **************************************************************************/
     void setLabelSpeed(double speed) {
-
-
         String s = speedFormat.format(speed).concat(" kB/s");
         try {
             FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.SPEED).setText(s);
         } catch (Exception e) {
         }
     }
-
-    /*@Deprecated
-    protected void addToSingleProgress(double i) {
-    setSingleProgress(singleProgress + i);
-    }*/
 
     /***************************************************************************
      * Set single file progress to a value
@@ -96,22 +88,40 @@ public class ProgressBar {
             log.addErr("Chyba počítání velikosti souborů.");
         }
 
-
-
         setTotalProgress(totalProgress - singleProgress + i);
         singleProgress = i;
         updateProgressBar(BARS.SINGLE);
     }
 
-    void resetSingleProgress(long i) {
-        setSingleMax(i);
-        resetSingleProgress();
+    void resetProgressBar(int bar, long max) {
+        switch (bar) {
+            case BARS.SINGLE:
+                log.addDebug("Resetuji Single progressbar.");
+                singleMax = max;
+                break;
+            case BARS.TOTAL:
+                log.addDebug("Resetuji Total progressbar.");
+                totalMax = max;
+                break;
+            default:
+                log.addErr("Pokus o resetovani neexistujiciho progressBaru");
+        }
+        resetProgressBar(bar);
     }
 
-    void resetSingleProgress() {
+    void resetProgressBar(int bar) {
+        switch (bar) {
+            case BARS.SINGLE:
+                singleProgress = 0;
+                break;
+            case BARS.TOTAL:
+                totalProgress = 0;
+                break;
+            default:
+                log.addErr("Pokus o resetovani neexistujiciho progressBaru");
+        }
         setLabelSpeed(0);
-        singleProgress = 0;
-        updateProgressBar(BARS.SINGLE);
+        updateProgressBar(bar);
     }
 
     public void removeFromTotalProgress(long i) {

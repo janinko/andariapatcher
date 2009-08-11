@@ -49,9 +49,8 @@ class Downloader extends PatcherQueue {
     @Override
     synchronized void executeNext() {
         PatchItem p = getFirstItem();
-        // ProgressBars
-
-        resetSingleProgress(p.getSize());
+        // ProgressBars - for single file
+        resetProgressBar(BARS.SINGLE, p.getSize());
 
         // Check if wanted file exists at local storage
         String fileName = p.getLocalFileName();
@@ -59,8 +58,8 @@ class Downloader extends PatcherQueue {
             p.checkHash();
             setLabelText("Kontroluju soubor: " + p.getFileName());
             log.addLine("Soubor: " + p.getFileName() + " je už stažený.");
-            startInstaller(p);
-            return; // file exists, don't need download
+            finishDownload(p); // correct file found, then finish action
+            return; // file exists, we don't need download it
         } catch (FileNotFoundException e) {
             log.addDebug("Soubor ".concat(p.getFileName()).concat(" není ještě stažený."));
         } catch (IOException e) {
@@ -103,7 +102,6 @@ class Downloader extends PatcherQueue {
                 } catch (ArithmeticException e) {
                 }
             }
-
         } catch (FileNotFoundException e) {
             log.addErr("Soubor jsem na serveru Andarie nenašel. Zřejmě problém seznamu patchů. Prosím kontaktuj admina Andarie.\n (" + e + ")");
         } catch (Exception e) {
@@ -120,18 +118,18 @@ class Downloader extends PatcherQueue {
             } catch (IOException e) {
                 log.addEx(e);
             } finally {
-                setLabelSpeed(0);
                 setLabelText("Kontroluji soubor: " + p.getFileName());
                 try {
                     p.checkHash();
-                    startInstaller(p);
-                } catch (IOException e) {
+                    finishDownload(p); // success
+                } catch (IOException e) { // file not found or read errors
                     log.addEx(e);
-                    Installer.getInstance().removeFromTotalProgress(p.getSize());
-                    setSingleProgressPercents(100);
-                    removeFirst();
-                } catch (Exception e) {
+                    removeFirst(); // finally I won't download it again.
+                } catch (Exception e) { // file is corrupted or old
                     log.addErr(e.getMessage().concat(" Zkus to znova a pokud se ani pak nezadaří, napiš to prosím na fórum andarie."));
+                    removeFirst(); // finally I won't download it again.
+                } finally {
+                    Settings.getInstance().updateTempSize();
                 }
             }
         }
@@ -143,11 +141,25 @@ class Downloader extends PatcherQueue {
      *  - add item to install queue and run Installer
      *  - remove downlaoded file from download queue
      **************************************************************************/
-    private void startInstaller(PatchItem p) {
+    private void finishDownload(PatchItem p) {
         p.setDownloaded(true);
         setSingleProgressPercents(100);
         Installer.getInstance().addPatchItem(p);
-        removeFirst();
-        Installer.getInstance().startSafe();
+        removeFirst(); // finally I won't download it again.
+    }
+
+    /***************************************************************************
+     * Add new PatchItem to queue.
+     * Overriding patchQueue method add progressbar max size counting funcion.
+     *
+     * @param p item to add
+     * @see cz.polous.andaria.Downloader#executeNext
+     **************************************************************************/
+    @Override
+    protected void addPatchItem(PatchItem p) {
+        super.addPatchItem(p);
+        setTotalMax(getTotalMax() + p.getSize());
+        Installer.getInstance().setTotalMax(this.getTotalMax());
+        log.addDebug("TotalMax = ".concat(Double.toString(getTotalMax())));
     }
 }

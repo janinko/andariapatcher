@@ -16,7 +16,7 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
 
     protected Vector patchQueue = new Vector();
     private boolean inProgress;
-    private boolean cancel;
+    private boolean cancel = false;
     protected Log log;
 
     /***************************************************************************
@@ -36,7 +36,7 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
      **************************************************************************/
     @Override
     public void run() {
-        reset();
+       // reset();
         execute();
     }
 
@@ -61,21 +61,20 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
                 inProgress = false;
                 FrontEnd.getInstance().updateButtons();
 
+                // wait for start() or startSafe() invocation
                 wait();
-
+                cancel = false;
                 inProgress = true;
                 FrontEnd.getInstance().updateButtons();
-
- //               updateSingleBar();
- //               updateTotalBar();
 
                 while (patchQueue.size() > 0 && !cancel) {
                     log.addDebug("Volání executeNext. Ve frontš je ještě: " + patchQueue.size() + " souborů.");
                     executeNext();
                 }
                 if (cancel) {
-                    setLabelText("Všechny akce byly zrušeny, vyčkávám na další příkazy...");
-                    reset();
+                   // reset();
+                    setLabelText("Činnost byla přerušena, vyčkávám na další příkazy...");
+                    log.addLine("Činnost byla pozastavena.");
                 } else {
                     setLabelText("Vyčkávám na další příkazy...");
                 }
@@ -89,12 +88,10 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
      * Reset queue state
      **************************************************************************/
     void reset() {
-        cancel = false;
-        inProgress = false;
-        resetSingleProgress();
-        setSingleMax(0);
-        setTotalProgress(0);
-        setTotalMax(0);
+        this.patchQueue.removeAllElements();
+        resetProgressBar(BARS.SINGLE, 0);
+        resetProgressBar(BARS.TOTAL, 0);
+
     }
 
     /***************************************************************************
@@ -125,6 +122,7 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
     public void startSafe() {
         //log.addDebug("Pracuje thread: (" + this.inProgress + ") ?");
         if (!inProgress) {
+            //reset();
             start();
         }
     }
@@ -137,9 +135,6 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
      **************************************************************************/
     protected void addPatchItem(PatchItem p) {
         patchQueue.add(p);
-        setTotalMax(getTotalMax() + p.getSize());
-        Installer.getInstance().setTotalMax(getTotalMax());
-        log.addDebug("TotalMax = ".concat(Double.toString(getTotalMax())));
     }
 
     /***************************************************************************
@@ -165,6 +160,8 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
 
     void cancel() {
         cancel = true;
+        log.addLine("Čekám na dokončení nepřerušitelných akcí.");
+        setLabelText("Akce bude co nejdříve přerušena.");
     }
 
 

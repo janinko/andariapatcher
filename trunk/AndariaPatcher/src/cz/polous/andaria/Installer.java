@@ -48,14 +48,16 @@ class Installer extends PatcherQueue {
 
     /***************************************************************************
      * Add new PatchItem to queue.
-     * Override PatchQueue object method to remove totalAmount (file size)
-     * adding. totalAmount variable is set by Downloader.
+     * Override PatchQueue method - Installer try start automaticly after new
+     * file added to queue.
+     *
      * @param p item to add
      * @see cz.polous.andaria.Downloader#executeNext
      **************************************************************************/
     @Override
     protected void addPatchItem(PatchItem p) {
-        patchQueue.add(p);
+       super.addPatchItem(p);
+       startSafe();
     }
 
     /**
@@ -124,7 +126,8 @@ class Installer extends PatcherQueue {
 
         // progress will be counted by 65% for extracting files
         // and  35% for installing patches.
-        resetSingleProgress(patchItem.getSize());
+        // ProgressBars - for single file
+        resetProgressBar(BARS.SINGLE, patchItem.getSize());
         extractProgressPart = Math.round(patchItem.getSize() * 65 / 100.00);
 
         log.addDebug("Pracuju se souborem: ".concat(patchItem.getLocalFileName()));
@@ -138,16 +141,19 @@ class Installer extends PatcherQueue {
             J7zipBinding sevenZip = new J7zipBinding();
             try {
                 sevenZip.unpack(patchItem.getLocalFileName());
-            } catch (IOException ex) {
+            } catch (Exception ex) { // unzip errors
+                log.addErr("Chyba při rozbalování souboru");
                 log.addEx(ex);
-            } catch (Exception ex) {
-                log.addEx(ex);
+                setLabelSpeed(0);
+                removeFirst();
+                return;
             }
 
-            setLabelSpeed(0);
+           // setLabelSpeed(0);
             log.addDebug("Soubor je rozbalený, hledám instalační skripty.");
             File f = new File(uopath + File.separator + "start_a.bat");
             log.addDebug("Hledám:" + f.getAbsolutePath());
+            if (canceled()) return;
             if (f.exists()) {
                 log.addDebug("Našel jsem start_a.bat.");
                 setLabelText("Instaluju patch (start_a.bat): " + patchItem.getFileName());
@@ -160,6 +166,7 @@ class Installer extends PatcherQueue {
             f = new File(uopath + File.separator + "start_g.bat");
             setSingleProgressPercents(87);
             log.addDebug("Hledám:" + f.getAbsolutePath());
+            if (canceled()) return;
             if (f.exists()) {
                 log.addDebug("Našel jsem start_g.bat.");
                 setLabelText("Instaluju patch (start_g.bat): " + patchItem.getFileName());
@@ -170,7 +177,7 @@ class Installer extends PatcherQueue {
 
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");
-        // setSingleProgressPercents(100);
+        
         } else {
             // copy raw downloaded file into game directory
             // probably not used, after unrar - 7zip migration.
@@ -216,13 +223,13 @@ class Installer extends PatcherQueue {
         setSingleProgressPercents(100);
         //TODO: odstranit tyhle kontroly velikosti a jejich promenne. Jsou celkem zbytecne.
         log.addDebug("Spočítaná velikost doinstalovaného souboru: ".concat(Double.toString(getSingleProgress())));
-        totalsizeEnd += patchItem.getSize();
-        if (totalsizeEnd != totalsize) {
-            log.addErr("Nevychází velikost celkově nainstalovaných patchů na začátku a konci instalačního procesu.");
-        }
-        if (getTotalProgress() != totalsize) {
-            log.addErr("Nevychází velikost celkově nainstalovaných patchů a stropu progressBaru.");
-        }
+     //   totalsizeEnd += patchItem.getSize();
+      //  if (totalsizeEnd != totalsize) {
+     //       log.addErr("Nevychází velikost celkově nainstalovaných patchů na začátku a konci instalačního procesu.");
+      //  }
+      //  if (getTotalProgress() != totalsize) {
+      //      log.addErr("Nevychází velikost celkově nainstalovaných patchů a stropu progressBaru.");
+       // }
         if (getTotalMax() == getTotalProgress()) {
             log.addDebug("Podle progressbaru jsou všechny patche jsou nainstalované.");
         }
@@ -238,7 +245,7 @@ class Installer extends PatcherQueue {
      * files.
      **************************************************************************/
     public void setExtractedProgress(long value) {
-       setSingleProgress(Math.round(value * extractProgressPart / extractTotalSize));
+        setSingleProgress(Math.round(value * extractProgressPart / extractTotalSize));
     }
 
     /***************************************************************************

@@ -1,5 +1,5 @@
 <?
-$countFile = "hits/".date("m-y").".txt";
+$countFile = "hits/hits.txt";
 echo $countFile;
 $hits = file($countFile);
 $hits[0]++;

@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import org.jdom.output.XMLOutputter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
@@ -38,7 +37,7 @@ class Settings {
     private final String about_url = "http://patcher.andaria.net/java.php";
     private final String news_url = "http://www.andaria.net/novinky_updater.php";
     private final String debug_log = "0";
-    private final String counter_url = "http://patcher.andaria.net/beta/counter.php";
+    private final String counter_url = "http://patcher.andaria.net/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
     private static Log log;
 

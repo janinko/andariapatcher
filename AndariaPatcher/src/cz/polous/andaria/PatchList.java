@@ -24,6 +24,7 @@ class PatchList {
     private static Log log;
     private Thread installThread;
     private Thread downloadThread;
+
     /***************************************************************************
      * Creates a new instance of installatortchList
      **************************************************************************/
@@ -92,8 +93,8 @@ class PatchList {
                         sLine = br.readLine();
                         log.addDebug(sLine);
                         sItems = sLine.split(";");
-                        for (int k =0; k<sItems.length ; k++) {
-                           sItems[k] = sItems[k].substring(1, sItems[k].length()-1);
+                        for (int k = 0; k < sItems.length; k++) {
+                            sItems[k] = sItems[k].substring(1, sItems[k].length() - 1);
                         }
                         patchItem = new PatchItem(sItems);
                         patchData.add(patchItem);
@@ -168,6 +169,16 @@ class PatchList {
         for (int i = 0; i < patchData.size(); i++) {
             patchItem = (PatchItem) patchData.get(i);
             patchItem.setInstalled();
+        }
+    }
+
+    public void selectNone() {
+        PatchItem patchItem;
+        for (int i = 0; i < patchData.size(); i++) {
+            patchItem = (PatchItem) patchData.get(i);
+            if (patchItem.getInstallFlag() == true) {
+                patchItem.switchInstallFlag();
+            }
         }
     }
 }

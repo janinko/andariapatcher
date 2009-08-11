@@ -353,6 +353,8 @@ public class FrontEnd extends JFrame {
         jSPPatchList = new javax.swing.JScrollPane();
         jPPatchList = new javax.swing.JPanel();
         jBInstallSelection = new javax.swing.JButton();
+        jBInstallSelectNone = new javax.swing.JButton();
+        jBInstallSelectAll = new javax.swing.JButton();
         jPSettingsTab = new javax.swing.JPanel();
         jLConfUltimaOnlinePath = new javax.swing.JLabel();
         jTConfUltimaOnlinePath = new javax.swing.JTextField();
@@ -639,11 +641,38 @@ public class FrontEnd extends JFrame {
             }
         });
 
+        jBInstallSelectNone.setBackground(getBackground());
+        jBInstallSelectNone.setForeground(getForeground());
+        jBInstallSelectNone.setText("Zruš výběr všech");
+        jBInstallSelectNone.setToolTipText("Odškrtne všechny zaškrtlé patche.");
+        jBInstallSelectNone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBInstallSelectNonejBInstallActionPerformed(evt);
+            }
+        });
+
+        jBInstallSelectAll.setBackground(getBackground());
+        jBInstallSelectAll.setForeground(getForeground());
+        jBInstallSelectAll.setText("Vyber všechny doporučené");
+        jBInstallSelectAll.setToolTipText("Vybere všechny neaktuální doporučené patche a patche nastavené k automatické instalaci.");
+        jBInstallSelectAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBInstallSelectAlljBInstallActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPPatchListTabLayout = new org.jdesktop.layout.GroupLayout(jPPatchListTab);
         jPPatchListTab.setLayout(jPPatchListTabLayout);
         jPPatchListTabLayout.setHorizontalGroup(
             jPPatchListTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .add(jPPatchListTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .add(jBInstallSelectAll, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jBInstallSelectNone, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addContainerGap())
             .add(jSPPatchList, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
         );
         jPPatchListTabLayout.setVerticalGroup(
@@ -651,7 +680,10 @@ public class FrontEnd extends JFrame {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPPatchListTabLayout.createSequentialGroup()
                 .add(jSPPatchList, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 427, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(jPPatchListTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jBInstallSelectNone, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jBInstallSelectAll, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTPMain.addTab("Výběr souborů", null, jPPatchListTab, "Tady si můžeš vybrat jaké soubory se mají instalovat a jaké ne...");
@@ -1075,6 +1107,16 @@ public class FrontEnd extends JFrame {
         // TODO add your handling code here
     }//GEN-LAST:event_jTPMainStateChanged
 
+    private void jBInstallSelectNonejBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallSelectNonejBInstallActionPerformed
+        // TODO add your handling code here:
+        PatchList.getInstance().selectNone();
+}//GEN-LAST:event_jBInstallSelectNonejBInstallActionPerformed
+
+    private void jBInstallSelectAlljBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallSelectAlljBInstallActionPerformed
+        // TODO add your handling code here:
+        PatchList.getInstance().reload();
+}//GEN-LAST:event_jBInstallSelectAlljBInstallActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
     private javax.swing.JButton jBClose;
@@ -1086,6 +1128,8 @@ public class FrontEnd extends JFrame {
     private javax.swing.JButton jBDeleteIntro;
     private javax.swing.JButton jBDeleteNWB;
     private javax.swing.JButton jBInstall;
+    private javax.swing.JButton jBInstallSelectAll;
+    private javax.swing.JButton jBInstallSelectNone;
     private javax.swing.JButton jBInstallSelection;
     private javax.swing.JButton jBRefreshPatchList;
     private javax.swing.JButton jBRemoveTempFiles;

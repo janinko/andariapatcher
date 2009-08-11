@@ -130,7 +130,7 @@ include_once($VERSION_FILE);
     </li><li> Patcher je projekt otevøený, zdrojové kódy jsou k dispozici všem (GNU GPL) a tudíž tato tvrzení tedy mùže ovìøit každý programátor, jenž se trošku vyzná v Javì.
     </li><li>Veškerá dùležitá èinnost je ukládána do logovacího okna a je možné si zobrazit detailní informace pomocí zaškrtávátka "Debug režim"</li>
     </ul><ul>
-    <b>Potrobnìji k èinnosti:</b>
+    <b>Podrobnìji k èinnosti:</b>
         <li> stáhne se soubor ze serveru Andarie obsahující seznam patchù (obsah sekce download).
         </li><li>Seznam patchù z andarie je porovnán se seznamem nainstalovaných v tvojí ultimì (informace jsou uložené v AndariaPatcher.xml v adresáøi uo).
         </li><li>Po stisknutí tlaèítka "Instalovat" stáhne program všechny potøebné (vybrané) soubory ze serveru Andarie na doèasné úložištì a zároveò stažené zaène instalovat. Pokud instalovaný patch obsahuje instalaèní skript (start_a.bat nebo start_g.bat) bude automaticky spuštìný - jako pøi ruèní instalaci.
@@ -205,7 +205,7 @@ include_once($VERSION_FILE);
     <ul>
         <li>Všechny objevené chyby, novinky a prùbìh i plánování vývoje je <a href='http://trac2.assembla.com/andariapatcher/report/6'>v tomto reportu.</a></li>
         <li>Zdrojový kód patcheru aktuální i vývojové verze je možné <a href="http://trac2.assembla.com/andariapatcher/">stáhnout a prohlížet na stránkách projektu</a>.
-        <li>Pokud chceš jen nahlédnout, je k dispozici také <a href="http://strazci.andaria.net/patcher/javadoc/index.html">JavaDoc</a>.
+        <li>Pokud chceš jen nahlédnout, je k dispozici také <a href="http://patcher.andaria.net/javadoc/index.html">JavaDoc</a>.
         <li>Pokud chceš k projektu jakkoliv pøispìt, kontaktuj mnì (p0l0us/korneus) na fóru Andarie, pøez JABBER, ICQ, IRC, mail.... Potøeba jsou obèas grafici a neustále programátoøi v Javì (nemusíš být žádný profík).
     </ul>
 

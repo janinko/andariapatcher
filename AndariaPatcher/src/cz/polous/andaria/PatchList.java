@@ -114,7 +114,7 @@ class PatchList {
 
     /***************************************************************************
      * Determinate if a job is in progress (downloader or installer)
-     * @return wokring state of patchlist
+     * @return state of patch process
      **************************************************************************/
     public boolean inProgress() {
         return Downloader.getInstance().inProgress() | Installer.getInstance().inProgress();
@@ -130,10 +130,14 @@ class PatchList {
 
     /***************************************************************************
      * Download other than patch item
+     *
+     * used for unrar download, not used now.
      **************************************************************************/
+    @Deprecated
     public synchronized void downloadOnly(PatchItem patchItem) {
         Downloader downloader = Downloader.getInstance();
         downloader.reset();
+        Installer.getInstance().reset();
         downloader.addPatchItem(patchItem);
         downloader.startSafe();
     }
@@ -152,7 +156,6 @@ class PatchList {
                 downloader.addPatchItem(patchItem);
             }
         }
-
         downloader.startSafe();
     }
 

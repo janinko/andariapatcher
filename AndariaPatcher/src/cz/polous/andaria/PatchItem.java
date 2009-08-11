@@ -185,9 +185,9 @@ class PatchItem {
     }
 
     public void switchInstallFlag() {
-        log.addDebug(fileName.concat(": ").concat(Boolean.toString(installFlag)).concat(" -> ").concat(Boolean.toString(!installFlag)));
         installFlag = !installFlag;
         panel.refresh();
+        log.addDebug(fileName.concat(": ").concat(Boolean.toString(installFlag)).concat(" -> ").concat(Boolean.toString(!installFlag)));
     }
 
     /***************************************************************************

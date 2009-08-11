@@ -121,6 +121,7 @@ public class FrontEnd extends JFrame {
             log.addDebug(System.getProperty("java.io.tmpdir"));
         }
         PatchList.getInstance().reload();
+        callCounter();
 //        Settings.getInstance().updateTempSize();
     }
 
@@ -164,12 +165,6 @@ public class FrontEnd extends JFrame {
         InputStream in = null;
 
         try {
-            /**
-             * TODO: Zmena #36
-             * LJK
-             *
-             * String uri = Settings.getInstance().getOs().getCounter_url();
-             */
             String uri = Settings.getInstance().getCounter_url();
 
             URL url = new URL(uri);

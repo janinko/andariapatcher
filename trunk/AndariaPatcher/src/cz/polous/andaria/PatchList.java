@@ -73,6 +73,7 @@ class PatchList {
                 try {
                     log.addLine("Zacinam stahovat seznam patchu z internetu.");
                     FrontEnd.getInstance().setJBPatchListEnabled(false);
+                    FrontEnd.getInstance().setJBInstall(false);
                     URL url = new URL(Settings.getInstance().getValue(Settings.VALUES.FILE_LIST_URL));
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
@@ -110,6 +111,7 @@ class PatchList {
                     log.addErr("Nejspíš se nepodařilo připojit k webovému serveru http://www.andaria.net !");
                 } finally {
                     FrontEnd.getInstance().setJBPatchListEnabled(true);
+                    FrontEnd.getInstance().setJBInstall(true);
                     FrontEnd.getInstance().updateButtons();
                 }
             }

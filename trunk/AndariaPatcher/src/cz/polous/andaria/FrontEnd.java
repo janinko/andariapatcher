@@ -151,11 +151,14 @@ public class FrontEnd extends JFrame {
         if (patchList.inProgress()) {
             patchList.cancel();
         }
-        jBInstallSelection.setEnabled(false);
-        jBInstall.setEnabled(false);
+
         patchList.reload();
     }
 
+    public void setJBInstall(boolean state){
+        jBInstallSelection.setEnabled(state);
+        jBInstall.setEnabled(state);
+    }
     public void setJBPatchListEnabled(boolean state) {
         jBRefreshPatchList.setEnabled(state);
         jBInstallSelectAll.setEnabled(state);
@@ -299,18 +302,15 @@ public class FrontEnd extends JFrame {
     public void updateButtons() {
         try {
             if (PatchList.getInstance().inProgress()) {
-                jBInstall.setEnabled(false);
-                jBInstallSelection.setEnabled(false);
+                setJBInstall(false);
                 jBCancel.setEnabled(true);
                 jBClose.setEnabled(false);
-
-                jBRefreshPatchList.setEnabled(false);
+                setJBPatchListEnabled(false);
             } else {
-                jBInstall.setEnabled(true);
-                jBInstallSelection.setEnabled(true);
+                setJBInstall(true);
                 jBCancel.setEnabled(false);
                 jBClose.setEnabled(true);
-                jBRefreshPatchList.setEnabled(true);
+                setJBPatchListEnabled(true);
             }
 
         } catch (NullPointerException e) {
@@ -670,15 +670,17 @@ public class FrontEnd extends JFrame {
         jPPatchListTabLayout.setHorizontalGroup(
             jPPatchListTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPPatchListTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jBInstallSelectAll, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .add(jBInstallSelectAll, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 216, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jBInstallSelectNone, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                .addContainerGap())
+                .add(jBInstallSelectNone, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 216, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(2, 2, 2))
             .add(jSPPatchList, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
         );
+
+        jPPatchListTabLayout.linkSize(new java.awt.Component[] {jBInstallSelectAll, jBInstallSelectNone}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
+
         jPPatchListTabLayout.setVerticalGroup(
             jPPatchListTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPPatchListTabLayout.createSequentialGroup()
@@ -689,6 +691,8 @@ public class FrontEnd extends JFrame {
                     .add(jBInstallSelectNone, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jBInstallSelectAll, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
         );
+
+        jPPatchListTabLayout.linkSize(new java.awt.Component[] {jBInstallSelectAll, jBInstallSelectNone}, org.jdesktop.layout.GroupLayout.VERTICAL);
 
         jTPMain.addTab("Výběr souborů", null, jPPatchListTab, "Tady si můžeš vybrat jaké soubory se mají instalovat a jaké ne...");
 
@@ -819,7 +823,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.5 beta - 7zip5");
+        jLabel1.setText("Verze programu: 1.5 beta - 7zip6");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());

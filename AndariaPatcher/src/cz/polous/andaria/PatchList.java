@@ -110,6 +110,7 @@ class PatchList {
                     log.addErr("Nejspíš se nepodařilo připojit k webovému serveru http://www.andaria.net !");
                 } finally {
                     FrontEnd.getInstance().setJBPatchListEnabled(true);
+                    FrontEnd.getInstance().updateButtons();
                 }
             }
         };

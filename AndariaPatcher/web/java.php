@@ -19,6 +19,7 @@ include_once($VERSION_FILE);
     var isIE = /*@cc_on!@*/false;
     var isMoz = ( navigator.userAgent.toLowerCase().indexOf("firefox") != -1 );
     var isOpera = ( navigator.userAgent.toLowerCase().indexOf("opera") != -1 );
+    var isChrome = ( navigator.userAgent.toLowerCase().indexOf("chrome") != -1 );
 
     var OSName="Unknown OS";
     if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
@@ -45,8 +46,8 @@ include_once($VERSION_FILE);
       	if (OSName == "Linux" || OSName == "Windows" ) {
       	      var text = 'Tvá verze je: ' + java_version;
 
-              if (isOpera) {
-                  text = text + '. To ale v pøípadì prohlížeèe Opera nic neznamená. Klikni na spouštìcí odkaz a dej otevøít stažený JNLP soubor v programu javaws (pokud tedy máš JRE 1.6.0 nainstalované).';
+              if (isOpera || isChrome ) {
+                  text = text + '. To ale v pøípadì prohlížeèe ' + (isOpera?'Opera':'Google Chrome') +' nic neznamená. Klikni na spouštìcí odkaz a dej otevøít stažený JNLP soubor '+(isOpera?'v programu "Java(TM) Web Start Launcher"':'poklikáním na nìj') +' (pokud tedy máš JRE 1.6.0 nainstalované).';
               } else {
                   text = text + ', což jest ' + (java_found?"v oukeji.":"špatnì a musíš to vylepšit !") ;
               }

@@ -158,6 +158,7 @@ public class FrontEnd extends JFrame {
 
     public void setJBPatchListEnabled(boolean state) {
         jBRefreshPatchList.setEnabled(state);
+        jBInstallSelectAll.setEnabled(state);
     }
 
     private void callCounter() {
@@ -657,7 +658,7 @@ public class FrontEnd extends JFrame {
         jBInstallSelectAll.setForeground(getForeground());
         jBInstallSelectAll.setText("Vyber všechny doporučené");
         jBInstallSelectAll.setToolTipText("Vybere všechny neaktuální doporučené patche a patche nastavené k automatické instalaci.");
-        jBInstallSelectAll.setEnabled(jBRefreshPatchList.isEnabled());
+        jBInstallSelectAll.setEnabled(false);
         jBInstallSelectAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBInstallSelectAlljBInstallActionPerformed(evt);
@@ -818,7 +819,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.5 beta - 7zip4");
+        jLabel1.setText("Verze programu: 1.5 beta - 7zip5");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());

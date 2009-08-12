@@ -657,6 +657,7 @@ public class FrontEnd extends JFrame {
         jBInstallSelectAll.setForeground(getForeground());
         jBInstallSelectAll.setText("Vyber všechny doporučené");
         jBInstallSelectAll.setToolTipText("Vybere všechny neaktuální doporučené patche a patche nastavené k automatické instalaci.");
+        jBInstallSelectAll.setEnabled(jBRefreshPatchList.isEnabled());
         jBInstallSelectAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBInstallSelectAlljBInstallActionPerformed(evt);

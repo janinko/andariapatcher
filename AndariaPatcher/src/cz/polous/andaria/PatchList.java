@@ -35,7 +35,7 @@ class PatchList {
         downloadThread = new Thread(Downloader.getInstance());
         downloadThread.start();
         installThread.start();
-    // reload();
+        // reload();
     }
 
     public static PatchList getInstance() {
@@ -186,5 +186,22 @@ class PatchList {
                 patchItem.switchInstallFlag();
             }
         }
+    }
+
+    public void selectAll() {
+        PatchItem patchItem;
+        for (int i = 0; i < patchData.size(); i++) {
+            patchItem = (PatchItem) patchData.get(i);
+            if (patchItem.getAutoInstallFlag()) {
+                if (patchItem.getInstallFlag() == false) {
+                    patchItem.switchInstallFlag();
+                }
+            } else {
+                if (patchItem.getInstallFlag() == true) {
+                    patchItem.switchInstallFlag();
+                }
+            }
+        }
+
     }
 }

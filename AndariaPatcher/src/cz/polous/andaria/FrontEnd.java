@@ -162,6 +162,7 @@ public class FrontEnd extends JFrame {
     public void setJBPatchListEnabled(boolean state) {
         jBRefreshPatchList.setEnabled(state);
         jBInstallSelectAll.setEnabled(state);
+        jBInstallSelectNone.setEnabled(state);
     }
 
     private void callCounter() {
@@ -1111,17 +1112,15 @@ public class FrontEnd extends JFrame {
 }//GEN-LAST:event_jBRemoveTempFilesActionPerformed
 
     private void jTPMainStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTPMainStateChanged
-        // TODO add your handling code here
+
     }//GEN-LAST:event_jTPMainStateChanged
 
     private void jBInstallSelectNonejBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallSelectNonejBInstallActionPerformed
-        // TODO add your handling code here:
         PatchList.getInstance().selectNone();
 }//GEN-LAST:event_jBInstallSelectNonejBInstallActionPerformed
 
     private void jBInstallSelectAlljBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallSelectAlljBInstallActionPerformed
-        // TODO add your handling code here:
-        PatchList.getInstance().reload();
+        PatchList.getInstance().selectAll();
 }//GEN-LAST:event_jBInstallSelectAlljBInstallActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

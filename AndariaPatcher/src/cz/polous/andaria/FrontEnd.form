@@ -588,13 +588,12 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <Component id="jBInstallSelectAll" linkSize="1" min="-2" pref="216" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jBInstallSelectAll" pref="224" max="32767" attributes="0"/>
+                      <Component id="jBInstallSelection" pref="276" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jBInstallSelection" pref="242" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jBInstallSelectNone" pref="224" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jBInstallSelectNone" linkSize="1" min="-2" pref="216" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jSPPatchList" alignment="0" pref="722" max="32767" attributes="0"/>
               </Group>
@@ -606,8 +605,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jBInstallSelection" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="jBInstallSelectNone" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="jBInstallSelectAll" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                          <Component id="jBInstallSelectNone" linkSize="2" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                          <Component id="jBInstallSelectAll" linkSize="2" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -1091,7 +1090,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Verze programu: 1.5 beta - 7zip5"/>
+                <Property name="text" type="java.lang.String" value="Verze programu: 1.5 beta - 7zip6"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator10">

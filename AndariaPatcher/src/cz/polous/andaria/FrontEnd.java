@@ -901,38 +901,31 @@ public class FrontEnd extends JFrame {
                 .addContainerGap()
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPSettingsTabLayout.createSequentialGroup()
-                                .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jLabel1)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jPSettingsTabLayout.createSequentialGroup()
-                                .add(jLConfUltimaOnlinePath)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 26, Short.MAX_VALUE)
-                                .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfBrowseUltimaOnlinePath)))
-                        .addContainerGap())
+                        .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPSettingsTabLayout.createSequentialGroup()
+                        .add(jLConfUltimaOnlinePath)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 26, Short.MAX_VALUE)
+                        .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jBConfBrowseUltimaOnlinePath))
                     .add(jPSettingsTabLayout.createSequentialGroup()
                         .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
                         .add(1, 1, 1)
-                        .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                        .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 524, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jBConfBrowseRunCommand)
-                        .add(4, 4, 4))
-                    .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                            .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                            .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
-                        .addContainerGap())
+                        .add(jBConfBrowseRunCommand))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                    .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                    .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
                     .add(jPSettingsTabLayout.createSequentialGroup()
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
@@ -946,11 +939,9 @@ public class FrontEnd extends JFrame {
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
                                 .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 525, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfBrowseTempPath)))
-                        .addContainerGap())
-                    .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jChDebug)
-                        .addContainerGap(219, Short.MAX_VALUE))))
+                                .add(jBConfBrowseTempPath))))
+                    .add(jChDebug))
+                .addContainerGap())
         );
         jPSettingsTabLayout.setVerticalGroup(
             jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1044,15 +1035,24 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBConfSaveActionPerformed
 
     private void jBConfBrowseRunCommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseRunCommandActionPerformed
-        jTConfRunCommand.setText(Settings.getInstance().openFile("Vyber program, který mám spustit po ukončení patcheru tlačítkem zavřít", jTConfRunCommand.getText(), JFileChooser.FILES_ONLY));
+        String tmp = Settings.getInstance().openFile("Vyber program, který mám spustit po ukončení patcheru tlačítkem zavřít", jTConfRunCommand.getText(), JFileChooser.FILES_ONLY);
+        if (tmp != null) {
+            jTConfRunCommand.setText(tmp);
+        }
     }//GEN-LAST:event_jBConfBrowseRunCommandActionPerformed
 
     private void jBConfBrowseTempPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseTempPathActionPerformed
-        jTConfTempPath.setText(Settings.getInstance().openFile("Vyber adresář kam stahovat soubory", jTConfTempPath.getText(), JFileChooser.DIRECTORIES_ONLY));
+        String tmp = Settings.getInstance().openFile("Vyber adresář kam stahovat soubory", jTConfTempPath.getText(), JFileChooser.DIRECTORIES_ONLY);
+        if (tmp != null) {
+            jTConfTempPath.setText(tmp);
+        }
     }//GEN-LAST:event_jBConfBrowseTempPathActionPerformed
 
     private void jBConfBrowseUltimaOnlinePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseUltimaOnlinePathActionPerformed
-        jTConfUltimaOnlinePath.setText(Settings.getInstance().openFile("Vyber adresář s Ultimou", jTConfUltimaOnlinePath.getText(), JFileChooser.DIRECTORIES_ONLY));
+        String tmp = Settings.getInstance().openFile("Vyber adresář s Ultimou", jTConfUltimaOnlinePath.getText(), JFileChooser.DIRECTORIES_ONLY);
+        if (tmp != null) {
+            jTConfUltimaOnlinePath.setText(tmp);
+        }
     }//GEN-LAST:event_jBConfBrowseUltimaOnlinePathActionPerformed
 
     private void jBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallActionPerformed

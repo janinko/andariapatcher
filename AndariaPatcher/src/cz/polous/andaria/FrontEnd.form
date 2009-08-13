@@ -726,46 +726,35 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jBConfLoad" min="-2" pref="185" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jSeparator10" min="-2" pref="86" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="jSeparator9" pref="98" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jBConfSave" min="-2" pref="160" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLConfUltimaOnlinePath" min="-2" max="-2" attributes="1"/>
-                                      <EmptySpace pref="26" max="32767" attributes="0"/>
-                                      <Component id="jTConfUltimaOnlinePath" pref="524" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jBConfBrowseUltimaOnlinePath" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jBConfLoad" min="-2" pref="185" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jSeparator10" min="-2" pref="86" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="jSeparator9" pref="98" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jBConfSave" min="-2" pref="160" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLConfUltimaOnlinePath" min="-2" max="-2" attributes="1"/>
+                              <EmptySpace pref="26" max="32767" attributes="0"/>
+                              <Component id="jTConfUltimaOnlinePath" pref="524" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jBConfBrowseUltimaOnlinePath" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLConfRunCommand" pref="94" max="32767" attributes="1"/>
                               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                              <Component id="jTConfRunCommand" pref="530" max="32767" attributes="0"/>
+                              <Component id="jTConfRunCommand" min="-2" pref="524" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jBConfBrowseRunCommand" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jBDeleteIntro" alignment="1" pref="708" max="32767" attributes="0"/>
-                                  <Component id="jBDeleteNWB" alignment="0" pref="708" max="32767" attributes="0"/>
-                                  <Component id="jBSetAllInstalled" alignment="0" pref="708" max="32767" attributes="0"/>
-                                  <Component id="jBRenewRegistry" alignment="1" pref="708" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jBDeleteIntro" alignment="1" pref="708" max="32767" attributes="0"/>
+                          <Component id="jBDeleteNWB" alignment="0" pref="708" max="32767" attributes="0"/>
+                          <Component id="jBSetAllInstalled" alignment="0" pref="708" max="32767" attributes="0"/>
+                          <Component id="jBRenewRegistry" alignment="1" pref="708" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLConfTempPath" pref="88" max="32767" attributes="1"/>
@@ -784,13 +773,10 @@
                                       <Component id="jBConfBrowseTempPath" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jChDebug" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="219" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jChDebug" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

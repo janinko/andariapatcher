@@ -92,6 +92,8 @@ class WindowsOS extends OperatingSystem {
             int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít záznam UO Monday's Legacy v registrech windows.\nBuď nemáš nainstalovaou UO správně nebo je to rozbitý. Přeješ si registry obnovit ručně ?", "Upozornění !", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
             if (obnov == JOptionPane.YES_OPTION) {
                 uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
+                if (uoPath == null)
+                    return "";
                 generateRegistryData(uoPath);
                 return uoPath;
             }

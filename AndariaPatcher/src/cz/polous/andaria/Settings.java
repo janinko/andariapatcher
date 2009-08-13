@@ -195,8 +195,8 @@ class Settings {
             File file = fc.getSelectedFile();
             return file.getAbsolutePath();
         }
-        //return defPath;
-        return null;
+        return defPath;
+        //return null;
     }
 
     /***************************************************************************

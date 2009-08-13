@@ -1,6 +1,7 @@
 package cz.polous.andaria;
 
 import java.awt.Dimension;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -11,8 +12,11 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLFrameHyperlinkEvent;
+import org.lobobrowser.html.FormInput;
 import org.lobobrowser.html.HtmlRendererContext;
 import org.lobobrowser.html.gui.HtmlPanel;
+import org.lobobrowser.html.gui.SelectionChangeEvent;
+import org.lobobrowser.html.gui.SelectionChangeListener;
 import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.parser.InputSourceImpl;
 import org.lobobrowser.html.test.SimpleHtmlRendererContext;
@@ -36,6 +40,8 @@ class Browser {
         log = new Log(this);
         uri = url;
         htmlPanel = p;
+
+        p.addSelectionChangeListener(new SelectionListener());
         try {
             openUrl(url);
         } catch (Exception ex) {
@@ -43,13 +49,23 @@ class Browser {
         }
     }
 
+    private class SelectionListener implements SelectionChangeListener {
+
+        @Override
+        public void selectionChanged(SelectionChangeEvent arg0) {
+            // do nothing
+        }
+    }
+
     /**
      * Custom hyperlink listener. Used by jTBrowser JTextArea.
      *
+     * useful for Browser2 implementation
+     *
      * @see cz.polous.andaria.Browser#openUrl
      */
+    @Deprecated
     private class hyperlink implements HyperlinkListener {
-
         @Override
         public void hyperlinkUpdate(HyperlinkEvent e) {
             if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
@@ -80,7 +96,6 @@ class Browser {
         InputSource is = new InputSourceImpl(reader, uri);
 
         HtmlRendererContext rendererContext = new LocalHtmlRendererContext(htmlPanel);
-        //htmlPanel.setPreferredWidth(400);
         htmlPanel.setPreferredSize(new Dimension(400, 400));
 
         DocumentBuilderImpl builder = new DocumentBuilderImpl(rendererContext.getUserAgentContext(), rendererContext);
@@ -95,8 +110,45 @@ class Browser {
     private static class LocalHtmlRendererContext extends SimpleHtmlRendererContext {
         // O1verride methods here to implement browser functionality
 
+        HtmlPanel htmlPanel;
+
         public LocalHtmlRendererContext(HtmlPanel contextComponent) {
             super(contextComponent);
+            this.htmlPanel = contextComponent;
+        }
+
+        @Override
+        protected String getDocumentCharset(URLConnection connection) {
+            return "ISO-8859-2";
+        }
+
+        /**
+         * Submits a form and/or navigates by making
+         * a <i>synchronous</i> request. This method is invoked
+         * by {@link #submitForm(String, URL, String, String, FormInput[])}.
+         * @param method The request method.
+         * @param action The action URL.
+         * @param target The target identifier.
+         * @param enctype The encoding type.
+         * @param formInputs The form inputs.
+         * @throws IOException
+         * @throws org.xml.sax.SAXException
+         * @see #submitForm(String, URL, String, String, FormInput[])
+         */
+        @Override
+        protected void submitFormSync(final String method, final java.net.URL action, final String target, String enctype, final FormInput[] formInputs) throws IOException, org.xml.sax.SAXException {
+            URL url = action;
+            URLConnection connection = url.openConnection();
+            InputStream in = connection.getInputStream();
+            Reader reader = new InputStreamReader(in, "windows-1250");
+            InputSource is = new InputSourceImpl(reader, action.toString());
+
+            HtmlRendererContext rendererContext = new LocalHtmlRendererContext(htmlPanel);
+
+            DocumentBuilderImpl builder = new DocumentBuilderImpl(rendererContext.getUserAgentContext(), rendererContext);
+            org.w3c.dom.Document document = builder.parse(is);
+            in.close();
+            htmlPanel.setDocument(document, rendererContext);
         }
     }
 

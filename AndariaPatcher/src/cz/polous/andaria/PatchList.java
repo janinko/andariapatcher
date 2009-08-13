@@ -163,7 +163,9 @@ class PatchList {
                 downloader.addPatchItem(patchItem);
             }
         }
-        downloader.startSafe();
+        if (downloader.patchQueue.size() > 0) {
+            downloader.startSafe();
+        }
     }
 
     /***************************************************************************

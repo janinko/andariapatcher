@@ -88,17 +88,14 @@ class Downloader extends PatcherQueue {
             int numRead;
             Date start = new Date();
             long size = 0;
-            while ((numRead = in.read(buff)) != -1) {
-                if (canceled()) {
-                    return;
-                }
+            while ((numRead = in.read(buff)) != -1 && !canceled()) {
                 out.write(buff, 0, numRead);
                 //addToSingleProgress((double) numRead);
                 size += numRead;
                 setSingleProgress(size);
                 try {
                     setLabelSpeed(1.00 * size / ((new Date()).getTime() - start.getTime()));
-                //log.addDebug(Double.toString((new Date()).getTime() - start.getTime()));
+                    //log.addDebug(Double.toString((new Date()).getTime() - start.getTime()));
                 } catch (ArithmeticException e) {
                 }
             }
@@ -118,6 +115,10 @@ class Downloader extends PatcherQueue {
             } catch (IOException e) {
                 log.addEx(e);
             } finally {
+                if (canceled()) {
+                    setLabelText("Stahování bylo přerušeno.");
+                    return;
+                }
                 setLabelText("Kontroluji soubor: " + p.getFileName());
                 try {
                     p.checkHash();

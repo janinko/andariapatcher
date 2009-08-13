@@ -79,6 +79,7 @@ public class FrontEnd extends JFrame {
         }
         // Browser2 newsPanel = new Browser2(Settings.getInstance().getValue(Settings.NEWS_URL));
         //*/
+
         HtmlPanel htmlPNews = new HtmlPanel();
         jTPMain.insertTab(null, null, htmlPNews, "Tady se nachází novinky nejen ze světa...", 0);
         jTPMain.setTitleAt(0, "Novinky");
@@ -88,6 +89,8 @@ public class FrontEnd extends JFrame {
         jTPMain.addTab(null, null, htmlPAbout, "Taky něco o programu samotném.");
         jTPMain.setTitleAt(jTPMain.getComponentCount() - 1, "O programu");
         final Browser about = new Browser(htmlPAbout, Settings.getInstance().getValue(Settings.VALUES.ABOUT_URL));
+
+        // handle TAB changes
         jTPMain.addChangeListener(new ChangeListener() {
 
             @Override
@@ -155,10 +158,11 @@ public class FrontEnd extends JFrame {
         patchList.reload();
     }
 
-    public void setJBInstall(boolean state){
+    public void setJBInstall(boolean state) {
         jBInstallSelection.setEnabled(state);
         jBInstall.setEnabled(state);
     }
+
     public void setJBPatchListEnabled(boolean state) {
         jBRefreshPatchList.setEnabled(state);
         jBInstallSelectAll.setEnabled(state);
@@ -176,11 +180,11 @@ public class FrontEnd extends JFrame {
             conn = url.openConnection();
             in = conn.getInputStream();
             log.addDebug("Zavolal jsem počítadlo spuštění.");
-        /*            byte[] buff = new byte[2048];
-        int numRead;
-        while ((numRead = in.read(buff)) != -1) {
-        out.write(buff, 0, numRead);
-        }*/
+            /*            byte[] buff = new byte[2048];
+            int numRead;
+            while ((numRead = in.read(buff)) != -1) {
+            out.write(buff, 0, numRead);
+            }*/
         } catch (Exception e) {
             log.addEx(e);
             log.addErr("Došlo k chybě při volání počítadla spuštění.");
@@ -1028,7 +1032,7 @@ public class FrontEnd extends JFrame {
 
     private void jBCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelActionPerformed
         PatchList.getInstance().cancel();
-    // updateButtons();
+        // updateButtons();
     }//GEN-LAST:event_jBCancelActionPerformed
 
     private void jBConfLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfLoadActionPerformed
@@ -1053,8 +1057,12 @@ public class FrontEnd extends JFrame {
 
     private void jBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallActionPerformed
         // TODO: version 1.7 and later: remove this line
-        Settings.removeRarFiles();
+        setJBInstall(false);
+        jBCancel.setEnabled(true);
+        jBClose.setEnabled(false);
+        setJBPatchListEnabled(false);
 
+        Settings.removeRarFiles();
         PatchList.getInstance().download();
         updateButtons();
 
@@ -1112,7 +1120,6 @@ public class FrontEnd extends JFrame {
 }//GEN-LAST:event_jBRemoveTempFilesActionPerformed
 
     private void jTPMainStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTPMainStateChanged
-
     }//GEN-LAST:event_jTPMainStateChanged
 
     private void jBInstallSelectNonejBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallSelectNonejBInstallActionPerformed
@@ -1122,7 +1129,6 @@ public class FrontEnd extends JFrame {
     private void jBInstallSelectAlljBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallSelectAlljBInstallActionPerformed
         PatchList.getInstance().selectAll();
 }//GEN-LAST:event_jBInstallSelectAlljBInstallActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
     private javax.swing.JButton jBClose;

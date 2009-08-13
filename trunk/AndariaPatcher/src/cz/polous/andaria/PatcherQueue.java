@@ -75,11 +75,11 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
                 if (cancel) {
                    // reset();
                     setLabelText("Činnost byla přerušena, vyčkávám na další příkazy...");
-                    if (!Installer.getInstance().inProgress() && Downloader.getInstance().inProgress())
-                        log.addLine("Činnost byla pozastavena.");
+                    if (!Installer.getInstance().inProgress() && !Downloader.getInstance().inProgress())
+                        log.addLine("Činnost byla zastavena.");
                 } else {
                     setLabelText("Vyčkávám na další příkazy...");
-                    if (!Installer.getInstance().inProgress() && Downloader.getInstance().inProgress())
+                    if (!Installer.getInstance().inProgress() && !Downloader.getInstance().inProgress())
                         log.addLine("Činnost byla dokončena.");
 
                 }

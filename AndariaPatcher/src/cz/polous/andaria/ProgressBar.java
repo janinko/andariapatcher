@@ -61,6 +61,15 @@ public class ProgressBar {
         }
     }
 
+    String getSpeedLabelText() {
+        String text = null;
+        try {
+            text = FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.SPEED).getText();
+        } catch (Exception e) {
+        } finally {
+            return text;
+        }
+    }
     /***************************************************************************
      * Set patchers speed label
      * 

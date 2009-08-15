@@ -44,11 +44,6 @@ public class J7zipArchiveExtractCallback implements IArchiveExtractCallback // ,
             file.close();
             file = null;
         }
-        /*
-        public void flush()  throws java.io.IOException {
-        file.flush();
-        }
-         */
 
         @Override
         public void write(byte[] b) throws java.io.IOException {

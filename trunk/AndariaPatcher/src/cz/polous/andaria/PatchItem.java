@@ -184,10 +184,14 @@ class PatchItem {
         Settings.getInstance().savePatchItem(this);
     }
 
-    public void switchInstallFlag() {
-        installFlag = !installFlag;
+    public void setInstallFlag(boolean b) {
+        log.addDebug(fileName.concat(": ").concat(Boolean.toString(installFlag)).concat(" -> ").concat(Boolean.toString(b)));
+        installFlag = b;
         panel.refresh();
-        log.addDebug(fileName.concat(": ").concat(Boolean.toString(installFlag)).concat(" -> ").concat(Boolean.toString(!installFlag)));
+    }
+
+    public void switchInstallFlag() {
+        setInstallFlag(!installFlag);
     }
 
     /***************************************************************************

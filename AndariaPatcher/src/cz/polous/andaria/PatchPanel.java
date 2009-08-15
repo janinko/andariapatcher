@@ -115,7 +115,7 @@ class PatchPanel extends JPanel {
 
         PatchItemMouseListener() {
             jChRequired.addMouseListener(this);
-            jChInstall.addMouseListener(this);
+            //jChInstall.addMouseListener(this);
 
             jLSize.addMouseListener(this);
             jTSize.addMouseListener(this);
@@ -138,6 +138,7 @@ class PatchPanel extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            log.addDebug("Click: ".concat(patchItem.getName()));
             patchItem.switchInstallFlag();
         }
 
@@ -154,8 +155,9 @@ class PatchPanel extends JPanel {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         jChInstall = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -166,18 +168,30 @@ class PatchPanel extends JPanel {
         jLSize = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
-        setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(163, 125, 86), 1, true), patchItem.getName(), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(163, 125, 86)));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(163, 125, 86), 1, true), patchItem.getName(), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(163, 125, 86))); // NOI18N
         setForeground(new java.awt.Color(163, 125, 86));
         setToolTipText(getToolTip());
         setFocusable(false);
         setMinimumSize(new java.awt.Dimension(510, 50));
         setPreferredSize(new java.awt.Dimension(510, 50));
+
         jChInstall.setBackground(getBackground());
         jChInstall.setForeground(getForeground());
+        jChInstall.setSelected(true);
         jChInstall.setText("Instalovat");
         jChInstall.setToolTipText(getToolTipText());
         jChInstall.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jChInstall.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jChInstall.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jChInstallStateChanged(evt);
+            }
+        });
+        jChInstall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jChInstallActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setBackground(getBackground());
         jSeparator1.setForeground(getBackground());
@@ -193,11 +207,12 @@ class PatchPanel extends JPanel {
 
         jChRequired.setBackground(getBackground());
         jChRequired.setForeground(getForeground());
+        jChRequired.setSelected(true);
         jChRequired.setToolTipText(getToolTipText());
         jChRequired.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jChRequired.setEnabled(false);
         jChRequired.setFocusable(false);
-        jChRequired.setLabel("Povinn\u00fd");
+        jChRequired.setLabel("Povinný");
         jChRequired.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jChRequired.setMaximumSize(new java.awt.Dimension(50, 15));
         jChRequired.setMinimumSize(new java.awt.Dimension(50, 15));
@@ -211,6 +226,7 @@ class PatchPanel extends JPanel {
 
         jChAutoInstall.setBackground(getBackground());
         jChAutoInstall.setForeground(getForeground());
+        jChAutoInstall.setSelected(true);
         jChAutoInstall.setText("Automaticky");
         jChAutoInstall.setToolTipText(getToolTipText());
         jChAutoInstall.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -221,6 +237,11 @@ class PatchPanel extends JPanel {
         jChAutoInstall.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jChAutoInstallStateChanged(evt);
+            }
+        });
+        jChAutoInstall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jChAutoInstallActionPerformed(evt);
             }
         });
 
@@ -252,17 +273,17 @@ class PatchPanel extends JPanel {
                 .addContainerGap()
                 .add(jChInstall)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE)
+                .add(jSeparator1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jChRequired, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 71, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jSeparator2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE)
+                .add(jSeparator2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 58, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jTSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jSeparator3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
+                .add(jSeparator3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jChAutoInstall, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
@@ -283,8 +304,24 @@ class PatchPanel extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jChAutoInstallStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jChAutoInstallStateChanged
-        patchItem.setAutoInstallFlag(jChAutoInstall.isSelected());
+       
     }//GEN-LAST:event_jChAutoInstallStateChanged
+
+    private void jChInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChInstallActionPerformed
+        // TODO add your handling code here:
+        log.addDebug("Akce: ".concat(patchItem.getName()));
+        patchItem.setInstallFlag(jChInstall.isSelected());
+    }//GEN-LAST:event_jChInstallActionPerformed
+
+    private void jChInstallStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jChInstallStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jChInstallStateChanged
+
+    private void jChAutoInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jChAutoInstallActionPerformed
+
+        patchItem.setAutoInstallFlag(jChAutoInstall.isSelected());
+    }//GEN-LAST:event_jChAutoInstallActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jChAutoInstall;
     private javax.swing.JCheckBox jChInstall;

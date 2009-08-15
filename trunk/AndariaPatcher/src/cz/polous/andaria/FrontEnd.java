@@ -518,6 +518,7 @@ public class FrontEnd extends JFrame {
         jLDownloadSpeed.setForeground(getForeground());
         jLDownloadSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLDownloadSpeed.setText("0 kbps");
+        jLDownloadSpeed.setToolTipText("Aktuální rychlost stahování souboru.");
         jLDownloadSpeed.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLDownloadSpeed.setMaximumSize(new java.awt.Dimension(50, 14));
         jPDownloadProgressText.add(jLDownloadSpeed);
@@ -581,6 +582,7 @@ public class FrontEnd extends JFrame {
         jLInstallSpeed.setForeground(getForeground());
         jLInstallSpeed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLInstallSpeed.setText("0 kbps");
+        jLInstallSpeed.setToolTipText("Aktuální rychlost rozbalování souboru. Čím rychlejší, tím máš výkonější počítač.");
         jLInstallSpeed.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLInstallSpeed.setMaximumSize(new java.awt.Dimension(50, 14));
         jPInstallProgressText.add(jLInstallSpeed);

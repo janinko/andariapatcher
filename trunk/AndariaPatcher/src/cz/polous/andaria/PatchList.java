@@ -184,9 +184,7 @@ class PatchList {
         PatchItem patchItem;
         for (int i = 0; i < patchData.size(); i++) {
             patchItem = (PatchItem) patchData.get(i);
-            if (patchItem.getInstallFlag() == true) {
-                patchItem.switchInstallFlag();
-            }
+            patchItem.setInstallFlag(false);
         }
     }
 
@@ -195,13 +193,9 @@ class PatchList {
         for (int i = 0; i < patchData.size(); i++) {
             patchItem = (PatchItem) patchData.get(i);
             if (patchItem.getAutoInstallFlag()) {
-                if (patchItem.getInstallFlag() == false) {
-                    patchItem.switchInstallFlag();
-                }
+                patchItem.setInstallFlag(true);
             } else {
-                if (patchItem.getInstallFlag() == true) {
-                    patchItem.switchInstallFlag();
-                }
+                patchItem.setInstallFlag(false);
             }
         }
 

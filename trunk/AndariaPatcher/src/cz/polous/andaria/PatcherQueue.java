@@ -12,7 +12,7 @@ package cz.polous.andaria;
  ******************************************************************************/
 import java.util.Vector;
 
-abstract class PatcherQueue extends ProgressBar implements Runnable  {
+abstract class PatcherQueue extends ProgressBar implements Runnable {
 
     protected Vector patchQueue = new Vector();
     private boolean inProgress;
@@ -36,7 +36,7 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
      **************************************************************************/
     @Override
     public void run() {
-       // reset();
+        // reset();
         execute();
     }
 
@@ -70,17 +70,20 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
                 while (patchQueue.size() > 0 && !cancel) {
                     log.addDebug("Volání executeNext. Ve frontš je ještě: " + patchQueue.size() + " souborů.");
                     executeNext();
+                    log.addLine((this.getClass() == Downloader.class ? "Stahování" : "Rozbalení").concat(" souboru proběhlo rychlostí ").concat(getSpeedLabelText()));
                 }
                 this.inProgress = false;
                 if (cancel) {
-                   // reset();
+                    // reset();
                     setLabelText("Činnost byla přerušena, vyčkávám na další příkazy...");
-                    if (!Installer.getInstance().inProgress() && !Downloader.getInstance().inProgress())
+                    if (!Installer.getInstance().inProgress() && !Downloader.getInstance().inProgress()) {
                         log.addLine("Činnost byla zastavena.");
+                    }
                 } else {
                     setLabelText("Vyčkávám na další příkazy...");
-                    if (!Installer.getInstance().inProgress() && !Downloader.getInstance().inProgress())
+                    if (!Installer.getInstance().inProgress() && !Downloader.getInstance().inProgress()) {
                         log.addLine("Činnost byla dokončena.");
+                    }
 
                 }
             }
@@ -132,8 +135,6 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
         }
     }
 
-   
-
     /***************************************************************************
      * Add new PatchItem to queue.
      * @param p item
@@ -149,7 +150,7 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
     PatchItem getFirstItem() {
         return (PatchItem) patchQueue.get(0);
     }
- 
+
     boolean notCanceled() {
         return !cancel;
     }
@@ -160,7 +161,7 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
 
     void removeFirst() {
         patchQueue.remove(0);
-        
+
     }
 
     void cancel() {
@@ -168,7 +169,4 @@ abstract class PatcherQueue extends ProgressBar implements Runnable  {
         log.addLine("Čekám na dokončení nepřerušitelných akcí.");
         setLabelText("Akce bude co nejdříve přerušena.");
     }
-
-
-   
 }

@@ -312,6 +312,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="4"/>
                         <Property name="text" type="java.lang.String" value="0 kbps"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Aktu&#xe1;ln&#xed; rychlost stahov&#xe1;n&#xed; souboru."/>
                         <Property name="horizontalTextPosition" type="int" value="4"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[50, 14]"/>
@@ -467,6 +468,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="4"/>
                         <Property name="text" type="java.lang.String" value="0 kbps"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Aktu&#xe1;ln&#xed; rychlost rozbalov&#xe1;n&#xed; souboru. &#x10c;&#xed;m rychlej&#x161;&#xed;, t&#xed;m m&#xe1;&#x161; v&#xfd;kon&#x11b;j&#x161;&#xed; po&#x10d;&#xed;ta&#x10d;."/>
                         <Property name="horizontalTextPosition" type="int" value="4"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[50, 14]"/>

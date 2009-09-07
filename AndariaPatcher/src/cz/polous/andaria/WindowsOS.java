@@ -85,9 +85,7 @@ class WindowsOS extends OperatingSystem {
         } catch (NoSuchMethodException e) {
             System.err.println(e.getMessage());
         }
-
-        uoPath = null; // TODO odstranit
-        
+       
         // ljk upravy 09.09.07
         if (uoPath == null || uoPath.isEmpty()) {
             //Object[] opts = {"Obnovit", "Neobnovovat","Ukázat patcheru cestu (nepracovat s registry)",};

@@ -86,9 +86,12 @@ class WindowsOS extends OperatingSystem {
             System.err.println(e.getMessage());
         }
 
-
+        uoPath = null; // TODO odstranit
+        
+        // ljk upravy 09.09.07
         if (uoPath == null || uoPath.isEmpty()) {
-            Object[] opts = {"Obnovit", "Neobnovovat"};
+            //Object[] opts = {"Obnovit", "Neobnovovat","Ukázat patcheru cestu (nepracovat s registry)",};
+        	Object[] opts = {"Obnovit", "Ukázat patcheru cestu (nepracovat s registry)",};
             int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít záznam UO Monday's Legacy v registrech windows.\nBuď nemáš nainstalovaou UO správně nebo je to rozbitý. Přeješ si registry obnovit ručně ?", "Upozornění !", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
             if (obnov == JOptionPane.YES_OPTION) {
                 uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
@@ -97,8 +100,22 @@ class WindowsOS extends OperatingSystem {
                 generateRegistryData(uoPath);
                 return uoPath;
             }
+            else if (obnov == JOptionPane.NO_OPTION){
+            	uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
+            	if (uoPath == null) return "";
+
+            	Object[] opts2 = {"Ano", "Ne, do tempu s nimi",};
+            	int temporaryFiles = JOptionPane.showOptionDialog(null, "Uložit dočasné soubory patcheru přímo do složky UO? (V opačném případě budou uloženy do TEMPu)", "Kam s nimi ?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts2, opts2[0]);
+            	if (temporaryFiles == JOptionPane.YES_OPTION){
+            		String storage = uoPath+File.separator+"TempAndariaPatcher";
+            		Settings.getInstance().setAlternate_storage(storage);
+            	}
+            	
+            	return uoPath;
+            }
             return "";
         }
+
         System.out.println("Rozpoznaný adresář s ultimou: ".concat(uoPath));
         return uoPath;
     }

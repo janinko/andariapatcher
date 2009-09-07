@@ -40,6 +40,8 @@ class Settings {
     private final String counter_url = "http://patcher.andaria.net/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
     private static Log log;
+    
+    private String alternate_storage;
 
     private Settings() {
         os = OperatingSystem.createOperatingSystemInstance();
@@ -74,7 +76,9 @@ class Settings {
     }
 
     public String getLocal_storage() {
-        return local_storage;
+    	// ljk upravy 09.09.07
+        if (alternate_storage!=null) return alternate_storage;
+        else return local_storage;
     }
 
     public String getNews_url() {
@@ -85,6 +89,10 @@ class Settings {
         return remote_storage;
     }
 
+    public void setAlternate_storage(String storage) {
+        alternate_storage=storage;
+    }
+    
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
@@ -220,6 +228,7 @@ class Settings {
         }
         if (doc == null || root == null) {
             JOptionPane.showMessageDialog(null, "Nejspíš jsi patcher pustil poprvé, takže nebyl nalezen konfigurační soubor (" + os.getConfigPath() + ").\nNež budeš patchovat, tak si zkontroluj a ulož svoje nastavení AndariaPatcheru.", "Upozornění !", JOptionPane.WARNING_MESSAGE);
+            
             root = new Element("main");
             settings = new Element("settings");
             patches = new Element("patchlist");

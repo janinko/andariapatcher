@@ -1003,7 +1003,7 @@ public class FrontEnd extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void jBSetAllInstalledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSetAllInstalledActionPerformed
-        if (0 == JOptionPane.showConfirmDialog(null, "Chceš opravdu nastavit všechny soubory jako nainastalové ?", "Zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
+        if (0 == JOptionPane.showConfirmDialog(null, "Chceš opravdu nastavit všechny soubory jako nainstalované ?", "Zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
             PatchList.getInstance().setAllInstalled();
         }
     }//GEN-LAST:event_jBSetAllInstalledActionPerformed

@@ -5,7 +5,7 @@ $countBetaFile = "/home/wwwroot/andaria.net/patcher/hits/.txt";
 
 include_once($VERSION_FILE);
 ?>
-<script src="http://java.com/js/deployJava.js"></script>
+<script src="http://patcher.andaria.net/deployJava.js"></script>
 <script type="text/javascript" >
     //<![CDATA[
   	var appLink = "http://patcher.andaria.net/launch.jnlp";
@@ -22,11 +22,11 @@ include_once($VERSION_FILE);
     var isChrome = ( navigator.userAgent.toLowerCase().indexOf("chrome") != -1 );
 
     var OSName="Unknown OS";
-    if (navigator.appVersion.toLowerCase().indexOf("win")!=-1) OSName="Windows";
-    if (navigator.appVersion.toLowerCase().indexOf("wow")!=-1) OSName="Windows";
-    if (navigator.appVersion.toLowerCase().indexOf("mac")!=-1) OSName="MacOS";
-    if (navigator.appVersion.toLowerCase().indexOf("x11")!=-1) OSName="Linux";
-    if (navigator.appVersion.toLowerCase().indexOf("linux")!=-1) OSName="Linux";
+    if (navigator.userAgent.toLowerCase().indexOf("win")!=-1) OSName="Windows";
+    if (navigator.userAgent.toLowerCase().indexOf("wow")!=-1) OSName="Windows";
+    if (navigator.userAgent.toLowerCase().indexOf("mac")!=-1) OSName="MacOS";
+    if (navigator.userAgent.toLowerCase().indexOf("x11")!=-1) OSName="Linux";
+    if (navigator.userAgent.toLowerCase().indexOf("linux")!=-1) OSName="Linux";
 
 	  // java detection
     var java_required_version = '1.6.0+';
@@ -162,19 +162,20 @@ include_once($VERSION_FILE);
         //}
 ?>
 <br><br>
+<!--
 <b>Beta Patcheru verze <?php echo $ap_versionBeta;?></b><br>
 
 <script type="text/javascript">
     //<![CDATA[
     // display JNLP button
-     deployJava.launchButtonPNG = appBetaLaunchButton;
-    deployJava.createWebStartLaunchButton(appBetaLink, '1.6.0');
+    // deployJava.launchButtonPNG = appBetaLaunchButton;
+    //deployJava.createWebStartLaunchButton(appBetaLink, '1.6.0');
     //]]>
 </script>
 <br>
 <font size=-2>mùže být nestabilní, nefunkèní, ale nemìla by poškodit ultimu jako takovou ani nic ostatního</font>
 </div><br>
-
+-->
 <div id="applet_holder"></div>
 
 <script type="text/javascript">

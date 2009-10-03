@@ -39,8 +39,10 @@ class Settings {
     private final String debug_log = "0";
     private final String counter_url = "http://patcher.andaria.net/counter.php";
     private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
+    private final String uomlRemotePath = "http://patcher.andaria.net/7z/";
+    private final String uomlPatchItemName = "UOML";
+    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2.7z", uomlPatchItemName, "8.9.2009, 18:51", "cc8c85f8bbe8ef257000122e39545ca2", "0", "627528687", "6.0.14.2", "Předinstalovaná ultima online."};
     private static Log log;
-    
     private String alternate_storage;
 
     private Settings() {
@@ -76,9 +78,12 @@ class Settings {
     }
 
     public String getLocal_storage() {
-    	// ljk upravy 09.09.07
-        if (alternate_storage!=null) return alternate_storage;
-        else return local_storage;
+        // ljk upravy 09.09.07
+        if (alternate_storage != null) {
+            return alternate_storage;
+        } else {
+            return local_storage;
+        }
     }
 
     public String getNews_url() {
@@ -90,9 +95,9 @@ class Settings {
     }
 
     public void setAlternate_storage(String storage) {
-        alternate_storage=storage;
+        alternate_storage = storage;
     }
-    
+
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
@@ -228,7 +233,7 @@ class Settings {
         }
         if (doc == null || root == null) {
             JOptionPane.showMessageDialog(null, "Nejspíš jsi patcher pustil poprvé, takže nebyl nalezen konfigurační soubor (" + os.getConfigPath() + ").\nNež budeš patchovat, tak si zkontroluj a ulož svoje nastavení AndariaPatcheru.", "Upozornění !", JOptionPane.WARNING_MESSAGE);
-            
+
             root = new Element("main");
             settings = new Element("settings");
             patches = new Element("patchlist");
@@ -315,9 +320,17 @@ class Settings {
         return true;
     }
 
+    public String[] getUomlPatchItem() {
+        return uomlPatchItem;
+    }
+
+    public String getUomlPatchItemName() {
+        return uomlPatchItemName;
+    }
     /*
      * Funkce urcena ke zruseni ve verzi 1.7 ci pozdeji.
      */
+
     @Deprecated
     public static void removeRarFiles() {
         String dir = Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE);
@@ -346,6 +359,10 @@ class Settings {
                 }
             }
         }
+    }
+
+    public String getUomlRemotePath() {
+        return uomlRemotePath;
     }
 
     public void updateTempSize() {

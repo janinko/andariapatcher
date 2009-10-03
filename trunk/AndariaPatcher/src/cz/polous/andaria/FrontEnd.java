@@ -311,11 +311,13 @@ public class FrontEnd extends JFrame {
                 jBCancel.setEnabled(true);
                 jBClose.setEnabled(false);
                 setJBPatchListEnabled(false);
+                jBDownloadUO.setEnabled(false);
             } else {
                 setJBInstall(true);
                 jBCancel.setEnabled(false);
                 jBClose.setEnabled(true);
                 setJBPatchListEnabled(true);
+                jBDownloadUO.setEnabled(true);
             }
 
         } catch (NullPointerException e) {
@@ -385,6 +387,7 @@ public class FrontEnd extends JFrame {
         jBRemoveTempFiles = new javax.swing.JButton();
         jLConfTempPath1 = new javax.swing.JLabel();
         jLConfTempSize = new javax.swing.JLabel();
+        jBDownloadUO = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
@@ -895,6 +898,16 @@ public class FrontEnd extends JFrame {
         jLConfTempSize.setText("0Mb");
         jLConfTempSize.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
 
+        jBDownloadUO.setBackground(getBackground());
+        jBDownloadUO.setForeground(getForeground());
+        jBDownloadUO.setText("Odstranit soubor desktop.nwb (použij, pokud máš problém se spuštěním UO)");
+        jBDownloadUO.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBDownloadUO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBDownloadUOActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPSettingsTabLayout = new org.jdesktop.layout.GroupLayout(jPSettingsTab);
         jPSettingsTab.setLayout(jPSettingsTabLayout);
         jPSettingsTabLayout.setHorizontalGroup(
@@ -903,47 +916,52 @@ public class FrontEnd extends JFrame {
                 .addContainerGap()
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jLConfUltimaOnlinePath)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 26, Short.MAX_VALUE)
-                        .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jBConfBrowseUltimaOnlinePath))
-                    .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                        .add(1, 1, 1)
-                        .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 524, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jBConfBrowseRunCommand))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(jPSettingsTabLayout.createSequentialGroup()
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .add(jLConfTempPath1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jLConfTempSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(jPSettingsTabLayout.createSequentialGroup()
+                                .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 499, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 525, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfBrowseTempPath))))
-                    .add(jChDebug))
-                .addContainerGap())
+                                .add(jLabel1)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jPSettingsTabLayout.createSequentialGroup()
+                                .add(jLConfUltimaOnlinePath)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 26, Short.MAX_VALUE)
+                                .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jBConfBrowseUltimaOnlinePath))
+                            .add(jPSettingsTabLayout.createSequentialGroup()
+                                .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                .add(1, 1, 1)
+                                .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 524, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jBConfBrowseRunCommand))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(jPSettingsTabLayout.createSequentialGroup()
+                                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                    .add(jLConfTempPath1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jLConfTempSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 499, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 525, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jBConfBrowseTempPath))))
+                            .add(jChDebug))
+                        .addContainerGap())
+                    .add(jPSettingsTabLayout.createSequentialGroup()
+                        .add(jBDownloadUO, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
+                        .add(4, 4, 4))))
         );
         jPSettingsTabLayout.setVerticalGroup(
             jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -978,7 +996,9 @@ public class FrontEnd extends JFrame {
                     .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jChDebug)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 158, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jBDownloadUO)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 124, Short.MAX_VALUE)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -1131,6 +1151,13 @@ public class FrontEnd extends JFrame {
     private void jBInstallSelectAlljBInstallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInstallSelectAlljBInstallActionPerformed
         PatchList.getInstance().selectAll();
 }//GEN-LAST:event_jBInstallSelectAlljBInstallActionPerformed
+
+    private void jBDownloadUOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDownloadUOActionPerformed
+        jBDownloadUO.setEnabled(false);
+        Downloader.getInstance().reset();
+        Downloader.getInstance().addPatchItem(new PatchItem(Settings.getInstance().getUomlPatchItem()));
+        Downloader.getInstance().start();
+    }//GEN-LAST:event_jBDownloadUOActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
     private javax.swing.JButton jBClose;
@@ -1141,6 +1168,7 @@ public class FrontEnd extends JFrame {
     private javax.swing.JButton jBConfSave;
     private javax.swing.JButton jBDeleteIntro;
     private javax.swing.JButton jBDeleteNWB;
+    private javax.swing.JButton jBDownloadUO;
     private javax.swing.JButton jBInstall;
     private javax.swing.JButton jBInstallSelectAll;
     private javax.swing.JButton jBInstallSelectNone;

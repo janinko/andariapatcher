@@ -111,7 +111,12 @@ class PatchItem {
     }
 
     public String getRemoteFileName() {
-        return Settings.getInstance().getValue(Settings.VALUES.REMOTE_STORAGE) + "/" + fileName;
+        Settings set = Settings.getInstance();
+        if (name.equals(set.getUomlPatchItemName())) {
+            return set.getUomlRemotePath().concat(fileName);
+        } else {
+            return set.getValue(Settings.VALUES.REMOTE_STORAGE) + "/" + fileName;
+        }
     }
 
     public String getName() {

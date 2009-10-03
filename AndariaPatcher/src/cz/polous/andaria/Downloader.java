@@ -65,6 +65,7 @@ class Downloader extends PatcherQueue {
         } catch (IOException e) {
             log.addEx(e);
         } catch (Exception e) {
+            //TODO: pridat otazku, jestli navazat nebo stahnout znova.
             log.addLine(e.getMessage().concat(" Zkusím to znova."));
         }
 
@@ -77,6 +78,7 @@ class Downloader extends PatcherQueue {
         InputStream in = null;
 
         try {
+            // TODO: implementovat navazani na predchozi nedokoncene stahovani
             String uri = p.getRemoteFileName();
 
             URL url = new URL(uri);

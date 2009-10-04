@@ -256,9 +256,11 @@ class WindowsOS extends OperatingSystem {
 
         regData = regData.concat("Windows Registry Editor Version 5.00\n\n");
         regData = regData.concat("[HKEY_CURRENT_USER\\Software\\Razor]\n");
-        regData = regData.concat("\"Client1\"=\"C:\\\\uo\\\\AndariaClient.exe\"");
-        regData = regData.concat("\"DefClient\"=\"2\"");
- 
+        regData = regData.concat("\"Client1\"=\"").concat(uoPath.replace("\\", "\\\\")).concat("\\\\AndariaClient.exe\"\n");
+        regData = regData.concat("\"DefClient\"=\"2\"\n");
+        regData = regData.concat("\"ShowWelcome\"=\"0\"\n\n");
+        regData = regData.concat("[HKEY_LOCAL_MACHINE\\SOFTWARE\\Razor]\n");
+        regData = regData.concat("\"InstallDir\"=\"").concat(uoPath.replace("\\", "\\\\")).concat("\\\\razor\"\n");
         FileWriter fw;
         File f;
         try {

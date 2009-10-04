@@ -237,12 +237,14 @@ public class FrontEnd extends JFrame {
      * execute autoRun commands and quit
      **************************************************************************/
     public void closeMe() {
+        boolean error = false;
         if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).isEmpty()) {
             try {
                 Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
             } catch (IOException ex) {
                 log.addErr("Chyba při spouštění externího programu !");
                 ex.printStackTrace();
+                error = true;
             }
         }
         if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1).isEmpty()) {
@@ -251,6 +253,7 @@ public class FrontEnd extends JFrame {
             } catch (IOException ex) {
                 log.addErr("Chyba při spouštění externího programu !");
                 ex.printStackTrace();
+                error = true;
             }
         }
         if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).isEmpty()) {
@@ -259,9 +262,13 @@ public class FrontEnd extends JFrame {
             } catch (IOException ex) {
                 log.addErr("Chyba při spouštění externího programu !");
                 ex.printStackTrace();
+                error = true;
             }
         }
-        System.exit(0);
+        if (error == false)
+            System.exit(0);
+        else
+            log.addErr("Při spouštění některého z externích programů došlo k chybě. Oprav prosím nastavení spouštěných programů nebo zavři patcher \"křížkem\".");
     }
 
     /***************************************************************************

@@ -125,6 +125,43 @@ include_once($VERSION_FILE);
 <p>
         <b>Poslední vydaná verze: <?PHP require_once($VERSION_FILE); echo $ap_version;?></b>. Informace o známých chybách a plánovaných úpravách najdete <a href='http://trac2.assembla.com/andariapatcher/report/3'>na stránkách projektu.</a><br>Po svìtì pobíhá i stará verze patcheru - XUL. Tu již nepoužívejte.
     </p>
+    <p>
+      <b>Instalace a spuštìní:</b><br>
+      Andaria patcher vyžaduje pro svùj chod <A href="http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com" >JRE 1.6.0 nebo novìjší</A>. <span id="java_detect_result"></span>
+<div align="center">
+
+<script type="text/javascript">
+    //<![CDATA[
+    // display JNLP button
+    deployJava.createWebStartLaunchButton(appLink, '1.6.0');
+    //]]>
+</script>
+<?PHP
+        // nacte pocet spusteni patcheru v poslednim mesici
+        //try {
+
+            $hits = file($countFile);
+            echo "<br><font size='-3'>(Poèet spuštìní verze 1.5 je ".$hits[0]."x)</font><br>";
+       // }// catch () {
+        //}
+?>
+
+<br>
+<font size="-2"><a href="http://patcher.andaria.net/Andaria Patcher.lnk">Zde je možné si stahnout spouštìcí ikonu AndariaPatcheru.</a><br><br></font>
+</div>
+<div align="center">
+<font size="-1"><b>Beta Patcheru verze <?php echo $ap_versionBeta;?></b><br>
+<script type="text/javascript">
+//<![CDATA[
+    //display JNLP button
+    deployJava.launchButtonPNG = appBetaLaunchButton;
+    deployJava.createWebStartLaunchButton(appBetaLink, '1.6.0');
+//]]>
+</script>
+<br>
+</font></div></p>
+<font size=-2>mùže být nestabilní, nefunkèní, ale nemìla by poškodit ultimu jako takovou ani nic ostatního</font>
+<br>
 
     <h4>Jak to funguje ?</h4>
     <ul>
@@ -140,42 +177,10 @@ include_once($VERSION_FILE);
         </li><li>AndariaPatcher obsahuje funkce, které usnadní øešení nìkterých problémù a pøíèin pádù hry (odstranìní .nwb, obnovit registry windows).
     </li></ul>
 
-    <h4>Instalace a spuštìní:</h4>
-    <p>Andaria patcher vyžaduje pro svùj chod <A href="http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=java.com" >JRE 1.6.0 nebo novìjší</A>. <span id="java_detect_result"></span>
 <p>
 <span id="start_label"></span>
-<br><br><div align="center">
-
-<script type="text/javascript">
-    //<![CDATA[
-    // display JNLP button
-    deployJava.createWebStartLaunchButton(appLink, '1.6.0');
-    //]]>
-</script>
-<?PHP
-        // nacte pocet spusteni patcheru v poslednim mesici
-        //try {
-
-            $hits = file($countFile);
-            echo "<br><font size='-3'>(Poèet spuštìní za ".date("m. Y")." je ".$hits[0]."x)</font><br>";
-       // }// catch () {
-        //}
-?>
-<br><br>
-<!--
-<b>Beta Patcheru verze <?php echo $ap_versionBeta;?></b><br>
-
-<script type="text/javascript">
-    //<![CDATA[
-    // display JNLP button
-    // deployJava.launchButtonPNG = appBetaLaunchButton;
-    //deployJava.createWebStartLaunchButton(appBetaLink, '1.6.0');
-    //]]>
-</script>
 <br>
-<font size=-2>mùže být nestabilní, nefunkèní, ale nemìla by poškodit ultimu jako takovou ani nic ostatního</font>
-</div><br>
--->
+
 <div id="applet_holder"></div>
 
 <script type="text/javascript">

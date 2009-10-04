@@ -91,8 +91,8 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jBPachAndPlay" alignment="0" pref="722" max="32767" attributes="0"/>
                   <Component id="jPNews1" alignment="0" pref="722" max="32767" attributes="0"/>
+                  <Component id="jBPachAndPlay" alignment="0" pref="722" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">

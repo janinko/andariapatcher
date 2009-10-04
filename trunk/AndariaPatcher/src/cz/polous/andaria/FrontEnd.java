@@ -189,6 +189,7 @@ public class FrontEnd extends JFrame {
         jBClose.setEnabled(false);
         jBDownloadUO.setEnabled(false);
         setJBPatchListEnabled(false);
+        jBPachAndPlay.setEnabled(false);
     }
 
     public void setJBInstall(boolean state) {
@@ -394,6 +395,7 @@ public class FrontEnd extends JFrame {
                 jBClose.setEnabled(true);
                 setJBPatchListEnabled(true);
                 jBDownloadUO.setEnabled(true);
+                jBPachAndPlay.setEnabled(true);
             }
 
         } catch (NullPointerException e) {
@@ -525,8 +527,8 @@ public class FrontEnd extends JFrame {
         jPNews.setLayout(jPNewsLayout);
         jPNewsLayout.setHorizontalGroup(
             jPNewsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jBPachAndPlay, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
             .add(jPNews1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .add(jBPachAndPlay, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
         );
         jPNewsLayout.setVerticalGroup(
             jPNewsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)

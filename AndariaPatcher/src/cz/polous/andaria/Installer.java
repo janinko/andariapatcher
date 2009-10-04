@@ -56,8 +56,8 @@ class Installer extends PatcherQueue {
      **************************************************************************/
     @Override
     protected void addPatchItem(PatchItem p) {
-       super.addPatchItem(p);
-       startSafe();
+        super.addPatchItem(p);
+        startSafe();
     }
 
     /**
@@ -123,23 +123,33 @@ class Installer extends PatcherQueue {
     synchronized void executeNext() {
         failed = false;
         PatchItem patchItem = getFirstItem();
-
+        File f;
+        final String uopath = Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
         // progress will be counted by 65% for extracting files
         // and  35% for installing patches expect for uoml file.
         // ProgressBars - for single file
         resetProgressBar(BARS.SINGLE, patchItem.getSize());
-        if (patchItem.getName().equals(Settings.getInstance().getUomlPatchItemName()))
+        if (patchItem.getName().equals(Settings.getInstance().getUomlPatchItemName())) {
             extractProgressPart = patchItem.getSize();
-        else
+            // - if exist start_g.bat, execute it
+            f = new File(Settings.getInstance().getOs().getConfigPath());
+            log.addDebug("Hledám:" + f.getAbsolutePath());
+            if (canceled()) {
+                return;
+            }
+            if (f.exists()) {
+                log.addDebug("Našel jsem config - mazu ho.");
+                f.delete();
+            }
+        } else {
             extractProgressPart = Math.round(patchItem.getSize() * 65 / 100.00);
+        }
 
         log.addDebug("Pracuju se souborem: ".concat(patchItem.getLocalFileName()));
         log.addDebug("...jeho velikost je: ".concat(Double.toString(patchItem.getSize())));
         totalsize += patchItem.getSize();
 
         if (patchItem.isPacked()) {
-            final String uopath = Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
-
             setLabelText("Rozbaluju soubor: " + patchItem.getFileName());
             J7zipBinding sevenZip = new J7zipBinding();
             try {
@@ -152,55 +162,69 @@ class Installer extends PatcherQueue {
                 return;
             }
 
-           // setLabelSpeed(0);
+            // setLabelSpeed(0);
             log.addDebug("Soubor je rozbalený, hledám instalační skripty.");
-            File f = new File(uopath + File.separator + "start_a.bat");
+            f = new File(uopath + File.separator + "start_a.bat");
             log.addDebug("Hledám:" + f.getAbsolutePath());
-            if (canceled()) return;
+            if (canceled()) {
+                return;
+            }
             if (f.exists()) {
                 log.addDebug("Našel jsem start_a.bat.");
                 setLabelText("Instaluju patch (start_a.bat): " + patchItem.getFileName());
 
                 exec(Settings.getInstance().getOs().getBatchExecCommand(f));
                 f.delete();
-                setSingleProgressPercents(82);
+                setSingleProgressPercents(68);
             }
             // - if exist start_g.bat, execute it
             f = new File(uopath + File.separator + "start_g.bat");
-            setSingleProgressPercents(87);
+            setSingleProgressPercents(72);
             log.addDebug("Hledám:" + f.getAbsolutePath());
-            if (canceled()) return;
+            if (canceled()) {
+                return;
+            }
             if (f.exists()) {
                 log.addDebug("Našel jsem start_g.bat.");
                 setLabelText("Instaluju patch (start_g.bat): " + patchItem.getFileName());
                 exec(Settings.getInstance().getOs().getBatchExecCommand(f));
                 f.delete();
-                setSingleProgressPercents(97);
+                setSingleProgressPercents(81);
             }
 
             // - if exist start_g.bat, execute it
             f = new File(uopath + File.separator + "install.bat");
-            setSingleProgressPercents(87);
+            setSingleProgressPercents(88);
             log.addDebug("Hledám:" + f.getAbsolutePath());
-            if (canceled()) return;
+            if (canceled()) {
+                return;
+            }
             if (f.exists()) {
                 log.addDebug("Našel jsem install.bat.");
                 setLabelText("Instaluju patch (install.bat): " + patchItem.getFileName());
                 exec(Settings.getInstance().getOs().getBatchExecCommand(f));
                 f.delete();
-                setSingleProgressPercents(97);
+                setSingleProgressPercents(96);
+            }
+
+            if (patchItem.getName().equals(Settings.getInstance().getUomlPatchItemName())) {
+                // a strange hack, but it works :-)
+                // this should merge settings in memory and .xml data.
+                FrontEnd.getInstance().loadSettings();
+                FrontEnd.getInstance().saveSettings();
+                PatchList.getInstance().reload();
             }
 
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");
-        
+
         } else {
             // copy raw downloaded file into game directory
             // probably not used, after unrar - 7zip migration.
             extractProgressPart = patchItem.getSize();
             setLabelText("Kopíruju soubor: " + patchItem.getFileName() + " do adresáře s UO.");
 
-            final String uopath = Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
+
             File inFile = new File(patchItem.getLocalFileName());
             File outFile = new File(uopath + File.separator + patchItem.getFileName());
 
@@ -239,13 +263,13 @@ class Installer extends PatcherQueue {
         setSingleProgressPercents(100);
         //TODO: odstranit tyhle kontroly velikosti a jejich promenne. Jsou celkem zbytecne.
         log.addDebug("Spočítaná velikost doinstalovaného souboru: ".concat(Double.toString(getSingleProgress())));
-     //   totalsizeEnd += patchItem.getSize();
-      //  if (totalsizeEnd != totalsize) {
-     //       log.addErr("Nevychází velikost celkově nainstalovaných patchů na začátku a konci instalačního procesu.");
-      //  }
-      //  if (getTotalProgress() != totalsize) {
-      //      log.addErr("Nevychází velikost celkově nainstalovaných patchů a stropu progressBaru.");
-       // }
+        //   totalsizeEnd += patchItem.getSize();
+        //  if (totalsizeEnd != totalsize) {
+        //       log.addErr("Nevychází velikost celkově nainstalovaných patchů na začátku a konci instalačního procesu.");
+        //  }
+        //  if (getTotalProgress() != totalsize) {
+        //      log.addErr("Nevychází velikost celkově nainstalovaných patchů a stropu progressBaru.");
+        // }
         if (getTotalMax() == getTotalProgress()) {
             log.addDebug("Podle progressbaru jsou všechny patche jsou nainstalované.");
         }

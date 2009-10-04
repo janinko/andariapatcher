@@ -41,7 +41,9 @@ class Settings {
     private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
     private final String uomlRemotePath = "http://patcher.andaria.net/7z/";
     private final String uomlPatchItemName = "UOML";
-    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2.7z", uomlPatchItemName, "8.9.2009, 18:51", "cc8c85f8bbe8ef257000122e39545ca2", "0", "627528687", "6.0.14.2", "Předinstalovaná ultima online."};
+    //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
+    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
+
     private static Log log;
     private String alternate_storage;
 

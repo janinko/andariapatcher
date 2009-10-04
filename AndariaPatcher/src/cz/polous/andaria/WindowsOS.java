@@ -16,9 +16,9 @@ import javax.swing.JOptionPane;
 class WindowsOS extends OperatingSystem {
 
     private static final String regOriginFileName = "UO_Registry_Origin.reg";
+    private static final String CONFIG_FILENAME = "AndariaPatcherConfig.xml";
     private static Log log;
     private String uoPath;
-
 
     static {
         log = new Log("WindowsOS");
@@ -85,31 +85,36 @@ class WindowsOS extends OperatingSystem {
         } catch (NoSuchMethodException e) {
             System.err.println(e.getMessage());
         }
-       
+
         // ljk upravy 09.09.07
         if (uoPath == null || uoPath.isEmpty()) {
             //Object[] opts = {"Obnovit", "Neobnovovat","Ukázat patcheru cestu (nepracovat s registry)",};
-        	Object[] opts = {"Obnovit", "Ukázat patcheru cestu (nepracovat s registry)",};
+            Object[] opts = {"Obnovit", "Ukázat patcheru cestu (nepracovat s registry)",};
             int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít záznam UO Monday's Legacy v registrech windows.\nBuď nemáš nainstalovaou UO správně nebo je to rozbitý. Přeješ si registry obnovit ručně ?", "Upozornění !", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
             if (obnov == JOptionPane.YES_OPTION) {
                 uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
-                if (uoPath == null)
+                if (uoPath == null) {
                     return "";
+                }
                 generateRegistryData(uoPath);
                 return uoPath;
-            }
-            else if (obnov == JOptionPane.NO_OPTION){
-            	uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
-            	if (uoPath == null) return "";
+            } else if (obnov == JOptionPane.NO_OPTION) {
+                uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
+                if (uoPath == null) {
+                    return "";
+                }
+                // don't ask when config exists.
+                File fCnf = new File(uoPath + File.separator + CONFIG_FILENAME);
+                if (!fCnf.exists()) {
+                    Object[] opts2 = {"Ano", "Ne, do tempu s nimi",};
 
-            	Object[] opts2 = {"Ano", "Ne, do tempu s nimi",};
-            	int temporaryFiles = JOptionPane.showOptionDialog(null, "Uložit dočasné soubory patcheru přímo do složky UO? (V opačném případě budou uloženy do TEMPu)", "Kam s nimi ?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts2, opts2[0]);
-            	if (temporaryFiles == JOptionPane.YES_OPTION){
-            		String storage = uoPath+File.separator+"TempAndariaPatcher";
-            		Settings.getInstance().setAlternate_storage(storage);
-            	}
-            	
-            	return uoPath;
+                    int temporaryFiles = JOptionPane.showOptionDialog(null, "Uložit dočasné soubory patcheru přímo do složky UO? (V opačném případě budou uloženy do TEMPu)", "Kam s nimi ?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts2, opts2[0]);
+                    if (temporaryFiles == JOptionPane.YES_OPTION) {
+                        String storage = uoPath + File.separator + "TempAndariaPatcher";
+                        Settings.getInstance().setAlternate_storage(storage);
+                    }
+                }
+                return uoPath;
             }
             return "";
         }
@@ -130,7 +135,7 @@ class WindowsOS extends OperatingSystem {
      **************************************************************************/
     @Override
     public String getConfigPath() {
-        return getUltima_online_path() + File.separator + "AndariaPatcherConfig.xml";
+        return getUltima_online_path() + File.separator + CONFIG_FILENAME;
     }
 
     /***************************************************************************

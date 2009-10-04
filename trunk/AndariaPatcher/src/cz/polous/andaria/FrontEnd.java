@@ -488,7 +488,7 @@ public class FrontEnd extends JFrame {
         jTPMain.setBackground(getBackground());
         jTPMain.setForeground(getForeground());
         jTPMain.setToolTipText("");
-        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14));
         jTPMain.setMinimumSize(new java.awt.Dimension(727, 481));
         jTPMain.setName(""); // NOI18N
         jTPMain.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -959,7 +959,7 @@ public class FrontEnd extends JFrame {
 
         jLabel1.setBackground(getBackground());
         jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.5");
+        jLabel1.setText("Verze programu: 1.6beta1");
 
         jSeparator10.setBackground(getBackground());
         jSeparator10.setForeground(getBackground());
@@ -1093,7 +1093,7 @@ public class FrontEnd extends JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPSettingsTabLayout.createSequentialGroup()
@@ -1190,7 +1190,7 @@ public class FrontEnd extends JFrame {
                 .add(jBSetAllInstalled)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBRenewRegistry)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 66, Short.MAX_VALUE)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -1329,8 +1329,15 @@ public class FrontEnd extends JFrame {
 }//GEN-LAST:event_jBInstallSelectAlljBInstallActionPerformed
 
     private void jBDownloadUOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDownloadUOActionPerformed
+        if (0 == JOptionPane.showConfirmDialog(null,
+                "Jsi si opravdu jistý, že chceš stáhnout a nainstalovat " +
+                "\nUO Monday's Legacy do složky zvolené v nastavení (Adresář Ultimy) ?" +
+                "\n\nPro tuto akci budeš potřebovat cca 700MB místa na disku kde jsou Windows" +
+                "\na cca 1,7GB na mítě kam plánuješ uo nainstalovat. Tedy celkem počítej 2,4GB." +
+                "\n(těch 700 pak můžeš smazat v nastavení AndariaPatcheru).", "Velmi zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
         Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
         installUO();
+        }
     }//GEN-LAST:event_jBDownloadUOActionPerformed
 
     private void jBConfBrowseRunCommand1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfBrowseRunCommand1ActionPerformed

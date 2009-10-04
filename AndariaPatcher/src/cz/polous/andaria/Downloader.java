@@ -165,4 +165,17 @@ class Downloader extends PatcherQueue {
         Installer.getInstance().setTotalMax(this.getTotalMax());
         log.addDebug("TotalMax = ".concat(Double.toString(getTotalMax())));
     }
+    /***************************************************************************
+     * Insert new PatchItem to first position in queue.
+     * Overriding patchQueue method add progressbar max size counting funcion.
+     *
+     * @param p item to add
+     * @see cz.polous.andaria.Downloader#executeNext
+     **************************************************************************/
+    protected void insertPatchItem(PatchItem p) {
+        patchQueue.insertElementAt(p, 0);
+        setTotalMax(getTotalMax() + p.getSize());
+        Installer.getInstance().setTotalMax(this.getTotalMax());
+        log.addDebug("TotalMax = ".concat(Double.toString(getTotalMax())));
+    }
 }

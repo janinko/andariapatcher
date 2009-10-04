@@ -286,7 +286,10 @@ class Installer extends PatcherQueue {
         }
 
         removeFirst();
-
+        // Autoclose flag set, all work finished, no problems
+        if (Settings.getAutoInstall() == Settings.AUTO_LEVELS.AUTO_CLOSE && !failed && (Downloader.getInstance().patchQueue.size() + this.patchQueue.size() == 0)) {
+            FrontEnd.getInstance().closeMe();
+        }
         updateProgressBar(BARS.TOTAL);
     }
 

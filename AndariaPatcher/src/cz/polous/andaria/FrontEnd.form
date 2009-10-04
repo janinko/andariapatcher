@@ -66,6 +66,84 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
+        <Container class="javax.swing.JPanel" name="jPNews">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection component="Form" name="background" type="property"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection component="Form" name="foreground" type="property"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Klikni pro zobrazen&#xed; nastaven&#xed; programu nebo informac&#xed;ch o programu."/>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[722, 452]"/>
+            </Property>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Novinky" toolTip="Tady se nach&#xe1;z&#xed; novinky nejen ze sv&#x11b;ta...">
+                <Property name="tabTitle" type="java.lang.String" value="Novinky"/>
+                <Property name="tabToolTip" type="java.lang.String" value="Tady se nach&#xe1;z&#xed; novinky nejen ze sv&#x11b;ta..."/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jBPachAndPlay" alignment="0" pref="722" max="32767" attributes="0"/>
+                  <Component id="jPNews1" alignment="0" pref="722" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jPNews1" pref="423" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jBPachAndPlay" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPNews1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="Form" name="background" type="property"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="Form" name="foreground" type="property"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Klikni pro zobrazen&#xed; nastaven&#xed; programu nebo informac&#xed;ch o programu."/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[722, 452]"/>
+                </Property>
+              </Properties>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
+                <Property name="axis" type="int" value="3"/>
+              </Layout>
+            </Container>
+            <Component class="javax.swing.JButton" name="jBPachAndPlay">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="ff" red="cc" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="Form" name="foreground" type="property"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Opatchuj (je-li co) a spus&#x165; hru"/>
+                <Property name="toolTipText" type="java.lang.String" value="Nastav&#xed; v&#x161;echy patche v seznamu patch&#x16f; jako nainstalovan&#xe9;. Pou&#x17e;ij, pokud jsi spustil AndariaPatcher poprv&#xe9; a m&#xe1;&#x161; ji&#x17e; Ultimu pln&#x11b; opatchovanou souborama za shardu Andarie."/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBPachAndPlayActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
         <Container class="javax.swing.JPanel" name="jPControlsTab">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

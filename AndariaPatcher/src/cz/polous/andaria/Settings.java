@@ -45,9 +45,9 @@ class Settings {
     private final String uoamPatchFileName = "uoam.7z";
     private final String razorPath = "razor\\razor.exe";
     private final String uoamPath = "uoam\\uoam.exe -q";
-    //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
+    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
     //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
-    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
+    //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
     private static int autoInstall = AUTO_LEVELS.MANUAL;
     private static Log log;
     private String alternate_storage;
@@ -314,6 +314,7 @@ class Settings {
         //NOTE: use this first
         public static final int AUTO_INSTALL = 1;
         public static final int AUTO_UPDATE = 2;
+        public static final int AUTO_CLOSE = 3;
     }
 
     class VALUES {

@@ -81,8 +81,10 @@ public class FrontEnd extends JFrame {
         //*/
 
         HtmlPanel htmlPNews = new HtmlPanel();
-        jTPMain.insertTab(null, null, htmlPNews, "Tady se nachází novinky nejen ze světa...", 0);
-        jTPMain.setTitleAt(0, "Novinky");
+        jPNews1.add(htmlPNews);
+
+        //jTPMain.insertTab(null, null, htmlPNews, "Tady se nachází novinky nejen ze světa...", 0);
+        //jTPMain.setTitleAt(0, "Novinky");
         final Browser news = new Browser(htmlPNews, Settings.getInstance().getValue(Settings.VALUES.NEWS_URL));
 
         HtmlPanel htmlPAbout = new HtmlPanel();
@@ -231,6 +233,38 @@ public class FrontEnd extends JFrame {
     }
 
     /***************************************************************************
+     * Standard application exit
+     * execute autoRun commands and quit
+     **************************************************************************/
+    public void closeMe() {
+        if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).isEmpty()) {
+            try {
+                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
+            } catch (IOException ex) {
+                log.addErr("Chyba při spouštění externího programu !");
+                ex.printStackTrace();
+            }
+        }
+        if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1).isEmpty()) {
+            try {
+                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
+            } catch (IOException ex) {
+                log.addErr("Chyba při spouštění externího programu !");
+                ex.printStackTrace();
+            }
+        }
+        if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).isEmpty()) {
+            try {
+                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
+            } catch (IOException ex) {
+                log.addErr("Chyba při spouštění externího programu !");
+                ex.printStackTrace();
+            }
+        }
+        System.exit(0);
+    }
+
+    /***************************************************************************
      * Renew label of Temp Files remove button
      **************************************************************************/
     public void udpateJBRemoveTempFiles() {
@@ -366,6 +400,9 @@ public class FrontEnd extends JFrame {
     private void initComponents() {
 
         jTPMain = new javax.swing.JTabbedPane();
+        jPNews = new javax.swing.JPanel();
+        jPNews1 = new javax.swing.JPanel();
+        jBPachAndPlay = new javax.swing.JButton();
         jPControlsTab = new javax.swing.JPanel();
         jPButtons = new javax.swing.JPanel();
         jBRefreshPatchList = new javax.swing.JButton();
@@ -445,7 +482,7 @@ public class FrontEnd extends JFrame {
         jTPMain.setBackground(getBackground());
         jTPMain.setForeground(getForeground());
         jTPMain.setToolTipText("");
-        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14));
+        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jTPMain.setMinimumSize(new java.awt.Dimension(727, 481));
         jTPMain.setName(""); // NOI18N
         jTPMain.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -453,6 +490,47 @@ public class FrontEnd extends JFrame {
                 jTPMainStateChanged(evt);
             }
         });
+
+        jPNews.setBackground(getBackground());
+        jPNews.setForeground(getForeground());
+        jPNews.setToolTipText("Klikni pro zobrazení nastavení programu nebo informacích o programu.");
+        jPNews.setMinimumSize(new java.awt.Dimension(722, 452));
+
+        jPNews1.setBackground(getBackground());
+        jPNews1.setForeground(getForeground());
+        jPNews1.setToolTipText("Klikni pro zobrazení nastavení programu nebo informacích o programu.");
+        jPNews1.setMinimumSize(new java.awt.Dimension(722, 452));
+        jPNews1.setLayout(new javax.swing.BoxLayout(jPNews1, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jBPachAndPlay.setBackground(new java.awt.Color(204, 255, 204));
+        jBPachAndPlay.setForeground(getForeground());
+        jBPachAndPlay.setText("Opatchuj (je-li co) a spusť hru");
+        jBPachAndPlay.setToolTipText("Nastaví všechy patche v seznamu patchů jako nainstalované. Použij, pokud jsi spustil AndariaPatcher poprvé a máš již Ultimu plně opatchovanou souborama za shardu Andarie.");
+        jBPachAndPlay.setFocusable(false);
+        jBPachAndPlay.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBPachAndPlay.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBPachAndPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBPachAndPlayActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.layout.GroupLayout jPNewsLayout = new org.jdesktop.layout.GroupLayout(jPNews);
+        jPNews.setLayout(jPNewsLayout);
+        jPNewsLayout.setHorizontalGroup(
+            jPNewsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jBPachAndPlay, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .add(jPNews1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+        );
+        jPNewsLayout.setVerticalGroup(
+            jPNewsLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPNewsLayout.createSequentialGroup()
+                .add(jPNews1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 423, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jBPachAndPlay))
+        );
+
+        jTPMain.addTab("Novinky", null, jPNews, "Tady se nachází novinky nejen ze světa...");
 
         jPControlsTab.setBackground(getBackground());
         jPControlsTab.setForeground(getForeground());
@@ -1106,7 +1184,7 @@ public class FrontEnd extends JFrame {
                 .add(jBSetAllInstalled)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBRenewRegistry)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -1142,31 +1220,7 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jChDebugStateChanged
 
     private void jBCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCloseActionPerformed
-        if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).isEmpty()) {
-            try {
-                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
-            } catch (IOException ex) {
-                log.addErr("Chyba při spouštění externího programu !");
-                ex.printStackTrace();
-            }
-        }
-        if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1).isEmpty()) {
-            try {
-                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
-            } catch (IOException ex) {
-                log.addErr("Chyba při spouštění externího programu !");
-                ex.printStackTrace();
-            }
-        }
-        if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).isEmpty()) {
-            try {
-                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
-            } catch (IOException ex) {
-                log.addErr("Chyba při spouštění externího programu !");
-                ex.printStackTrace();
-            }
-        }
-        System.exit(0);
+        closeMe();
     }//GEN-LAST:event_jBCloseActionPerformed
 
     private void jBCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelActionPerformed
@@ -1286,6 +1340,11 @@ public class FrontEnd extends JFrame {
             jTConfRunCommand2.setText(tmp);
         }
     }//GEN-LAST:event_jBConfBrowseRunCommand2ActionPerformed
+
+    private void jBPachAndPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPachAndPlayActionPerformed
+        Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_CLOSE);
+        installPatches();
+}//GEN-LAST:event_jBPachAndPlayActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
     private javax.swing.JButton jBClose;
@@ -1303,6 +1362,7 @@ public class FrontEnd extends JFrame {
     private javax.swing.JButton jBInstallSelectAll;
     private javax.swing.JButton jBInstallSelectNone;
     private javax.swing.JButton jBInstallSelection;
+    private javax.swing.JButton jBPachAndPlay;
     private javax.swing.JButton jBRefreshPatchList;
     private javax.swing.JButton jBRemoveTempFiles;
     private javax.swing.JButton jBRenewRegistry;
@@ -1330,6 +1390,8 @@ public class FrontEnd extends JFrame {
     private javax.swing.JPanel jPDownloadProgressText;
     private javax.swing.JPanel jPInstallProgress;
     private javax.swing.JPanel jPInstallProgressText;
+    private javax.swing.JPanel jPNews;
+    private javax.swing.JPanel jPNews1;
     private javax.swing.JPanel jPPatchList;
     private javax.swing.JPanel jPPatchListTab;
     private javax.swing.JPanel jPSettingsTab;

@@ -102,13 +102,21 @@ class WindowsOS extends OperatingSystem {
             int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít záznam UO Monday's Legacy v registrech windows.\nBuď nemáš UO ještě nainstalovanou nebo jen chybí v registrech. Nyní můžeš:\n1) spustit automatickou instalaci UO\n2) opravit registry tím, že mi řekneš kde UO máš\n3) pracovat bez registrů (vhodné pro Flash paměti).", "Upozornění !", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
             if (obnov == JOptionPane.YES_OPTION) {
                 // this will enable autoinstall procedure.
-                uoPath = Settings.getInstance().openFile("Vyber (vytvoř) adresář do kterého chceš UO instalovat.", "C:\\", JFileChooser.DIRECTORIES_ONLY);
-                if (uoPath == null) {
-                    return "";
+                if (0 == JOptionPane.showConfirmDialog(null,
+                        "Jsi si opravdu jistý, že chceš stáhnout a nainstalovat " +
+                        "\nUO Monday's Legacy do složky na kterou se tě záhy zeptám ?" +
+                        "\n\nPro tuto akci budeš potřebovat cca 700MB místa na disku kde jsou Windows" +
+                        "\na cca 1,7GB na mítě kam plánuješ uo nainstalovat. Tedy celkem počítej 2,4GB." +
+                        "\n(těch 700 pak můžeš smazat v nastavení AndariaPatcheru).", "Velmi zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
+                    uoPath = Settings.getInstance().openFile("Vyber (vytvoř) adresář do kterého chceš UO instalovat.", "C:\\", JFileChooser.DIRECTORIES_ONLY);
+                    if (uoPath == null) {
+                        return "";
+                    }
+
+                    Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_INSTALL);
+                    return uoPath;
                 }
-               
-                Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_INSTALL);
-                return uoPath;
+                return "";
             }
 
             if (obnov == JOptionPane.NO_OPTION) {
@@ -193,7 +201,7 @@ class WindowsOS extends OperatingSystem {
      * @return ultima online path from windows registers
      **************************************************************************/
     public String generateRegistryData(String uoPath) {
-        
+
         String regData = ""; //new String("");
 
         regData = regData.concat("Windows Registry Editor Version 5.00\n\n");
@@ -251,7 +259,7 @@ class WindowsOS extends OperatingSystem {
 
     }
 
-      public String generateRazorData(String uoPath) {
+    public String generateRazorData(String uoPath) {
         String regData = ""; //new String("");
 
         regData = regData.concat("Windows Registry Editor Version 5.00\n\n");

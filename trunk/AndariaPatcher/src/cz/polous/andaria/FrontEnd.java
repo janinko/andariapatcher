@@ -209,7 +209,7 @@ public class FrontEnd extends JFrame {
     /***************************************************************************
      * Inicialize application settings and settings form.
      **************************************************************************/
-    private void loadSettings() {
+    public void loadSettings() {
         Settings.getInstance().load();
 
         jTConfRunCommand.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND));
@@ -221,7 +221,7 @@ public class FrontEnd extends JFrame {
     /***************************************************************************
      * Store application Settings.getInstance().
      **************************************************************************/
-    private void saveSettings() {
+    public void saveSettings() {
         Settings.getInstance().setValue(Settings.VALUES.RUN_COMMAND, jTConfRunCommand.getText());
         Settings.getInstance().setValue(Settings.VALUES.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
         Settings.getInstance().setValue(Settings.VALUES.LOCAL_STORAGE, jTConfTempPath.getText());
@@ -900,7 +900,7 @@ public class FrontEnd extends JFrame {
 
         jBDownloadUO.setBackground(getBackground());
         jBDownloadUO.setForeground(getForeground());
-        jBDownloadUO.setText("Odstranit soubor desktop.nwb (použij, pokud máš problém se spuštěním UO)");
+        jBDownloadUO.setText("Instalovat Ultimu Online Monday's Legacy pro shard Andaria.net jedním klikem");
         jBDownloadUO.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
         jBDownloadUO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1013,6 +1013,7 @@ public class FrontEnd extends JFrame {
         );
 
         jBRemoveTempFiles.getAccessibleContext().setAccessibleDescription("Pomůže uvolnit nějaké to místo na disku. ");
+        jBDownloadUO.getAccessibleContext().setAccessibleDescription("Nainstaluje Ultimu Online a vše potřebné pro hraní na Shardu Andaria.net do adresáře, který jsi zvolil při spuštění AndariaPatcheru. Složku můžeš změnit zde v nastavení - položka \"Adresář ultimy\".");
 
         jTPMain.addTab("Nastavení", null, jPSettingsTab, "Klikni pro zobrazení panelu s nastavením Andaria Patcheru...");
 

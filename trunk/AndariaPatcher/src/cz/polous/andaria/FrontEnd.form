@@ -1215,9 +1215,12 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Odstranit soubor desktop.nwb (pou&#x17e;ij, pokud m&#xe1;&#x161; probl&#xe9;m se spu&#x161;t&#x11b;n&#xed;m UO)"/>
+                <Property name="text" type="java.lang.String" value="Instalovat Ultimu Online Monday&apos;s Legacy pro shard Andaria.net jedn&#xed;m klikem"/>
                 <Property name="toolTipText" type="java.lang.String" value="Opravuje chybu spou&#x161;t&#x11b;n&#xed; ultimy online, p&#x159;i kter&#xe9; hra spadne hned po spu&#x161;t&#x11b;n&#xed;."/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Nainstaluje Ultimu Online a v&#x161;e pot&#x159;ebn&#xe9; pro hran&#xed; na Shardu Andaria.net do adres&#xe1;&#x159;e, kter&#xfd; jsi zvolil p&#x159;i spu&#x161;t&#x11b;n&#xed; AndariaPatcheru. Slo&#x17e;ku m&#x16f;&#x17e;e&#x161; zm&#x11b;nit zde v nastaven&#xed; - polo&#x17e;ka &quot;Adres&#xe1;&#x159; ultimy&quot;."/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDownloadUOActionPerformed"/>
               </Events>

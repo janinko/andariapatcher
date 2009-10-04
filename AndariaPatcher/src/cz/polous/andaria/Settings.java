@@ -41,10 +41,13 @@ class Settings {
     private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
     private final String uomlRemotePath = "http://patcher.andaria.net/7z/";
     private final String uomlPatchItemName = "UOML";
+    private final String razorPatchFileName = "razor.7z";
+    private final String uoamPatchFileName = "uoam.7z";
+    private final String razorPath = "razor\\razor.exe";
+    private final String uoamPath = "uoam\\uoam.exe -q";
     //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
     //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
     private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
-
     private static int autoInstall = AUTO_LEVELS.MANUAL;
     private static Log log;
     private String alternate_storage;
@@ -88,6 +91,22 @@ class Settings {
         } else {
             return local_storage;
         }
+    }
+
+    public String getRazorPath() {
+        return razorPath;
+    }
+
+    public String getUoamPath() {
+        return uoamPath;
+    }
+
+    public String getRazorPatchFileName() {
+        return razorPatchFileName;
+    }
+
+    public String getUoamPatchFileName() {
+        return uoamPatchFileName;
     }
 
     public static int getAutoInstall() {
@@ -401,5 +420,39 @@ class Settings {
         }
         JLabel label = FrontEnd.getInstance().getjLabel(this, FrontEnd.LABEL_TYPES.TEMP_SIZE);
         label.setText(Long.toString(Math.round(size / 1024)).concat(" MB"));
+    }
+
+    public void addAutorun(String name, String path) {
+        addAutorun(name, path, name);
+    }
+
+    public void addAutorun(String name, String path, String alterName) {
+        log.addLine("Nastavuji ".concat(name).concat(" aby se automaticky spouštěl po zavření AndariaPatheru."));
+        if (getValue(VALUES.RUN_COMMAND).toLowerCase().contains(alterName) || getValue(VALUES.RUN_COMMAND).toLowerCase().contains(name)) {
+            setValue(VALUES.RUN_COMMAND, path);
+        } else {
+            if (getValue(VALUES.RUN_COMMAND1).toLowerCase().contains(alterName) || getValue(VALUES.RUN_COMMAND).toLowerCase().contains(name)) {
+                setValue(VALUES.RUN_COMMAND1, path);
+            } else {
+                if (getValue(VALUES.RUN_COMMAND2).toLowerCase().contains(alterName) || getValue(VALUES.RUN_COMMAND).toLowerCase().contains(name)) {
+                    setValue(VALUES.RUN_COMMAND2, path);
+                } else {
+                    if (getValue(VALUES.RUN_COMMAND).isEmpty()) {
+                        setValue(VALUES.RUN_COMMAND, path);
+                    } else {
+                        if (getValue(VALUES.RUN_COMMAND1).isEmpty()) {
+                            setValue(VALUES.RUN_COMMAND1, path);
+                        } else {
+                            if (getValue(VALUES.RUN_COMMAND2).isEmpty()) {
+                                setValue(VALUES.RUN_COMMAND2, path);
+                            } else {
+                                log.addLine("Nevím do které spouštěcí řádky ".concat(name).concat(" zapsat. Musíš to udělat ručně."));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        FrontEnd.getInstance().updatejTConfRunCommands();
     }
 }

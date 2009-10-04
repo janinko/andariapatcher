@@ -242,13 +242,16 @@ public class FrontEnd extends JFrame {
      **************************************************************************/
     public void loadSettings() {
         Settings.getInstance().load();
-
-        jTConfRunCommand.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND));
-        jTConfRunCommand1.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1));
-        jTConfRunCommand2.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2));
+        updatejTConfRunCommands();
         jTConfUltimaOnlinePath.setText(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH));
         jTConfTempPath.setText(Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE));
         jChDebug.setSelected(Settings.getInstance().debugMode());
+    }
+
+    public void updatejTConfRunCommands() {
+        jTConfRunCommand.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND));
+        jTConfRunCommand1.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1));
+        jTConfRunCommand2.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2));
     }
 
     /***************************************************************************

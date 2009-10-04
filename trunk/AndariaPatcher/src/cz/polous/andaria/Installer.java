@@ -124,15 +124,17 @@ class Installer extends PatcherQueue {
         failed = false;
         PatchItem patchItem = getFirstItem();
         File f;
-        final String uopath = Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
+        final Settings settings = Settings.getInstance();
+        final String uopath = settings.getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
+
         // progress will be counted by 65% for extracting files
         // and  35% for installing patches expect for uoml file.
         // ProgressBars - for single file
         resetProgressBar(BARS.SINGLE, patchItem.getSize());
-        if (patchItem.getName().equals(Settings.getInstance().getUomlPatchItemName())) {
+        if (patchItem.getName().equals(settings.getUomlPatchItemName())) {
             extractProgressPart = patchItem.getSize();
             // - if exist start_g.bat, execute it
-            f = new File(Settings.getInstance().getOs().getConfigPath());
+            f = new File(settings.getOs().getConfigPath());
             log.addDebug("Hledám:" + f.getAbsolutePath());
             if (canceled()) {
                 return;
@@ -173,7 +175,7 @@ class Installer extends PatcherQueue {
                 log.addDebug("Našel jsem start_a.bat.");
                 setLabelText("Instaluju patch (start_a.bat): " + patchItem.getFileName());
 
-                exec(Settings.getInstance().getOs().getBatchExecCommand(f));
+                exec(settings.getOs().getBatchExecCommand(f));
                 f.delete();
                 setSingleProgressPercents(68);
             }
@@ -187,7 +189,7 @@ class Installer extends PatcherQueue {
             if (f.exists()) {
                 log.addDebug("Našel jsem start_g.bat.");
                 setLabelText("Instaluju patch (start_g.bat): " + patchItem.getFileName());
-                exec(Settings.getInstance().getOs().getBatchExecCommand(f));
+                exec(settings.getOs().getBatchExecCommand(f));
                 f.delete();
                 setSingleProgressPercents(81);
             }
@@ -202,19 +204,24 @@ class Installer extends PatcherQueue {
             if (f.exists()) {
                 log.addDebug("Našel jsem install.bat.");
                 setLabelText("Instaluju patch (install.bat): " + patchItem.getFileName());
-                exec(Settings.getInstance().getOs().getBatchExecCommand(f));
+                exec(settings.getOs().getBatchExecCommand(f));
                 f.delete();
                 setSingleProgressPercents(96);
             }
 
-            if (patchItem.getName().equals(Settings.getInstance().getUomlPatchItemName())) {
+            if (patchItem.getName().equals(settings.getUomlPatchItemName())) {
                 // a strange hack, but it works :-)
                 // this should merge settings in memory and .xml data.
                 FrontEnd.getInstance().loadSettings();
                 FrontEnd.getInstance().saveSettings();
                 PatchList.getInstance().reload();
             }
-
+            if (patchItem.getFileName().equals(settings.getRazorPatchFileName())) {
+                Settings.getInstance().addAutorun("razor", uopath + File.separator + settings.getRazorPath(), "client");
+            }
+            if (patchItem.getFileName().equals(settings.getUoamPatchFileName())) {
+                Settings.getInstance().addAutorun("uoam", uopath + File.separator + settings.getUoamPath());
+            }
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");
 
@@ -256,13 +263,14 @@ class Installer extends PatcherQueue {
                 log.addEx(e);
             }
         }
-
         if (!failed) {
             patchItem.setInstalled();
         }
-        setSingleProgressPercents(100);
+        setSingleProgressPercents(
+                100);
         //TODO: odstranit tyhle kontroly velikosti a jejich promenne. Jsou celkem zbytecne.
-        log.addDebug("Spočítaná velikost doinstalovaného souboru: ".concat(Double.toString(getSingleProgress())));
+        log.addDebug(
+                "Spočítaná velikost doinstalovaného souboru: ".concat(Double.toString(getSingleProgress())));
         //   totalsizeEnd += patchItem.getSize();
         //  if (totalsizeEnd != totalsize) {
         //       log.addErr("Nevychází velikost celkově nainstalovaných patchů na začátku a konci instalačního procesu.");
@@ -270,10 +278,15 @@ class Installer extends PatcherQueue {
         //  if (getTotalProgress() != totalsize) {
         //      log.addErr("Nevychází velikost celkově nainstalovaných patchů a stropu progressBaru.");
         // }
+
+
+
         if (getTotalMax() == getTotalProgress()) {
             log.addDebug("Podle progressbaru jsou všechny patche jsou nainstalované.");
         }
+
         removeFirst();
+
         updateProgressBar(BARS.TOTAL);
     }
 

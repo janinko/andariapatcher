@@ -380,7 +380,6 @@ public class FrontEnd extends JFrame {
     public void updateButtons() {
         try {
             if (PatchList.getInstance().inProgress()) {
-
                 disableButtons();
             } else {
                 setJBInstall(true);

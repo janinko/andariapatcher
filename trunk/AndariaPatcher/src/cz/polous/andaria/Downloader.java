@@ -55,8 +55,10 @@ class Downloader extends PatcherQueue {
         // Check if wanted file exists at local storage
         String fileName = p.getLocalFileName();
         try {
-            p.checkHash();
+
             setLabelText("Kontroluju soubor: " + p.getFileName());
+            log.addLine("Kontroluju soubor: " + p.getFileName());
+            p.checkHash();
             log.addLine("Soubor: " + p.getFileName() + " je už stažený.");
             finishDownload(p); // correct file found, then finish action
             return; // file exists, we don't need download it
@@ -122,6 +124,7 @@ class Downloader extends PatcherQueue {
                     return;
                 }
                 setLabelText("Kontroluji soubor: " + p.getFileName());
+                log.addLine("Kontroluju soubor: " + p.getFileName());
                 try {
                     p.checkHash();
                     finishDownload(p); // success
@@ -165,6 +168,7 @@ class Downloader extends PatcherQueue {
         Installer.getInstance().setTotalMax(this.getTotalMax());
         log.addDebug("TotalMax = ".concat(Double.toString(getTotalMax())));
     }
+
     /***************************************************************************
      * Insert new PatchItem to first position in queue.
      * Overriding patchQueue method add progressbar max size counting funcion.

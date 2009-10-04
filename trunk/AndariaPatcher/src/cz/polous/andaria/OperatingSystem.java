@@ -11,10 +11,12 @@ import java.io.IOException;
  ******************************************************************************/
 abstract class OperatingSystem {
 
-	 private static Log log;
+    private static Log log;
 
     abstract String getDefaultRunCommand();
+
     abstract String getDefaultRunCommand1();
+
     abstract String getDefaultRunCommand2();
 
     abstract String getUOPath();

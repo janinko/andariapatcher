@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 class WindowsOS extends OperatingSystem {
 
     private static final String regOriginFileName = "UO_Registry_Origin.reg";
+    private static final String regRazorFileName = "Razor_client.reg";
     private static final String CONFIG_FILENAME = "AndariaPatcherConfig.xml";
     private static Log log;
     private String uoPath;
@@ -105,7 +106,7 @@ class WindowsOS extends OperatingSystem {
                 if (uoPath == null) {
                     return "";
                 }
-                generateRegistryData(uoPath);
+               
                 Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_INSTALL);
                 return uoPath;
             }
@@ -191,7 +192,8 @@ class WindowsOS extends OperatingSystem {
     /***************************************************************************
      * @return ultima online path from windows registers
      **************************************************************************/
-    private String generateRegistryData(String uoPath) {
+    public String generateRegistryData(String uoPath) {
+        
         String regData = ""; //new String("");
 
         regData = regData.concat("Windows Registry Editor Version 5.00\n\n");
@@ -247,5 +249,47 @@ class WindowsOS extends OperatingSystem {
 
         return uoPath;
 
+    }
+
+      public String generateRazorData(String uoPath) {
+        String regData = ""; //new String("");
+
+        regData = regData.concat("Windows Registry Editor Version 5.00\n\n");
+        regData = regData.concat("[HKEY_CURRENT_USER\\Software\\Razor]\n");
+        regData = regData.concat("\"Client1\"=\"C:\\\\uo\\\\AndariaClient.exe\"");
+        regData = regData.concat("\"DefClient\"=\"2\"");
+ 
+        FileWriter fw;
+        File f;
+        try {
+            f = getExistingFileInstance(uoPath.concat(File.separator).concat(regRazorFileName));
+            if (f.exists() && f.canWrite()) {
+                fw = new FileWriter(f);
+                fw.write(regData);
+                fw.close();
+
+                try {
+                    String[] cmd = {"cmd.exe", "/c", "regedit.exe /s \"".concat(f.getAbsolutePath()).concat("\"")};
+
+                    log.addCmd(cmd);
+
+                    Process proc = Runtime.getRuntime().exec(cmd);
+                    try {
+                        proc.waitFor();
+                    } catch (InterruptedException ex) {
+                        log.addEx(ex);
+                    }
+                    proc.destroy();
+                } catch (IOException ex) {
+                    log.addEx(ex);
+                }
+            }
+        } catch (IOException ex) {
+            log.addEx(ex);
+        } finally {
+            f = null;
+        }
+
+        return uoPath;
     }
 }

@@ -132,7 +132,7 @@ class Installer extends PatcherQueue {
         // ProgressBars - for single file
         resetProgressBar(BARS.SINGLE, patchItem.getSize());
         if (patchItem.getName().equals(settings.getUomlPatchItemName())) {
-            extractProgressPart = patchItem.getSize();
+           // extractProgressPart = patchItem.getSize();
             // - if exist start_g.bat, execute it
             f = new File(settings.getOs().getConfigPath());
             log.addDebug("Hledám:" + f.getAbsolutePath());
@@ -143,9 +143,9 @@ class Installer extends PatcherQueue {
                 log.addDebug("Našel jsem config - mazu ho.");
                 f.delete();
             }
-        } else {
+        } //else {
             extractProgressPart = Math.round(patchItem.getSize() * 65 / 100.00);
-        }
+       // }
 
         log.addDebug("Pracuju se souborem: ".concat(patchItem.getLocalFileName()));
         log.addDebug("...jeho velikost je: ".concat(Double.toString(patchItem.getSize())));
@@ -210,6 +210,10 @@ class Installer extends PatcherQueue {
             }
 
             if (patchItem.getName().equals(settings.getUomlPatchItemName())) {
+                if (settings.getOs().getClass() == WindowsOS.class) {
+                    WindowsOS os = (WindowsOS) settings.getOs();
+                    os.generateRegistryData(uopath);
+                }
                 // a strange hack, but it works :-)
                 // this should merge settings in memory and .xml data.
                 FrontEnd.getInstance().loadSettings();
@@ -218,6 +222,10 @@ class Installer extends PatcherQueue {
             }
             if (patchItem.getFileName().equals(settings.getRazorPatchFileName())) {
                 Settings.getInstance().addAutorun("razor", uopath + File.separator + settings.getRazorPath(), "client");
+                if (settings.getOs().getClass() == WindowsOS.class) {
+                    WindowsOS os = (WindowsOS) settings.getOs();
+                    os.generateRazorData(uopath);
+                }
             }
             if (patchItem.getFileName().equals(settings.getUoamPatchFileName())) {
                 Settings.getInstance().addAutorun("uoam", uopath + File.separator + settings.getUoamPath());
@@ -266,8 +274,7 @@ class Installer extends PatcherQueue {
         if (!failed) {
             patchItem.setInstalled();
         }
-        setSingleProgressPercents(
-                100);
+        setSingleProgressPercents(100);
         //TODO: odstranit tyhle kontroly velikosti a jejich promenne. Jsou celkem zbytecne.
         log.addDebug(
                 "Spočítaná velikost doinstalovaného souboru: ".concat(Double.toString(getSingleProgress())));

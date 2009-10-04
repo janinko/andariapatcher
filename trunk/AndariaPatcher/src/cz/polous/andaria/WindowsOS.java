@@ -23,16 +23,24 @@ class WindowsOS extends OperatingSystem {
     static {
         log = new Log("WindowsOS");
     }
-    // @Override
 
     @Override
-    public String getRun_command() {
-        return getUltima_online_path().concat("\\AndariaClient.exe");
+    public String getDefaultRunCommand() {
+        return getUOPath().concat("\\AndariaClient.exe");
     }
-    //@Override
 
     @Override
-    public String getUltima_online_path() {
+    public String getDefaultRunCommand1() {
+        return "";
+    }
+
+    @Override
+    public String getDefaultRunCommand2() {
+        return "";
+    }
+
+    @Override
+    public String getUOPath() {
         // If I had checked (or inicialized) uoPath before,
         // don't try again.
         if (uoPath != null) {
@@ -89,16 +97,27 @@ class WindowsOS extends OperatingSystem {
         // ljk upravy 09.09.07
         if (uoPath == null || uoPath.isEmpty()) {
             //Object[] opts = {"Obnovit", "Neobnovovat","Ukázat patcheru cestu (nepracovat s registry)",};
-            Object[] opts = {"Obnovit", "Ukázat patcheru cestu (nepracovat s registry)",};
-            int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít záznam UO Monday's Legacy v registrech windows.\nBuď nemáš nainstalovaou UO správně nebo je to rozbitý. Přeješ si registry obnovit ručně ?", "Upozornění !", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
+            Object[] opts = {"Instalovat", "Opravit registry", "Nepracovat s registry",};
+            int obnov = JOptionPane.showOptionDialog(null, "Nemůžu najít záznam UO Monday's Legacy v registrech windows.\nBuď nemáš UO ještě nainstalovanou nebo jen chybí v registrech. Nyní můžeš:\n1) spustit automatickou instalaci UO\n2) opravit registry tím, že mi řekneš kde UO máš\n3) pracovat bez registrů (vhodné pro Flash paměti).", "Upozornění !", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, opts, opts[0]);
             if (obnov == JOptionPane.YES_OPTION) {
+                // this will enable autoinstall procedure.
+                uoPath = Settings.getInstance().openFile("Vyber (vytvoř) adresář do kterého chceš UO instalovat.", "C:\\", JFileChooser.DIRECTORIES_ONLY);
+                if (uoPath == null) {
+                    return "";
+                }
+                generateRegistryData(uoPath);
+                Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_INSTALL);
+                return uoPath;
+            }
+
+            if (obnov == JOptionPane.NO_OPTION) {
                 uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
                 if (uoPath == null) {
                     return "";
                 }
                 generateRegistryData(uoPath);
                 return uoPath;
-            } else if (obnov == JOptionPane.NO_OPTION) {
+            } else if (obnov == JOptionPane.CANCEL_OPTION) {
                 uoPath = Settings.getInstance().openFile("Vyber adresář s ultimou", "C:\\", JFileChooser.DIRECTORIES_ONLY);
                 if (uoPath == null) {
                     return "";
@@ -135,7 +154,7 @@ class WindowsOS extends OperatingSystem {
      **************************************************************************/
     @Override
     public String getConfigPath() {
-        return getUltima_online_path() + File.separator + CONFIG_FILENAME;
+        return getUOPath() + File.separator + CONFIG_FILENAME;
     }
 
     /***************************************************************************

@@ -113,6 +113,16 @@ class PatchList {
                     FrontEnd.getInstance().setJBPatchListEnabled(true);
                     FrontEnd.getInstance().setJBInstall(true);
                     FrontEnd.getInstance().updateButtons();
+
+                    if (Settings.getAutoInstall() == Settings.AUTO_LEVELS.AUTO_UPDATE) {
+                        Settings.setAutoInstall(Settings.AUTO_LEVELS.MANUAL);
+                        FrontEnd.getInstance().installPatches();
+                    }
+                    if (Settings.getAutoInstall() == Settings.AUTO_LEVELS.AUTO_INSTALL) {
+                        Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
+                        FrontEnd.getInstance().installUO();
+                    }
+
                 }
             }
         };
@@ -147,6 +157,20 @@ class PatchList {
         Installer.getInstance().reset();
         downloader.addPatchItem(patchItem);
         downloader.startSafe();
+    }
+
+    /***************************************************************************
+     * Start downloads and installations
+     **************************************************************************/
+    public synchronized void downloadUOML() {
+        Downloader downloader = Downloader.getInstance();
+        downloader.reset();
+        Installer.getInstance().reset();
+        downloader.addPatchItem(Settings.getInstance().getUomlPatchItem());
+
+        if (downloader.patchQueue.size() > 0) {
+            downloader.startSafe();
+        }
     }
 
     /***************************************************************************

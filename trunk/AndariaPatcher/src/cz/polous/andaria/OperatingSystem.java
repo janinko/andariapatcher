@@ -13,9 +13,11 @@ abstract class OperatingSystem {
 
 	 private static Log log;
 
-    abstract String getRun_command();
+    abstract String getDefaultRunCommand();
+    abstract String getDefaultRunCommand1();
+    abstract String getDefaultRunCommand2();
 
-    abstract String getUltima_online_path();
+    abstract String getUOPath();
 
     /***************************************************************************
      * Creates a new instance of current operating system

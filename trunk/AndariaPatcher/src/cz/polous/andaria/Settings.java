@@ -42,8 +42,10 @@ class Settings {
     private final String uomlRemotePath = "http://patcher.andaria.net/7z/";
     private final String uomlPatchItemName = "UOML";
     //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
-    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
+    //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
+    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
 
+    private static int autoInstall = AUTO_LEVELS.MANUAL;
     private static Log log;
     private String alternate_storage;
 
@@ -86,6 +88,14 @@ class Settings {
         } else {
             return local_storage;
         }
+    }
+
+    public static int getAutoInstall() {
+        return autoInstall;
+    }
+
+    public static void setAutoInstall(int autoInstall) {
+        Settings.autoInstall = autoInstall;
     }
 
     public String getNews_url() {
@@ -234,7 +244,9 @@ class Settings {
             }
         }
         if (doc == null || root == null) {
-            JOptionPane.showMessageDialog(null, "Nejspíš jsi patcher pustil poprvé, takže nebyl nalezen konfigurační soubor (" + os.getConfigPath() + ").\nNež budeš patchovat, tak si zkontroluj a ulož svoje nastavení AndariaPatcheru.", "Upozornění !", JOptionPane.WARNING_MESSAGE);
+            if (autoInstall == AUTO_LEVELS.MANUAL) {
+                JOptionPane.showMessageDialog(null, "Nejspíš jsi patcher pustil poprvé, takže nebyl nalezen konfigurační soubor (" + os.getConfigPath() + ").\nNež budeš patchovat, tak si zkontroluj a ulož svoje nastavení AndariaPatcheru.", "Upozornění !", JOptionPane.WARNING_MESSAGE);
+            }
 
             root = new Element("main");
             settings = new Element("settings");
@@ -277,11 +289,19 @@ class Settings {
         return settingList[val];
     }
 
+    class AUTO_LEVELS {
+
+        public static final int MANUAL = 0;
+        //NOTE: use this first
+        public static final int AUTO_INSTALL = 1;
+        public static final int AUTO_UPDATE = 2;
+    }
+
     class VALUES {
 
         public static final int RUN_COMMAND = 0;
         //NOTE: use this first
-        public static final int UNUSED_CONST = 1;
+        public static final int RUN_COMMAND1 = 1;
         public static final int ULTIMA_ONINE_PATH = 2;
         public static final int LOCAL_STORAGE = 3;
         public static final int REMOTE_STORAGE = 4;
@@ -289,17 +309,18 @@ class Settings {
         public static final int NEWS_URL = 6;
         public static final int DEBUG_MODE = 7;
         public static final int FILE_LIST_URL = 8;
+        public static final int RUN_COMMAND2 = 9;
     }
-    private static final String[] settingList = {"run_command", "", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url"};
+    private static final String[] settingList = {"run_command", "run_command1", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url", "run_command2"};
 
     private String getDefaultValue(int item) {
         switch (item) {
             case 0:
-                return os.getRun_command();
+                return os.getDefaultRunCommand();
             case 1:
-                return "";
+                return os.getDefaultRunCommand1();
             case 2:
-                return os.getUltima_online_path();
+                return os.getUOPath();
             case 3:
                 return getLocal_storage();
             case 4:
@@ -312,6 +333,8 @@ class Settings {
                 return getDebug_log();
             case 8:
                 return getFilelist_url();
+            case 9:
+                return os.getDefaultRunCommand2();
             default:
                 return "";
         }
@@ -322,8 +345,8 @@ class Settings {
         return true;
     }
 
-    public String[] getUomlPatchItem() {
-        return uomlPatchItem;
+    public PatchItem getUomlPatchItem() {
+        return new PatchItem(uomlPatchItem);
     }
 
     public String getUomlPatchItemName() {

@@ -8,17 +8,26 @@ import java.io.File;
  ******************************************************************************/
 class LinuxOS extends OperatingSystem {
 
-  
     private final String ultima_online_path = System.getProperty("user.home") + "/.wine/drive_c/Program Files/EA Games/Ultima Online Mondain's Legacy";
     private final String run_command = "wine " + ultima_online_path + "/AndariaClient.exe";
 
     @Override
-    public String getRun_command() {
+    public String getDefaultRunCommand() {
         return run_command;
     }
 
     @Override
-    String getUltima_online_path() {
+    public String getDefaultRunCommand1() {
+        return "";
+    }
+
+    @Override
+    public String getDefaultRunCommand2() {
+        return "";
+    }
+
+    @Override
+    String getUOPath() {
         return ultima_online_path;
     }
 

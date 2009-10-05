@@ -190,8 +190,10 @@ class PatchList {
         if (downloader.patchQueue.size() > 0) {
             downloader.startSafe();
         } else {
-            if (Settings.getAutoInstall() == Settings.AUTO_LEVELS.AUTO_CLOSE)
+            if (Settings.getAutoInstall() == Settings.AUTO_LEVELS.AUTO_CLOSE) {
                 FrontEnd.getInstance().closeMe();
+            }
+            FrontEnd.getInstance().updateButtons();
         }
     }
 

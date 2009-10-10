@@ -44,7 +44,7 @@ class Settings {
     private final String razorPatchFileName = "razor.7z";
     private final String uoamPatchFileName = "uoam.7z";
     private final String razorPath = "razor\\razor.exe";
-    private final String uoamPath = "uoam\\uoam.exe -q";
+    private final String uoamPath = "uoam\\uoam.exe";
     private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
     //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
     //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
@@ -129,6 +129,25 @@ class Settings {
         alternate_storage = storage;
     }
 
+    public String getUomlParams() {
+        log.addDebug("-q -c " + getValue(VALUES.UOAM_SERVER) +
+                    "-p " + getValue(VALUES.UOAM_PORT) +
+                    "-n " + getValue(VALUES.UOAM_NAME) +
+                    "-pw " + getValue(VALUES.UOAM_PASSWORD));
+        
+        if (getValue(VALUES.UOAM_SERVER).isEmpty() ||
+                getValue(VALUES.UOAM_PORT).isEmpty() ||
+                getValue(VALUES.UOAM_NAME).isEmpty() ||
+                getValue(VALUES.UOAM_PASSWORD).isEmpty() )
+
+            return " -q ";
+        else
+            return (" -q -c " + getValue(VALUES.UOAM_SERVER) +
+                    " -p " + getValue(VALUES.UOAM_PORT) +
+                    " -n " + getValue(VALUES.UOAM_NAME) +
+                    " -pw " + getValue(VALUES.UOAM_PASSWORD)
+                   );
+    }
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
@@ -318,9 +337,7 @@ class Settings {
     }
 
     class VALUES {
-
         public static final int RUN_COMMAND = 0;
-        //NOTE: use this first
         public static final int RUN_COMMAND1 = 1;
         public static final int ULTIMA_ONINE_PATH = 2;
         public static final int LOCAL_STORAGE = 3;
@@ -330,31 +347,42 @@ class Settings {
         public static final int DEBUG_MODE = 7;
         public static final int FILE_LIST_URL = 8;
         public static final int RUN_COMMAND2 = 9;
+        public static final int UOAM_SERVER = 10;
+        public static final int UOAM_PORT = 11;
+        public static final int UOAM_PASSWORD = 12;
+        public static final int UOAM_NAME = 13;
+
     }
-    private static final String[] settingList = {"run_command", "run_command1", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url", "run_command2"};
+    private static final String[] settingList = {"run_command", "run_command1", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url", "run_command2", "uoam_server", "uoam_port", "uoam_password", "uoam_name"};
 
     private String getDefaultValue(int item) {
         switch (item) {
-            case 0:
+            case VALUES.RUN_COMMAND:
                 return os.getDefaultRunCommand();
-            case 1:
+            case VALUES.RUN_COMMAND1:
                 return os.getDefaultRunCommand1();
-            case 2:
+            case VALUES.ULTIMA_ONINE_PATH:
                 return os.getUOPath();
-            case 3:
+            case VALUES.LOCAL_STORAGE:
                 return getLocal_storage();
-            case 4:
+            case VALUES.REMOTE_STORAGE:
                 return getRemote_storage();
-            case 5:
+            case VALUES.ABOUT_URL:
                 return getAbout_url();
-            case 6:
+            case VALUES.NEWS_URL:
                 return getNews_url();
-            case 7:
+            case VALUES.DEBUG_MODE:
                 return getDebug_log();
-            case 8:
+            case VALUES.FILE_LIST_URL:
                 return getFilelist_url();
-            case 9:
+            case VALUES.RUN_COMMAND2:
                 return os.getDefaultRunCommand2();
+            case VALUES.UOAM_SERVER:
+            case VALUES.UOAM_PORT:
+            case VALUES.UOAM_PASSWORD:
+            case VALUES.UOAM_NAME:
+                return "";
+
             default:
                 return "";
         }

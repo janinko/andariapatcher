@@ -228,7 +228,7 @@ class Installer extends PatcherQueue {
                 }
             }
             if (patchItem.getFileName().equals(settings.getUoamPatchFileName())) {
-                Settings.getInstance().addAutorun("uoam", uopath + File.separator + settings.getUoamPath());
+                Settings.getInstance().addAutorun("uoam", uopath + File.separator + settings.getUoamPath());            
             }
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");

@@ -240,39 +240,35 @@ public class FrontEnd extends JFrame {
     public void closeMe() {
         boolean error = false;
         if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).isEmpty()) {
-            try {
-                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
-            } catch (IOException ex) {
-                log.addErr("Chyba při spouštění externího programu !");
-                ex.printStackTrace();
-                error = true;
-            }
+            error = (error || runApp(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND)));
         }
         if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1).isEmpty()) {
-            try {
-                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
-            } catch (IOException ex) {
-                log.addErr("Chyba při spouštění externího programu !");
-                ex.printStackTrace();
-                error = true;
-            }
+            error = (error || runApp(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1)));
         }
         if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).isEmpty()) {
-            try {
-                Runtime.getRuntime().exec(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
-            } catch (IOException ex) {
-                log.addErr("Chyba při spouštění externího programu !");
-                ex.printStackTrace();
-                error = true;
-            }
+            error = (error || runApp(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2)));
         }
-        if (error == false) {
+        if (error == false)
             System.exit(0);
-        } else {
+        else
             log.addErr("Při spouštění některého z externích programů došlo k chybě. Oprav prosím nastavení spouštěných programů nebo zavři patcher \"křížkem\".");
-        }
     }
 
+    private boolean  runApp(String command) {
+        if (command.toLowerCase().contains("uoam"))
+            command = command.concat(Settings.getInstance().getUomlParams());
+        try {
+            log.addDebug(command);
+            Runtime.getRuntime().exec(command.split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
+        } catch (IOException ex) {
+            log.addErr("Chyba při spouštění externího programu !");
+            log.addDebug(command.split("").toString());
+            ex.printStackTrace();
+            return true;
+        }
+        return false;
+    }
+    
     /***************************************************************************
      * Renew label of Temp Files remove button
      **************************************************************************/
@@ -284,11 +280,18 @@ public class FrontEnd extends JFrame {
      * Inicialize application settings and settings form.
      **************************************************************************/
     public void loadSettings() {
-        Settings.getInstance().load();
+        Settings set = Settings.getInstance();
+        set.load();
         updatejTConfRunCommands();
-        jTConfUltimaOnlinePath.setText(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH));
-        jTConfTempPath.setText(Settings.getInstance().getValue(Settings.VALUES.LOCAL_STORAGE));
-        jChDebug.setSelected(Settings.getInstance().debugMode());
+
+        jTConfUltimaOnlinePath.setText(set.getValue(Settings.VALUES.ULTIMA_ONINE_PATH));
+        jTConfTempPath.setText(set.getValue(Settings.VALUES.LOCAL_STORAGE));
+        jChDebug.setSelected(set.debugMode());
+
+        jTConfUoamServer.setText(set.getValue(Settings.VALUES.UOAM_SERVER));
+        jTConfUoamPort.setText(set.getValue(Settings.VALUES.UOAM_PORT));
+        jTpwConfUoamPassword.setText(set.getValue(Settings.VALUES.UOAM_PASSWORD));
+        jTConfUoamName.setText(set.getValue(Settings.VALUES.UOAM_NAME));
     }
 
     public void updatejTConfRunCommands() {
@@ -296,19 +299,25 @@ public class FrontEnd extends JFrame {
         jTConfRunCommand1.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1));
         jTConfRunCommand2.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2));
     }
-
     /***************************************************************************
      * Store application Settings.getInstance().
      **************************************************************************/
     public void saveSettings() {
-        Settings.getInstance().setValue(Settings.VALUES.RUN_COMMAND, jTConfRunCommand.getText());
-        Settings.getInstance().setValue(Settings.VALUES.RUN_COMMAND1, jTConfRunCommand1.getText());
-        Settings.getInstance().setValue(Settings.VALUES.RUN_COMMAND2, jTConfRunCommand2.getText());
+        Settings set = Settings.getInstance();
+        set.setValue(Settings.VALUES.RUN_COMMAND, jTConfRunCommand.getText());
+        set.setValue(Settings.VALUES.RUN_COMMAND1, jTConfRunCommand1.getText());
+        set.setValue(Settings.VALUES.RUN_COMMAND2, jTConfRunCommand2.getText());
 
-        Settings.getInstance().setValue(Settings.VALUES.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
-        Settings.getInstance().setValue(Settings.VALUES.LOCAL_STORAGE, jTConfTempPath.getText());
-        Settings.getInstance().setValue(Settings.VALUES.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
-        Settings.getInstance().save();
+        set.setValue(Settings.VALUES.ULTIMA_ONINE_PATH, jTConfUltimaOnlinePath.getText());
+        set.setValue(Settings.VALUES.LOCAL_STORAGE, jTConfTempPath.getText());
+        set.setValue(Settings.VALUES.DEBUG_MODE, jChDebug.isSelected() ? "1" : "0");
+
+        set.setValue(Settings.VALUES.UOAM_SERVER, jTConfUoamServer.getText());
+        set.setValue(Settings.VALUES.UOAM_PORT, jTConfUoamPort.getText());
+        set.setValue(Settings.VALUES.UOAM_NAME, jTConfUoamName.getText());
+        set.setValue(Settings.VALUES.UOAM_PASSWORD, new String(jTpwConfUoamPassword.getPassword()));
+
+        set.save();
     }
 
     private Image getIcon(String fileName) {
@@ -451,17 +460,16 @@ public class FrontEnd extends JFrame {
         jTConfUltimaOnlinePath = new javax.swing.JTextField();
         jBConfBrowseUltimaOnlinePath = new javax.swing.JButton();
         jLConfTempPath = new javax.swing.JLabel();
+        jTConfTempPath = new javax.swing.JTextField();
         jBConfBrowseTempPath = new javax.swing.JButton();
         jLConfRunCommand = new javax.swing.JLabel();
         jTConfRunCommand = new javax.swing.JTextField();
         jBConfBrowseRunCommand = new javax.swing.JButton();
         jBConfLoad = new javax.swing.JButton();
         jBConfSave = new javax.swing.JButton();
-        jSeparator9 = new javax.swing.JSeparator();
         jChDebug = new javax.swing.JCheckBox();
         jBSetAllInstalled = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator10 = new javax.swing.JSeparator();
+        jLVersion = new javax.swing.JLabel();
         jBDeleteNWB = new javax.swing.JButton();
         jBDeleteIntro = new javax.swing.JButton();
         jBRenewRegistry = new javax.swing.JButton();
@@ -475,7 +483,15 @@ public class FrontEnd extends JFrame {
         jLConfRunCommand2 = new javax.swing.JLabel();
         jTConfRunCommand2 = new javax.swing.JTextField();
         jBConfBrowseRunCommand2 = new javax.swing.JButton();
-        jTConfTempPath1 = new javax.swing.JTextField();
+        jPUoam = new javax.swing.JPanel();
+        jLConfUoamServer = new javax.swing.JLabel();
+        jLConfUoamPort = new javax.swing.JLabel();
+        jLConfUoamName = new javax.swing.JLabel();
+        jLConfUoamPassword = new javax.swing.JLabel();
+        jTConfUoamServer = new javax.swing.JTextField();
+        jTConfUoamPort = new javax.swing.JTextField();
+        jTConfUoamName = new javax.swing.JTextField();
+        jTpwConfUoamPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
@@ -491,7 +507,7 @@ public class FrontEnd extends JFrame {
         jTPMain.setBackground(getBackground());
         jTPMain.setForeground(getForeground());
         jTPMain.setToolTipText("");
-        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14));
+        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jTPMain.setMinimumSize(new java.awt.Dimension(727, 481));
         jTPMain.setName(""); // NOI18N
         jTPMain.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -844,12 +860,13 @@ public class FrontEnd extends JFrame {
         jLConfUltimaOnlinePath.setForeground(getForeground());
         jLConfUltimaOnlinePath.setLabelFor(jTConfUltimaOnlinePath);
         jLConfUltimaOnlinePath.setText("Adresář ultimy");
-        jLConfUltimaOnlinePath.setToolTipText("Adresář, kde je nainstalovaná ultima online. Patcher tam bude instalovat soubory potřebné pro hraní na Andarii.");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("cz/polous/andaria/FrontEnd"); // NOI18N
+        jLConfUltimaOnlinePath.setToolTipText(bundle.getString("UOPathTootlTip")); // NOI18N
 
         jTConfUltimaOnlinePath.setBackground(getBackground());
         jTConfUltimaOnlinePath.setColumns(30);
         jTConfUltimaOnlinePath.setForeground(getForeground());
-        jTConfUltimaOnlinePath.setToolTipText("Adresář, kde je nainstalovaná ultima online. Patcher tam bude instalovat soubory potřebné pro hraní na Andarii.");
+        jTConfUltimaOnlinePath.setToolTipText(bundle.getString("UOPathTootlTip")); // NOI18N
         jTConfUltimaOnlinePath.setMinimumSize(new java.awt.Dimension(20, 19));
 
         jBConfBrowseUltimaOnlinePath.setBackground(getBackground());
@@ -863,8 +880,15 @@ public class FrontEnd extends JFrame {
 
         jLConfTempPath.setBackground(getBackground());
         jLConfTempPath.setForeground(getForeground());
+        jLConfTempPath.setLabelFor(jTConfTempPath);
         jLConfTempPath.setText("Dočasné úložiště:");
-        jLConfTempPath.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
+        jLConfTempPath.setToolTipText(bundle.getString("DownloadTempToolTip")); // NOI18N
+
+        jTConfTempPath.setBackground(getBackground());
+        jTConfTempPath.setColumns(30);
+        jTConfTempPath.setForeground(getForeground());
+        jTConfTempPath.setToolTipText(bundle.getString("DownloadTempToolTip")); // NOI18N
+        jTConfTempPath.setMinimumSize(new java.awt.Dimension(200, 19));
 
         jBConfBrowseTempPath.setBackground(getBackground());
         jBConfBrowseTempPath.setForeground(getForeground());
@@ -879,12 +903,12 @@ public class FrontEnd extends JFrame {
         jLConfRunCommand.setForeground(getForeground());
         jLConfRunCommand.setLabelFor(jTConfRunCommand);
         jLConfRunCommand.setText("Spuštěný program 1");
-        jLConfRunCommand.setToolTipText("Program, který bude spuštěn po ukončení AndariaPatcheru. Pokud nechceš spouštět žádný program, nech řádku prázdnou.");
+        jLConfRunCommand.setToolTipText(bundle.getString("AutoRunToolTip")); // NOI18N
 
         jTConfRunCommand.setBackground(getBackground());
         jTConfRunCommand.setColumns(30);
         jTConfRunCommand.setForeground(getForeground());
-        jTConfRunCommand.setToolTipText("Program, který bude spuštěn po ukončení AndariaPatcheru. Pokud nechceš spouštět žádný program, nech řádku prázdnou.");
+        jTConfRunCommand.setToolTipText(bundle.getString("AutoRunToolTip")); // NOI18N
         jTConfRunCommand.setMinimumSize(new java.awt.Dimension(20, 19));
 
         jBConfBrowseRunCommand.setBackground(getBackground());
@@ -899,7 +923,7 @@ public class FrontEnd extends JFrame {
         jBConfLoad.setBackground(getBackground());
         jBConfLoad.setForeground(getForeground());
         jBConfLoad.setText("Načti nastavení");
-        jBConfLoad.setToolTipText("Klikni pro načtení nastavení ze souboru s nastavením.");
+        jBConfLoad.setToolTipText(bundle.getString("ReadSettingsToolTip")); // NOI18N
         jBConfLoad.setMaximumSize(new java.awt.Dimension(300, 25));
         jBConfLoad.setMinimumSize(new java.awt.Dimension(100, 25));
         jBConfLoad.setPreferredSize(new java.awt.Dimension(130, 25));
@@ -912,7 +936,7 @@ public class FrontEnd extends JFrame {
         jBConfSave.setBackground(getBackground());
         jBConfSave.setForeground(getForeground());
         jBConfSave.setText("Ulož nastavení");
-        jBConfSave.setToolTipText("Klikni pro uložení nastavení do souboru s nastavením.");
+        jBConfSave.setToolTipText(bundle.getString("SaveSettingsToolTip")); // NOI18N
         jBConfSave.setMaximumSize(new java.awt.Dimension(300, 25));
         jBConfSave.setMinimumSize(new java.awt.Dimension(100, 25));
         jBConfSave.setPreferredSize(new java.awt.Dimension(130, 25));
@@ -922,14 +946,9 @@ public class FrontEnd extends JFrame {
             }
         });
 
-        jSeparator9.setBackground(getBackground());
-        jSeparator9.setForeground(getBackground());
-        jSeparator9.setEnabled(false);
-        jSeparator9.setMinimumSize(new java.awt.Dimension(10, 30));
-
         jChDebug.setBackground(getBackground());
         jChDebug.setForeground(getForeground());
-        jChDebug.setText("Zobrazovat informace užitečné pro ladění Andaria Patcheru a odstraňování problémů (debug režim)");
+        jChDebug.setText(bundle.getString("DebugModeToolTip")); // NOI18N
         jChDebug.setToolTipText("Po zaškrtnutí bude patcher zobrazovat detailní informace o své činnosti. Pokud chcete nahlásit chybu, zapněte tuto možnost a spolu s popisem chyby zašlete i výpis v okně Logu.");
         jChDebug.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         jChDebug.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -946,26 +965,23 @@ public class FrontEnd extends JFrame {
         jBSetAllInstalled.setBackground(getBackground());
         jBSetAllInstalled.setForeground(getForeground());
         jBSetAllInstalled.setText("Nastavit všechny patche jako nainstalované");
-        jBSetAllInstalled.setToolTipText("Nastaví všechy patche v seznamu patchů jako nainstalované. Použij, pokud jsi spustil AndariaPatcher poprvé a máš již Ultimu plně opatchovanou souborama za shardu Andarie.");
+        jBSetAllInstalled.setToolTipText(bundle.getString("SetAllInstalledToolTip")); // NOI18N
         jBSetAllInstalled.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSetAllInstalledActionPerformed(evt);
             }
         });
 
-        jLabel1.setBackground(getBackground());
-        jLabel1.setForeground(getForeground());
-        jLabel1.setText("Verze programu: 1.6beta1");
-
-        jSeparator10.setBackground(getBackground());
-        jSeparator10.setForeground(getBackground());
-        jSeparator10.setEnabled(false);
-        jSeparator10.setMinimumSize(new java.awt.Dimension(10, 30));
+        jLVersion.setBackground(getBackground());
+        jLVersion.setForeground(getForeground());
+        jLVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLVersion.setText("Verze programu: 1.6beta1");
+        jLVersion.setToolTipText(bundle.getString("VersionToolTip")); // NOI18N
 
         jBDeleteNWB.setBackground(getBackground());
         jBDeleteNWB.setForeground(getForeground());
         jBDeleteNWB.setText("Odstranit soubor desktop.nwb (použij, pokud máš problém se spuštěním UO)");
-        jBDeleteNWB.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBDeleteNWB.setToolTipText(bundle.getString("RemoveDesktipNwbToolTip")); // NOI18N
         jBDeleteNWB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBDeleteNWBActionPerformed(evt);
@@ -975,7 +991,7 @@ public class FrontEnd extends JFrame {
         jBDeleteIntro.setBackground(getBackground());
         jBDeleteIntro.setForeground(getForeground());
         jBDeleteIntro.setText("Odstranit intro hry (úvodní videa)");
-        jBDeleteIntro.setToolTipText("Smaže úvodní videa hry. Tím se zrychlí start a udělá trošku místa na disku.");
+        jBDeleteIntro.setToolTipText(bundle.getString("RemoveIntroToolTip")); // NOI18N
         jBDeleteIntro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBDeleteIntroActionPerformed(evt);
@@ -985,7 +1001,7 @@ public class FrontEnd extends JFrame {
         jBRenewRegistry.setBackground(getBackground());
         jBRenewRegistry.setForeground(getForeground());
         jBRenewRegistry.setText("Obnovit registry windows (vybereš adresář ve kterém je ultima nainstalovaná)");
-        jBRenewRegistry.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBRenewRegistry.setToolTipText(bundle.getString("RenewRegistryToolTip")); // NOI18N
         jBRenewRegistry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBRenewRegistryActionPerformed(evt);
@@ -998,7 +1014,7 @@ public class FrontEnd extends JFrame {
         jBRemoveTempFiles.setBackground(getBackground());
         jBRemoveTempFiles.setForeground(getForeground());
         jBRemoveTempFiles.setText("Smazat z dočasného úložiště všechny stažené soubory.");
-        jBRemoveTempFiles.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBRemoveTempFiles.setToolTipText(bundle.getString("DownloadTempEraseToolTip")); // NOI18N
         jBRemoveTempFiles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBRemoveTempFilesActionPerformed(evt);
@@ -1010,18 +1026,20 @@ public class FrontEnd extends JFrame {
 
         jLConfTempPath1.setBackground(getBackground());
         jLConfTempPath1.setForeground(getForeground());
+        jLConfTempPath1.setLabelFor(jTConfTempPath);
         jLConfTempPath1.setText("Úložiště obsahuje:");
-        jLConfTempPath1.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
+        jLConfTempPath1.setToolTipText(bundle.getString("DownloadTempSizeToolTip")); // NOI18N
 
         jLConfTempSize.setBackground(getBackground());
         jLConfTempSize.setForeground(getForeground());
+        jLConfTempSize.setLabelFor(jTConfTempPath);
         jLConfTempSize.setText("0kB");
-        jLConfTempSize.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
+        jLConfTempSize.setToolTipText(bundle.getString("DownloadTempSizeToolTip")); // NOI18N
 
         jBDownloadUO.setBackground(getBackground());
         jBDownloadUO.setForeground(getForeground());
         jBDownloadUO.setText("Instalovat Ultimu Online Monday's Legacy pro shard Andaria.net jedním klikem");
-        jBDownloadUO.setToolTipText("Opravuje chybu spouštění ultimy online, při které hra spadne hned po spuštění.");
+        jBDownloadUO.setToolTipText(bundle.getString("InstallUomlToolTip")); // NOI18N
         jBDownloadUO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBDownloadUOActionPerformed(evt);
@@ -1032,12 +1050,12 @@ public class FrontEnd extends JFrame {
         jLConfRunCommand1.setForeground(getForeground());
         jLConfRunCommand1.setLabelFor(jTConfRunCommand);
         jLConfRunCommand1.setText("Spuštěný program 2");
-        jLConfRunCommand1.setToolTipText("Program, který bude spuštěn po ukončení AndariaPatcheru. Pokud nechceš spouštět žádný program, nech řádku prázdnou.");
+        jLConfRunCommand1.setToolTipText(bundle.getString("AutoRunToolTip")); // NOI18N
 
         jTConfRunCommand1.setBackground(getBackground());
         jTConfRunCommand1.setColumns(30);
         jTConfRunCommand1.setForeground(getForeground());
-        jTConfRunCommand1.setToolTipText("Program, který bude spuštěn po ukončení AndariaPatcheru. Pokud nechceš spouštět žádný program, nech řádku prázdnou.");
+        jTConfRunCommand1.setToolTipText(bundle.getString("AutoRunToolTip")); // NOI18N
         jTConfRunCommand1.setMinimumSize(new java.awt.Dimension(20, 19));
 
         jBConfBrowseRunCommand1.setBackground(getBackground());
@@ -1053,12 +1071,12 @@ public class FrontEnd extends JFrame {
         jLConfRunCommand2.setForeground(getForeground());
         jLConfRunCommand2.setLabelFor(jTConfRunCommand);
         jLConfRunCommand2.setText("Spuštěný program 3");
-        jLConfRunCommand2.setToolTipText("Program, který bude spuštěn po ukončení AndariaPatcheru. Pokud nechceš spouštět žádný program, nech řádku prázdnou.");
+        jLConfRunCommand2.setToolTipText(bundle.getString("AutoRunToolTip")); // NOI18N
 
         jTConfRunCommand2.setBackground(getBackground());
         jTConfRunCommand2.setColumns(30);
         jTConfRunCommand2.setForeground(getForeground());
-        jTConfRunCommand2.setToolTipText("Program, který bude spuštěn po ukončení AndariaPatcheru. Pokud nechceš spouštět žádný program, nech řádku prázdnou.");
+        jTConfRunCommand2.setToolTipText(bundle.getString("AutoRunToolTip")); // NOI18N
         jTConfRunCommand2.setMinimumSize(new java.awt.Dimension(20, 19));
 
         jBConfBrowseRunCommand2.setBackground(getBackground());
@@ -1070,11 +1088,101 @@ public class FrontEnd extends JFrame {
             }
         });
 
-        jTConfTempPath1.setBackground(getBackground());
-        jTConfTempPath1.setColumns(30);
-        jTConfTempPath1.setForeground(getForeground());
-        jTConfTempPath1.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
-        jTConfTempPath1.setMinimumSize(new java.awt.Dimension(200, 19));
+        jPUoam.setBackground(getBackground());
+        jPUoam.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nastavení UOAM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), getForeground())); // NOI18N
+        jPUoam.setForeground(getForeground());
+        jPUoam.setToolTipText(bundle.getString("UoamTootlTip")); // NOI18N
+
+        jLConfUoamServer.setBackground(getBackground());
+        jLConfUoamServer.setForeground(getForeground());
+        jLConfUoamServer.setLabelFor(jTConfUltimaOnlinePath);
+        jLConfUoamServer.setText("Server:");
+        jLConfUoamServer.setToolTipText(jTConfUoamServer.getToolTipText());
+        jLConfUoamServer.setEnabled(jPUoam.isEnabled());
+
+        jLConfUoamPort.setBackground(getBackground());
+        jLConfUoamPort.setForeground(getForeground());
+        jLConfUoamPort.setLabelFor(jTConfUltimaOnlinePath);
+        jLConfUoamPort.setText("Port:");
+        jLConfUoamPort.setToolTipText(jTConfUoamPort.getToolTipText());
+        jLConfUoamPort.setEnabled(jPUoam.isEnabled());
+
+        jLConfUoamName.setBackground(getBackground());
+        jLConfUoamName.setForeground(getForeground());
+        jLConfUoamName.setLabelFor(jTConfUltimaOnlinePath);
+        jLConfUoamName.setText("Jméno:");
+        jLConfUoamName.setToolTipText(jTConfUoamName.getToolTipText());
+        jLConfUoamName.setEnabled(jPUoam.isEnabled());
+
+        jLConfUoamPassword.setBackground(getBackground());
+        jLConfUoamPassword.setForeground(getForeground());
+        jLConfUoamPassword.setLabelFor(jTConfUltimaOnlinePath);
+        jLConfUoamPassword.setText("Heslo:");
+        jLConfUoamPassword.setToolTipText(bundle.getString("UoamPasswordTootlTip")); // NOI18N
+        jLConfUoamPassword.setEnabled(jPUoam.isEnabled());
+
+        jTConfUoamServer.setBackground(getBackground());
+        jTConfUoamServer.setColumns(30);
+        jTConfUoamServer.setForeground(getForeground());
+        jTConfUoamServer.setToolTipText(bundle.getString("UoamServerTootlTip")); // NOI18N
+        jTConfUoamServer.setEnabled(jPUoam.isEnabled());
+        jTConfUoamServer.setMinimumSize(new java.awt.Dimension(200, 19));
+
+        jTConfUoamPort.setBackground(getBackground());
+        jTConfUoamPort.setColumns(30);
+        jTConfUoamPort.setForeground(getForeground());
+        jTConfUoamPort.setToolTipText(bundle.getString("UoamPortTootlTip")); // NOI18N
+        jTConfUoamPort.setEnabled(jPUoam.isEnabled());
+        jTConfUoamPort.setMinimumSize(new java.awt.Dimension(200, 19));
+
+        jTConfUoamName.setBackground(getBackground());
+        jTConfUoamName.setColumns(30);
+        jTConfUoamName.setForeground(getForeground());
+        jTConfUoamName.setToolTipText(bundle.getString("UoamNameTootlTip")); // NOI18N
+        jTConfUoamName.setEnabled(jPUoam.isEnabled());
+        jTConfUoamName.setMinimumSize(new java.awt.Dimension(200, 19));
+
+        jTpwConfUoamPassword.setBackground(getBackground());
+        jTpwConfUoamPassword.setForeground(getForeground());
+        jTpwConfUoamPassword.setText("jPasswordField1");
+        jTpwConfUoamPassword.setToolTipText(bundle.getString("UoamPasswordTootlTip")); // NOI18N
+        jTpwConfUoamPassword.setEnabled(jPUoam.isEnabled());
+
+        org.jdesktop.layout.GroupLayout jPUoamLayout = new org.jdesktop.layout.GroupLayout(jPUoam);
+        jPUoam.setLayout(jPUoamLayout);
+        jPUoamLayout.setHorizontalGroup(
+            jPUoamLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPUoamLayout.createSequentialGroup()
+                .addContainerGap()
+                .add(jLConfUoamServer)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jTConfUoamServer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 144, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jLConfUoamPort)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jTConfUoamPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jLConfUoamName)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jTConfUoamName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 169, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jLConfUoamPassword)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jTpwConfUoamPassword, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 122, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPUoamLayout.setVerticalGroup(
+            jPUoamLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPUoamLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                .add(jLConfUoamServer)
+                .add(jTConfUoamServer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jTConfUoamPort, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jLConfUoamName)
+                .add(jLConfUoamPort)
+                .add(jTConfUoamName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jLConfUoamPassword)
+                .add(jTpwConfUoamPassword, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
 
         org.jdesktop.layout.GroupLayout jPSettingsTabLayout = new org.jdesktop.layout.GroupLayout(jPSettingsTab);
         jPSettingsTab.setLayout(jPSettingsTabLayout);
@@ -1083,67 +1191,65 @@ public class FrontEnd extends JFrame {
             .add(jPSettingsTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
-                    .add(jBDownloadUO, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
                     .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
-                            .add(jLConfTempPath1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jLConfTempSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jPUoam, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .add(jPSettingsTabLayout.createSequentialGroup()
+                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jBDownloadUO, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPSettingsTabLayout.createSequentialGroup()
+                                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                    .add(jLConfTempPath1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 499, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jBConfBrowseTempPath)))
-                    .add(jChDebug)
-                    .add(jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
-                    .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jLConfTempSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 499, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 525, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jBConfBrowseTempPath))))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jChDebug)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
                             .add(jPSettingsTabLayout.createSequentialGroup()
                                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jLConfUltimaOnlinePath)
-                                    .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED))
-                            .add(jLConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                            .add(jLConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
-                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                    .add(jTConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-                                    .add(jTConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                    .add(jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(jLConfUltimaOnlinePath)
+                                            .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED))
+                                    .add(jLConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                                    .add(jLConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
                                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jBConfBrowseRunCommand2)
-                                    .add(jBConfBrowseRunCommand1)))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfBrowseRunCommand))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfBrowseUltimaOnlinePath))))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                            .add(jTConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                                            .add(jTConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(jBConfBrowseRunCommand2)
+                                            .add(jBConfBrowseRunCommand1)))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jBConfBrowseRunCommand))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                                        .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jBConfBrowseUltimaOnlinePath)))))
+                        .add(10, 10, 10))
                     .add(jPSettingsTabLayout.createSequentialGroup()
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLVersion, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel1)
-                        .add(67, 67, 67)
-                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(620, 620, 620)
-                        .add(jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-            .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                    .addContainerGap(447, Short.MAX_VALUE)
-                    .add(jTConfTempPath1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 525, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(79, 79, 79)))
+                        .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPSettingsTabLayout.setVerticalGroup(
             jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1179,6 +1285,7 @@ public class FrontEnd extends JFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLConfTempPath)
+                    .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jBConfBrowseTempPath))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -1193,23 +1300,14 @@ public class FrontEnd extends JFrame {
                 .add(jBSetAllInstalled)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBRenewRegistry)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 56, Short.MAX_VALUE)
-                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jLabel1)
-                        .add(jPSettingsTabLayout.createSequentialGroup()
-                            .add(5, 5, 5)
-                            .add(jSeparator9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(21, 21, 21))
-            .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(jPSettingsTabLayout.createSequentialGroup()
-                    .add(196, 196, 196)
-                    .add(jTConfTempPath1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(236, Short.MAX_VALUE)))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jPUoam, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(11, 11, 11)
+                .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLVersion))
+                .add(23, 23, 23))
         );
 
         jBRemoveTempFiles.getAccessibleContext().setAccessibleDescription("Pomůže uvolnit nějaké to místo na disku. ");
@@ -1343,8 +1441,8 @@ public class FrontEnd extends JFrame {
                 "\n\nPro tuto akci budeš potřebovat cca 700MB místa na disku kde jsou Windows" +
                 "\na cca 1,7GB na mítě kam plánuješ uo nainstalovat. Tedy celkem počítej 2,4GB." +
                 "\n(těch 700 pak můžeš smazat v nastavení AndariaPatcheru).", "Velmi zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
-            Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
-            installUO();
+        Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
+        installUO();
         }
     }//GEN-LAST:event_jBDownloadUOActionPerformed
 
@@ -1363,14 +1461,8 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBConfBrowseRunCommand2ActionPerformed
 
     private void jBPachAndPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPachAndPlayActionPerformed
-        if (PatchList.getInstance().getInstallCount() > 0) {
-            if (0 == JOptionPane.showConfirmDialog(null, "Jsou k dispozici nové patche, chceš je nainstalovat ?", "Novinky na Andarii.", JOptionPane.YES_NO_OPTION)) {
-                Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_CLOSE);
-                installPatches();
-            }
-        } else {
-            closeMe();
-        }
+        Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_CLOSE);
+        installPatches();
 }//GEN-LAST:event_jBPachAndPlayActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
@@ -1402,11 +1494,15 @@ public class FrontEnd extends JFrame {
     private javax.swing.JLabel jLConfTempPath1;
     public javax.swing.JLabel jLConfTempSize;
     private javax.swing.JLabel jLConfUltimaOnlinePath;
+    private javax.swing.JLabel jLConfUoamName;
+    private javax.swing.JLabel jLConfUoamPassword;
+    private javax.swing.JLabel jLConfUoamPort;
+    private javax.swing.JLabel jLConfUoamServer;
     private javax.swing.JLabel jLDownload;
     private javax.swing.JLabel jLDownloadSpeed;
     private javax.swing.JLabel jLInstall;
     private javax.swing.JLabel jLInstallSpeed;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLVersion;
     private javax.swing.JProgressBar jPBDownloadSingle;
     private javax.swing.JProgressBar jPBDownloadTotal;
     private javax.swing.JProgressBar jPBInstallSingle;
@@ -1422,10 +1518,10 @@ public class FrontEnd extends JFrame {
     private javax.swing.JPanel jPPatchList;
     private javax.swing.JPanel jPPatchListTab;
     private javax.swing.JPanel jPSettingsTab;
+    private javax.swing.JPanel jPUoam;
     private javax.swing.JScrollPane jSPLog;
     private javax.swing.JScrollPane jSPPatchList;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -1433,13 +1529,16 @@ public class FrontEnd extends JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField jTConfRunCommand;
     private javax.swing.JTextField jTConfRunCommand1;
     private javax.swing.JTextField jTConfRunCommand2;
-    private javax.swing.JTextField jTConfTempPath1;
+    private javax.swing.JTextField jTConfTempPath;
     private javax.swing.JTextField jTConfUltimaOnlinePath;
+    private javax.swing.JTextField jTConfUoamName;
+    private javax.swing.JTextField jTConfUoamPort;
+    private javax.swing.JTextField jTConfUoamServer;
     private javax.swing.JTextArea jTLog;
     private javax.swing.JTabbedPane jTPMain;
+    private javax.swing.JPasswordField jTpwConfUoamPassword;
     // End of variables declaration//GEN-END:variables
 }

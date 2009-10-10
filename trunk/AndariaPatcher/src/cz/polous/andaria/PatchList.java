@@ -59,6 +59,21 @@ class PatchList {
     }
 
     /***************************************************************************
+     * @return amount of patches to install
+     **************************************************************************/
+    public int getInstallCount() {
+        int result = 0;
+        PatchItem patchItem;
+        for (int i = 0; i < patchData.size(); i++) {
+            patchItem = (PatchItem) patchData.get(i);
+            if (patchItem.getInstallFlag()) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    /***************************************************************************
      * Read patchList from remote storage and fill data  vector
      * (list of pachItems).
      **************************************************************************/

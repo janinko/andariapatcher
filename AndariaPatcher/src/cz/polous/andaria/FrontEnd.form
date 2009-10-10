@@ -806,24 +806,12 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jBRenewRegistry" alignment="0" pref="708" max="32767" attributes="0"/>
-                          <Component id="jBSetAllInstalled" alignment="0" pref="708" max="32767" attributes="0"/>
-                          <Component id="jBDownloadUO" alignment="0" pref="708" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jBConfLoad" min="-2" pref="185" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jSeparator10" min="-2" pref="86" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="jSeparator9" pref="130" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jBConfSave" min="-2" pref="160" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jBSetAllInstalled" alignment="0" pref="1031" max="32767" attributes="0"/>
+                          <Component id="jBDownloadUO" alignment="0" pref="1031" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLConfTempPath" pref="88" max="32767" attributes="1"/>
-                                  <Component id="jLConfTempPath1" max="32767" attributes="1"/>
+                                  <Component id="jLConfTempPath" pref="505" max="32767" attributes="1"/>
+                                  <Component id="jLConfTempPath1" pref="505" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -832,33 +820,29 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jBRemoveTempFiles" min="-2" pref="499" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jTConfTempPath" min="-2" pref="525" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jBConfBrowseTempPath" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jBConfBrowseTempPath" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jChDebug" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jBDeleteIntro" alignment="0" pref="708" max="32767" attributes="0"/>
-                          <Component id="jBDeleteNWB" alignment="0" pref="708" max="32767" attributes="0"/>
+                          <Component id="jBDeleteIntro" alignment="0" pref="1031" max="32767" attributes="0"/>
+                          <Component id="jBDeleteNWB" alignment="0" pref="1031" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLConfUltimaOnlinePath" alignment="0" min="-2" max="-2" attributes="1"/>
-                                          <Component id="jLConfRunCommand" pref="98" max="32767" attributes="1"/>
+                                          <Component id="jLConfRunCommand" pref="260" max="32767" attributes="1"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jLConfRunCommand1" pref="102" max="32767" attributes="1"/>
-                                  <Component id="jLConfRunCommand2" alignment="0" pref="102" max="32767" attributes="1"/>
+                                  <Component id="jLConfRunCommand1" pref="264" max="32767" attributes="1"/>
+                                  <Component id="jLConfRunCommand2" alignment="0" pref="264" max="32767" attributes="1"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jTConfRunCommand2" pref="517" max="32767" attributes="1"/>
-                                          <Component id="jTConfRunCommand1" alignment="1" pref="517" max="32767" attributes="0"/>
+                                          <Component id="jTConfRunCommand2" pref="678" max="32767" attributes="1"/>
+                                          <Component id="jTConfRunCommand1" alignment="1" pref="678" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -867,19 +851,41 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jTConfRunCommand" pref="517" max="32767" attributes="0"/>
+                                      <Component id="jTConfRunCommand" pref="678" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jBConfBrowseRunCommand" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jTConfUltimaOnlinePath" pref="517" max="32767" attributes="0"/>
+                                      <Component id="jTConfUltimaOnlinePath" pref="678" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jBConfBrowseUltimaOnlinePath" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jBConfLoad" min="-2" pref="185" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jSeparator10" min="-2" pref="86" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                              <Component id="jSeparator9" pref="390" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jBConfSave" min="-2" pref="160" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="620" max="-2" attributes="0"/>
+                              <Component id="jBRenewRegistry" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace pref="447" max="32767" attributes="0"/>
+                          <Component id="jTConfTempPath1" min="-2" pref="525" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -924,7 +930,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLConfTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTConfTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBConfBrowseTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -941,7 +946,7 @@
                       <Component id="jBSetAllInstalled" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jBRenewRegistry" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="66" max="32767" attributes="0"/>
+                      <EmptySpace pref="56" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jBConfLoad" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -956,7 +961,14 @@
                           </Group>
                           <Component id="jSeparator10" min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="196" max="-2" attributes="0"/>
+                          <Component id="jTConfTempPath1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="236" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1015,25 +1027,10 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="jTConfTempPath"/>
+                  <ComponentRef name="default"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Do&#x10d;asn&#xe9; &#xfa;lo&#x17e;i&#x161;t&#x11b;:"/>
                 <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTConfTempPath">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="columns" type="int" value="30"/>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="foreground" type="property"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[200, 19]"/>
-                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jBConfBrowseTempPath">
@@ -1295,7 +1292,7 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="jTConfTempPath"/>
+                  <ComponentRef name="default"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&#xda;lo&#x17e;i&#x161;t&#x11b; obsahuje:"/>
                 <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
@@ -1310,7 +1307,7 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="jTConfTempPath"/>
+                  <ComponentRef name="default"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="0kB"/>
                 <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
@@ -1424,6 +1421,21 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBConfBrowseRunCommand2ActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTConfTempPath1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="Form" name="background" type="property"/>
+                </Property>
+                <Property name="columns" type="int" value="30"/>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="Form" name="foreground" type="property"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[200, 19]"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

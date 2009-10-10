@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://patcher.andaria.net/" href="launch.jnlp">
+    <information>
+        <title>Andaria Patcher</title>
+        <vendor>Martin Polehla</vendor>
+        <description>Co to je?
+* AndariaPatcher slouží k automatické úpravě originální instalace Ultimy Online potřebné pro hraní na shardu Andaria.  
+Je to škodlivé?
+* AndariaPatcher neobsahuje funkce pro kontrolu ani šmírování uživatelů, všechny aktivity programu je možné sledovat v logovacím okně (detailně po nastavení ladícího režimu).
+Našel jsem chybu ?
+* Na fóru Andarie je v obecné diskusi vlákno zabývající se AndariaPatcherem. To je jediné správné místo na hlášení chyb pro lidi, kteří nejsou součástí vývojového týmu.
+Chci pomoct s vývojem ?
+* Vítán je každý kdo má zájem pomoct s vývojem, zejména testovat, programovat v javě. Nejlepším začátkem bude kontaktovat mě (p0l0us) na foru Andarie.
+Licencování ?
+* AndariaPatcher je vydán pod licencí GNU GPL v jejím posledním znění. Porušení licence tohoto projektu zapříčiní trvalou deformaci mozku hříšníka a poškození ostatních orgánu (zejména statních, které si pro něj v nestřeženou chvíli příjdou !).</description>
+        <description kind="short">Andaria Patcher</description>
+        <homepage href="http://www.andaria.net/index.php?link=strazci_patcher"/>
+        <icon href="andaria.png" kind="default"/>
+        <icon href="andaria_splash.png" kind="splash"/>
+        <shortcut online="true">
+            <desktop />
+            <menu submenu="Andaria"/>
+        </shortcut>
+    </information>
+    <update check="timeout" policy="always"/>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se version="1.6+" java-vm-args="-Xmx512M" />
+        <jar href="AndariaPatcher.jar" main="true" download="eager"/>
+        <jar href="lib/AbsoluteLayout.jar" download="eager"/>
+        <jar href="lib/J7Zip.jar" download="eager"/>
+        <jar href="lib/cobra.jar" download="eager"/>
+        <jar href="lib/jdom.jar" download="eager"/>
+        <jar href="lib/js.jar" download="eager"/>
+        <jar href="lib/swing-layout-1.0.jar" download="eager"/>
+    </resources>
+    <application-desc main-class="cz.polous.andaria.FrontEnd">
+    </application-desc>
+</jnlp>

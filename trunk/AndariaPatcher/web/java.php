@@ -145,9 +145,6 @@ include_once($VERSION_FILE);
        // }// catch () {
         //}
 ?>
-
-<br>
-<font size="-2"><a href="http://patcher.andaria.net/Andaria Patcher.lnk">Zde je možné si stahnout spouštìcí ikonu AndariaPatcheru.</a><br><br></font>
 </div>
 <div align="center">
 <font size="-1"><b>Beta Patcheru verze <?php echo $ap_versionBeta;?></b><br>

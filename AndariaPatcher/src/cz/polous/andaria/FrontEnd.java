@@ -248,15 +248,18 @@ public class FrontEnd extends JFrame {
         if (!Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2).isEmpty()) {
             error = (error || runApp(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2)));
         }
-        if (error == false)
+        if (error == false) {
             System.exit(0);
-        else
+            Runtime.getRuntime().exit(0);
+        } else {
             log.addErr("Při spouštění některého z externích programů došlo k chybě. Oprav prosím nastavení spouštěných programů nebo zavři patcher \"křížkem\".");
+        }
     }
 
-    private boolean  runApp(String command) {
-        if (command.toLowerCase().contains("uoam"))
+    private boolean runApp(String command) {
+        if (command.toLowerCase().contains("uoam")) {
             command = command.concat(Settings.getInstance().getUomlParams());
+        }
         try {
             log.addDebug(command);
             Runtime.getRuntime().exec(command.split(" "), null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
@@ -267,13 +270,6 @@ public class FrontEnd extends JFrame {
             return true;
         }
         return false;
-    }
-    
-    /***************************************************************************
-     * Renew label of Temp Files remove button
-     **************************************************************************/
-    public void udpateJBRemoveTempFiles() {
-        //    jLConfTempSize =
     }
 
     /***************************************************************************
@@ -299,8 +295,9 @@ public class FrontEnd extends JFrame {
         jTConfRunCommand1.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND1));
         jTConfRunCommand2.setText(Settings.getInstance().getValue(Settings.VALUES.RUN_COMMAND2));
     }
+
     /***************************************************************************
-     * Store application Settings.getInstance().
+     * Store application Settings.
      **************************************************************************/
     public void saveSettings() {
         Settings set = Settings.getInstance();
@@ -1441,8 +1438,8 @@ public class FrontEnd extends JFrame {
                 "\n\nPro tuto akci budeš potřebovat cca 700MB místa na disku kde jsou Windows" +
                 "\na cca 1,7GB na mítě kam plánuješ uo nainstalovat. Tedy celkem počítej 2,4GB." +
                 "\n(těch 700 pak můžeš smazat v nastavení AndariaPatcheru).", "Velmi zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
-        Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
-        installUO();
+            Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
+            installUO();
         }
     }//GEN-LAST:event_jBDownloadUOActionPerformed
 

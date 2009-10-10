@@ -806,85 +806,84 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jBSetAllInstalled" alignment="0" pref="1031" max="32767" attributes="0"/>
-                          <Component id="jBDownloadUO" alignment="0" pref="1031" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLConfTempPath" pref="505" max="32767" attributes="1"/>
-                                  <Component id="jLConfTempPath1" pref="505" max="32767" attributes="1"/>
-                              </Group>
+                              <Component id="jPUoam" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="1" attributes="1">
-                                      <Component id="jLConfTempSize" max="32767" attributes="1"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jBRemoveTempFiles" min="-2" pref="499" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jBConfBrowseTempPath" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
-                          <Component id="jChDebug" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jBDeleteIntro" alignment="0" pref="1031" max="32767" attributes="0"/>
-                          <Component id="jBDeleteNWB" alignment="0" pref="1031" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jBRenewRegistry" alignment="0" pref="708" max="32767" attributes="0"/>
+                                  <Component id="jBSetAllInstalled" alignment="0" pref="708" max="32767" attributes="0"/>
+                                  <Component id="jBDownloadUO" alignment="0" pref="708" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLConfUltimaOnlinePath" alignment="0" min="-2" max="-2" attributes="1"/>
-                                          <Component id="jLConfRunCommand" pref="260" max="32767" attributes="1"/>
+                                          <Component id="jLConfTempPath" pref="88" max="32767" attributes="1"/>
+                                          <Component id="jLConfTempPath1" max="32767" attributes="1"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" alignment="1" attributes="1">
+                                              <Component id="jLConfTempSize" max="32767" attributes="1"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jBRemoveTempFiles" min="-2" pref="499" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jTConfTempPath" min="-2" pref="525" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jBConfBrowseTempPath" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
-                                  <Component id="jLConfRunCommand1" pref="264" max="32767" attributes="1"/>
-                                  <Component id="jLConfRunCommand2" alignment="0" pref="264" max="32767" attributes="1"/>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jChDebug" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jBDeleteIntro" alignment="0" pref="708" max="32767" attributes="0"/>
+                                  <Component id="jBDeleteNWB" alignment="0" pref="708" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jTConfRunCommand2" pref="678" max="32767" attributes="1"/>
-                                          <Component id="jTConfRunCommand1" alignment="1" pref="678" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jBConfBrowseRunCommand2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jBConfBrowseRunCommand1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLConfUltimaOnlinePath" alignment="0" min="-2" max="-2" attributes="1"/>
+                                                  <Component id="jLConfRunCommand" pref="98" max="32767" attributes="1"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jLConfRunCommand1" pref="102" max="32767" attributes="1"/>
+                                          <Component id="jLConfRunCommand2" alignment="0" pref="102" max="32767" attributes="1"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="jTConfRunCommand2" pref="517" max="32767" attributes="1"/>
+                                                  <Component id="jTConfRunCommand1" alignment="1" pref="517" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jBConfBrowseRunCommand2" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jBConfBrowseRunCommand1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jTConfRunCommand" pref="517" max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jBConfBrowseRunCommand" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jTConfUltimaOnlinePath" pref="517" max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jBConfBrowseUltimaOnlinePath" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jTConfRunCommand" pref="678" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jBConfBrowseRunCommand" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jTConfUltimaOnlinePath" pref="678" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jBConfBrowseUltimaOnlinePath" min="-2" max="-2" attributes="0"/>
-                                  </Group>
                               </Group>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jBConfLoad" min="-2" pref="185" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jSeparator10" min="-2" pref="86" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                              <Component id="jSeparator9" pref="390" max="32767" attributes="0"/>
+                              <Component id="jLVersion" pref="355" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jBConfSave" min="-2" pref="160" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="620" max="-2" attributes="0"/>
-                              <Component id="jBRenewRegistry" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="447" max="32767" attributes="0"/>
-                          <Component id="jTConfTempPath1" min="-2" pref="525" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -930,6 +929,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLConfTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTConfTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jBConfBrowseTempPath" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -946,29 +946,15 @@
                       <Component id="jBSetAllInstalled" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jBRenewRegistry" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="56" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jBConfLoad" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jBConfSave" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                  <Component id="jSeparator9" min="-2" pref="10" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="jSeparator10" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jPUoam" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jBConfLoad" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jBConfSave" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLVersion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="196" max="-2" attributes="0"/>
-                          <Component id="jTConfTempPath1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="236" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -986,7 +972,9 @@
                   <ComponentRef name="jTConfUltimaOnlinePath"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Adres&#xe1;&#x159; ultimy"/>
-                <Property name="toolTipText" type="java.lang.String" value="Adres&#xe1;&#x159;, kde je nainstalovan&#xe1; ultima online. Patcher tam bude instalovat soubory pot&#x159;ebn&#xe9; pro hran&#xed; na Andarii."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UOPathTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTConfUltimaOnlinePath">
@@ -998,7 +986,9 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Adres&#xe1;&#x159;, kde je nainstalovan&#xe1; ultima online. Patcher tam bude instalovat soubory pot&#x159;ebn&#xe9; pro hran&#xed; na Andarii."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UOPathTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[20, 19]"/>
                 </Property>
@@ -1027,10 +1017,29 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="default"/>
+                  <ComponentRef name="jTConfTempPath"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Do&#x10d;asn&#xe9; &#xfa;lo&#x17e;i&#x161;t&#x11b;:"/>
-                <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="DownloadTempToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTConfTempPath">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="Form" name="background" type="property"/>
+                </Property>
+                <Property name="columns" type="int" value="30"/>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection component="Form" name="foreground" type="property"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="DownloadTempToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[200, 19]"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jBConfBrowseTempPath">
@@ -1059,7 +1068,9 @@
                   <ComponentRef name="jTConfRunCommand"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Spu&#x161;t&#x11b;n&#xfd; program 1"/>
-                <Property name="toolTipText" type="java.lang.String" value="Program, kter&#xfd; bude spu&#x161;t&#x11b;n po ukon&#x10d;en&#xed; AndariaPatcheru. Pokud nechce&#x161; spou&#x161;t&#x11b;t &#x17e;&#xe1;dn&#xfd; program, nech &#x159;&#xe1;dku pr&#xe1;zdnou."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="AutoRunToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTConfRunCommand">
@@ -1071,7 +1082,9 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Program, kter&#xfd; bude spu&#x161;t&#x11b;n po ukon&#x10d;en&#xed; AndariaPatcheru. Pokud nechce&#x161; spou&#x161;t&#x11b;t &#x17e;&#xe1;dn&#xfd; program, nech &#x159;&#xe1;dku pr&#xe1;zdnou."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="AutoRunToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[20, 19]"/>
                 </Property>
@@ -1100,7 +1113,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Na&#x10d;ti nastaven&#xed;"/>
-                <Property name="toolTipText" type="java.lang.String" value="Klikni pro na&#x10d;ten&#xed; nastaven&#xed; ze souboru s nastaven&#xed;m."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="ReadSettingsToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[300, 25]"/>
                 </Property>
@@ -1124,7 +1139,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ulo&#x17e; nastaven&#xed;"/>
-                <Property name="toolTipText" type="java.lang.String" value="Klikni pro ulo&#x17e;en&#xed; nastaven&#xed; do souboru s nastaven&#xed;m."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="SaveSettingsToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[300, 25]"/>
                 </Property>
@@ -1139,20 +1156,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBConfSaveActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JSeparator" name="jSeparator9">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[10, 30]"/>
-                </Property>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JCheckBox" name="jChDebug">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -1161,7 +1164,9 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Zobrazovat informace u&#x17e;ite&#x10d;n&#xe9; pro lad&#x11b;n&#xed; Andaria Patcheru a odstra&#x148;ov&#xe1;n&#xed; probl&#xe9;m&#x16f; (debug re&#x17e;im)"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="DebugModeToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Po za&#x161;krtnut&#xed; bude patcher zobrazovat detailn&#xed; informace o sv&#xe9; &#x10d;innosti. Pokud chcete nahl&#xe1;sit chybu, zapn&#x11b;te tuto mo&#x17e;nost a spolu s popisem chyby za&#x161;lete i v&#xfd;pis v okn&#x11b; Logu."/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
@@ -1183,13 +1188,15 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Nastavit v&#x161;echny patche jako nainstalovan&#xe9;"/>
-                <Property name="toolTipText" type="java.lang.String" value="Nastav&#xed; v&#x161;echy patche v seznamu patch&#x16f; jako nainstalovan&#xe9;. Pou&#x17e;ij, pokud jsi spustil AndariaPatcher poprv&#xe9; a m&#xe1;&#x161; ji&#x17e; Ultimu pln&#x11b; opatchovanou souborama za shardu Andarie."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="SetAllInstalledToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBSetAllInstalledActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="jLVersion">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="background" type="property"/>
@@ -1197,20 +1204,10 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Verze programu: 1.6beta1"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JSeparator" name="jSeparator10">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection component="Form" name="background" type="property"/>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[10, 30]"/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="VersionToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
             </Component>
@@ -1223,7 +1220,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Odstranit soubor desktop.nwb (pou&#x17e;ij, pokud m&#xe1;&#x161; probl&#xe9;m se spu&#x161;t&#x11b;n&#xed;m UO)"/>
-                <Property name="toolTipText" type="java.lang.String" value="Opravuje chybu spou&#x161;t&#x11b;n&#xed; ultimy online, p&#x159;i kter&#xe9; hra spadne hned po spu&#x161;t&#x11b;n&#xed;."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="RemoveDesktipNwbToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDeleteNWBActionPerformed"/>
@@ -1238,7 +1237,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Odstranit intro hry (&#xfa;vodn&#xed; videa)"/>
-                <Property name="toolTipText" type="java.lang.String" value="Sma&#x17e;e &#xfa;vodn&#xed; videa hry. T&#xed;m se zrychl&#xed; start a ud&#x11b;l&#xe1; tro&#x161;ku m&#xed;sta na disku."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="RemoveIntroToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDeleteIntroActionPerformed"/>
@@ -1253,7 +1254,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Obnovit registry windows (vybere&#x161; adres&#xe1;&#x159; ve kter&#xe9;m je ultima nainstalovan&#xe1;)"/>
-                <Property name="toolTipText" type="java.lang.String" value="Opravuje chybu spou&#x161;t&#x11b;n&#xed; ultimy online, p&#x159;i kter&#xe9; hra spadne hned po spu&#x161;t&#x11b;n&#xed;."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="RenewRegistryToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBRenewRegistryActionPerformed"/>
@@ -1271,7 +1274,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Smazat z do&#x10d;asn&#xe9;ho &#xfa;lo&#x17e;i&#x161;t&#x11b; v&#x161;echny sta&#x17e;en&#xe9; soubory."/>
-                <Property name="toolTipText" type="java.lang.String" value="Opravuje chybu spou&#x161;t&#x11b;n&#xed; ultimy online, p&#x159;i kter&#xe9; hra spadne hned po spu&#x161;t&#x11b;n&#xed;."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="DownloadTempEraseToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Pom&#x16f;&#x17e;e uvolnit n&#x11b;jak&#xe9; to m&#xed;sto na disku. "/>
@@ -1292,10 +1297,12 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="default"/>
+                  <ComponentRef name="jTConfTempPath"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="&#xda;lo&#x17e;i&#x161;t&#x11b; obsahuje:"/>
-                <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="DownloadTempSizeToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLConfTempSize">
@@ -1307,10 +1314,12 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="default"/>
+                  <ComponentRef name="jTConfTempPath"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="0kB"/>
-                <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="DownloadTempSizeToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -1325,7 +1334,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Instalovat Ultimu Online Monday&apos;s Legacy pro shard Andaria.net jedn&#xed;m klikem"/>
-                <Property name="toolTipText" type="java.lang.String" value="Opravuje chybu spou&#x161;t&#x11b;n&#xed; ultimy online, p&#x159;i kter&#xe9; hra spadne hned po spu&#x161;t&#x11b;n&#xed;."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="InstallUomlToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Nainstaluje Ultimu Online a v&#x161;e pot&#x159;ebn&#xe9; pro hran&#xed; na Shardu Andaria.net do adres&#xe1;&#x159;e, kter&#xfd; jsi zvolil p&#x159;i spu&#x161;t&#x11b;n&#xed; AndariaPatcheru. Slo&#x17e;ku m&#x16f;&#x17e;e&#x161; zm&#x11b;nit zde v nastaven&#xed; - polo&#x17e;ka &quot;Adres&#xe1;&#x159; ultimy&quot;."/>
@@ -1346,7 +1357,9 @@
                   <ComponentRef name="jTConfRunCommand"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Spu&#x161;t&#x11b;n&#xfd; program 2"/>
-                <Property name="toolTipText" type="java.lang.String" value="Program, kter&#xfd; bude spu&#x161;t&#x11b;n po ukon&#x10d;en&#xed; AndariaPatcheru. Pokud nechce&#x161; spou&#x161;t&#x11b;t &#x17e;&#xe1;dn&#xfd; program, nech &#x159;&#xe1;dku pr&#xe1;zdnou."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="AutoRunToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTConfRunCommand1">
@@ -1358,7 +1371,9 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Program, kter&#xfd; bude spu&#x161;t&#x11b;n po ukon&#x10d;en&#xed; AndariaPatcheru. Pokud nechce&#x161; spou&#x161;t&#x11b;t &#x17e;&#xe1;dn&#xfd; program, nech &#x159;&#xe1;dku pr&#xe1;zdnou."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="AutoRunToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[20, 19]"/>
                 </Property>
@@ -1390,7 +1405,9 @@
                   <ComponentRef name="jTConfRunCommand"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Spu&#x161;t&#x11b;n&#xfd; program 3"/>
-                <Property name="toolTipText" type="java.lang.String" value="Program, kter&#xfd; bude spu&#x161;t&#x11b;n po ukon&#x10d;en&#xed; AndariaPatcheru. Pokud nechce&#x161; spou&#x161;t&#x11b;t &#x17e;&#xe1;dn&#xfd; program, nech &#x159;&#xe1;dku pr&#xe1;zdnou."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="AutoRunToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTConfRunCommand2">
@@ -1402,7 +1419,9 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Program, kter&#xfd; bude spu&#x161;t&#x11b;n po ukon&#x10d;en&#xed; AndariaPatcheru. Pokud nechce&#x161; spou&#x161;t&#x11b;t &#x17e;&#xe1;dn&#xfd; program, nech &#x159;&#xe1;dku pr&#xe1;zdnou."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="AutoRunToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[20, 19]"/>
                 </Property>
@@ -1422,21 +1441,225 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBConfBrowseRunCommand2ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTConfTempPath1">
+            <Container class="javax.swing.JPanel" name="jPUoam">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="background" type="property"/>
                 </Property>
-                <Property name="columns" type="int" value="30"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Nastaven&#xed; UOAM">
+                      <Connection PropertyName="color" component="Form" name="foreground" type="property"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="M&#xed;sto kam bude AndariaPatcher stahovat soubory z internetu. Je tak&#xe9; mo&#x17e;n&#xe9; tam nahr&#xe1;t ji&#x17e; sta&#x17e;en&#xe9; soubory, aby je AndariaPatcher nemusel stahovat."/>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[200, 19]"/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UoamTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
-            </Component>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="jLConfUoamServer" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTConfUoamServer" min="-2" pref="144" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLConfUoamPort" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTConfUoamPort" pref="70" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLConfUoamName" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTConfUoamName" pref="169" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLConfUoamPassword" min="-2" max="-2" attributes="1"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTpwConfUoamPassword" min="-2" pref="122" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLConfUoamServer" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTConfUoamServer" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTConfUoamPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLConfUoamName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLConfUoamPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTConfUoamName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLConfUoamPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTpwConfUoamPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLConfUoamServer">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                      <ComponentRef name="jTConfUltimaOnlinePath"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Server:"/>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jTConfUoamServer" name="toolTipText" type="property"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLConfUoamPort">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                      <ComponentRef name="jTConfUltimaOnlinePath"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Port:"/>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jTConfUoamPort" name="toolTipText" type="property"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLConfUoamName">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                      <ComponentRef name="jTConfUltimaOnlinePath"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Jm&#xe9;no:"/>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jTConfUoamName" name="toolTipText" type="property"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLConfUoamPassword">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                      <ComponentRef name="jTConfUltimaOnlinePath"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Heslo:"/>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UoamPasswordTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTConfUoamServer">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="columns" type="int" value="30"/>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UoamServerTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[200, 19]"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTConfUoamPort">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="columns" type="int" value="30"/>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UoamPortTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[200, 19]"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="jTConfUoamName">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="columns" type="int" value="30"/>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UoamNameTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[200, 19]"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JPasswordField" name="jTpwConfUoamPassword">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="background" type="property"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="Form" name="foreground" type="property"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="jPasswordField1"/>
+                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="UoamPasswordTootlTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPUoam" name="enabled" type="property"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
       </SubComponents>

@@ -266,10 +266,11 @@ public class FrontEnd extends JFrame {
                 error = true;
             }
         }
-        if (error == false)
+        if (error == false) {
             System.exit(0);
-        else
+        } else {
             log.addErr("Při spouštění některého z externích programů došlo k chybě. Oprav prosím nastavení spouštěných programů nebo zavři patcher \"křížkem\".");
+        }
     }
 
     /***************************************************************************
@@ -450,7 +451,6 @@ public class FrontEnd extends JFrame {
         jTConfUltimaOnlinePath = new javax.swing.JTextField();
         jBConfBrowseUltimaOnlinePath = new javax.swing.JButton();
         jLConfTempPath = new javax.swing.JLabel();
-        jTConfTempPath = new javax.swing.JTextField();
         jBConfBrowseTempPath = new javax.swing.JButton();
         jLConfRunCommand = new javax.swing.JLabel();
         jTConfRunCommand = new javax.swing.JTextField();
@@ -475,11 +475,12 @@ public class FrontEnd extends JFrame {
         jLConfRunCommand2 = new javax.swing.JLabel();
         jTConfRunCommand2 = new javax.swing.JTextField();
         jBConfBrowseRunCommand2 = new javax.swing.JButton();
+        jTConfTempPath1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
         setBackground(java.awt.Color.white);
-        setFont(new java.awt.Font("Verdana", 1, 12));
+        setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         setForeground(new java.awt.Color(163, 125, 86));
         setIconImage(getIcon("andaria.png"));
         setLocationByPlatform(true);
@@ -862,15 +863,8 @@ public class FrontEnd extends JFrame {
 
         jLConfTempPath.setBackground(getBackground());
         jLConfTempPath.setForeground(getForeground());
-        jLConfTempPath.setLabelFor(jTConfTempPath);
         jLConfTempPath.setText("Dočasné úložiště:");
         jLConfTempPath.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
-
-        jTConfTempPath.setBackground(getBackground());
-        jTConfTempPath.setColumns(30);
-        jTConfTempPath.setForeground(getForeground());
-        jTConfTempPath.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
-        jTConfTempPath.setMinimumSize(new java.awt.Dimension(200, 19));
 
         jBConfBrowseTempPath.setBackground(getBackground());
         jBConfBrowseTempPath.setForeground(getForeground());
@@ -1016,13 +1010,11 @@ public class FrontEnd extends JFrame {
 
         jLConfTempPath1.setBackground(getBackground());
         jLConfTempPath1.setForeground(getForeground());
-        jLConfTempPath1.setLabelFor(jTConfTempPath);
         jLConfTempPath1.setText("Úložiště obsahuje:");
         jLConfTempPath1.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
 
         jLConfTempSize.setBackground(getBackground());
         jLConfTempSize.setForeground(getForeground());
-        jLConfTempSize.setLabelFor(jTConfTempPath);
         jLConfTempSize.setText("0kB");
         jLConfTempSize.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
 
@@ -1078,6 +1070,12 @@ public class FrontEnd extends JFrame {
             }
         });
 
+        jTConfTempPath1.setBackground(getBackground());
+        jTConfTempPath1.setColumns(30);
+        jTConfTempPath1.setForeground(getForeground());
+        jTConfTempPath1.setToolTipText("Místo kam bude AndariaPatcher stahovat soubory z internetu. Je také možné tam nahrát již stažené soubory, aby je AndariaPatcher nemusel stahovat.");
+        jTConfTempPath1.setMinimumSize(new java.awt.Dimension(200, 19));
+
         org.jdesktop.layout.GroupLayout jPSettingsTabLayout = new org.jdesktop.layout.GroupLayout(jPSettingsTab);
         jPSettingsTab.setLayout(jPSettingsTabLayout);
         jPSettingsTabLayout.setHorizontalGroup(
@@ -1085,63 +1083,67 @@ public class FrontEnd extends JFrame {
             .add(jPSettingsTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(jBDownloadUO, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(jPSettingsTabLayout.createSequentialGroup()
-                        .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jBSetAllInstalled, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
+                    .add(jBDownloadUO, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
                     .add(jPSettingsTabLayout.createSequentialGroup()
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                            .add(jLConfTempPath1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .add(jLConfTempPath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                            .add(jLConfTempPath1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
                                 .add(jLConfTempSize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jBRemoveTempFiles, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 499, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 525, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfBrowseTempPath))))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jBConfBrowseTempPath)))
                     .add(jChDebug)
-                    .add(jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
-                    .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                    .add(jBDeleteIntro, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
+                    .add(jBDeleteNWB, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1031, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPSettingsTabLayout.createSequentialGroup()
                                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jLConfUltimaOnlinePath)
-                                    .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                                    .add(jLConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED))
-                            .add(jLConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                            .add(jLConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                            .add(jLConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                            .add(jLConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
                         .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
                                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                    .add(jTConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
-                                    .add(jTConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                                    .add(jTConfRunCommand2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+                                    .add(jTConfRunCommand1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jBConfBrowseRunCommand2)
                                     .add(jBConfBrowseRunCommand1)))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                                .add(jTConfRunCommand, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jBConfBrowseRunCommand))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
-                                .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                                .add(jTConfUltimaOnlinePath, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jBConfBrowseUltimaOnlinePath)))))
+                                .add(jBConfBrowseUltimaOnlinePath))))
+                    .add(jPSettingsTabLayout.createSequentialGroup()
+                        .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 185, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel1)
+                        .add(67, 67, 67)
+                        .add(jSeparator9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jBConfSave, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPSettingsTabLayout.createSequentialGroup()
+                        .add(620, 620, 620)
+                        .add(jBRenewRegistry, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(org.jdesktop.layout.GroupLayout.TRAILING, jPSettingsTabLayout.createSequentialGroup()
+                    .addContainerGap(447, Short.MAX_VALUE)
+                    .add(jTConfTempPath1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 525, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(79, 79, 79)))
         );
         jPSettingsTabLayout.setVerticalGroup(
             jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1177,7 +1179,6 @@ public class FrontEnd extends JFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLConfTempPath)
-                    .add(jTConfTempPath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jBConfBrowseTempPath))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -1192,7 +1193,7 @@ public class FrontEnd extends JFrame {
                 .add(jBSetAllInstalled)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBRenewRegistry)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 56, Short.MAX_VALUE)
                 .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jBConfLoad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -1203,7 +1204,12 @@ public class FrontEnd extends JFrame {
                             .add(5, 5, 5)
                             .add(jSeparator9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                     .add(jSeparator10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .add(21, 21, 21))
+            .add(jPSettingsTabLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPSettingsTabLayout.createSequentialGroup()
+                    .add(196, 196, 196)
+                    .add(jTConfTempPath1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(236, Short.MAX_VALUE)))
         );
 
         jBRemoveTempFiles.getAccessibleContext().setAccessibleDescription("Pomůže uvolnit nějaké to místo na disku. ");
@@ -1337,8 +1343,8 @@ public class FrontEnd extends JFrame {
                 "\n\nPro tuto akci budeš potřebovat cca 700MB místa na disku kde jsou Windows" +
                 "\na cca 1,7GB na mítě kam plánuješ uo nainstalovat. Tedy celkem počítej 2,4GB." +
                 "\n(těch 700 pak můžeš smazat v nastavení AndariaPatcheru).", "Velmi zásadní otázka...", JOptionPane.YES_NO_OPTION)) {
-        Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
-        installUO();
+            Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_UPDATE);
+            installUO();
         }
     }//GEN-LAST:event_jBDownloadUOActionPerformed
 
@@ -1357,8 +1363,14 @@ public class FrontEnd extends JFrame {
     }//GEN-LAST:event_jBConfBrowseRunCommand2ActionPerformed
 
     private void jBPachAndPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPachAndPlayActionPerformed
-        Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_CLOSE);
-        installPatches();
+        if (PatchList.getInstance().getInstallCount() > 0) {
+            if (0 == JOptionPane.showConfirmDialog(null, "Jsou k dispozici nové patche, chceš je nainstalovat ?", "Novinky na Andarii.", JOptionPane.YES_NO_OPTION)) {
+                Settings.setAutoInstall(Settings.AUTO_LEVELS.AUTO_CLOSE);
+                installPatches();
+            }
+        } else {
+            closeMe();
+        }
 }//GEN-LAST:event_jBPachAndPlayActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBCancel;
@@ -1425,7 +1437,7 @@ public class FrontEnd extends JFrame {
     private javax.swing.JTextField jTConfRunCommand;
     private javax.swing.JTextField jTConfRunCommand1;
     private javax.swing.JTextField jTConfRunCommand2;
-    private javax.swing.JTextField jTConfTempPath;
+    private javax.swing.JTextField jTConfTempPath1;
     private javax.swing.JTextField jTConfUltimaOnlinePath;
     private javax.swing.JTextArea jTLog;
     private javax.swing.JTabbedPane jTPMain;

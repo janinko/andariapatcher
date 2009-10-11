@@ -493,7 +493,7 @@ public class FrontEnd extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
         setBackground(java.awt.Color.white);
-        setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        setFont(new java.awt.Font("Verdana", 1, 12));
         setForeground(new java.awt.Color(163, 125, 86));
         setIconImage(getIcon("andaria.png"));
         setLocationByPlatform(true);
@@ -504,7 +504,7 @@ public class FrontEnd extends JFrame {
         jTPMain.setBackground(getBackground());
         jTPMain.setForeground(getForeground());
         jTPMain.setToolTipText("");
-        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14));
         jTPMain.setMinimumSize(new java.awt.Dimension(727, 481));
         jTPMain.setName(""); // NOI18N
         jTPMain.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -972,7 +972,7 @@ public class FrontEnd extends JFrame {
         jLVersion.setBackground(getBackground());
         jLVersion.setForeground(getForeground());
         jLVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLVersion.setText("Verze programu: 1.6beta1");
+        jLVersion.setText("Verze programu: 1.6beta2");
         jLVersion.setToolTipText(bundle.getString("VersionToolTip")); // NOI18N
 
         jBDeleteNWB.setBackground(getBackground());

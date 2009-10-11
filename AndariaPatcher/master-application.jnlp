@@ -7,7 +7,12 @@
         <description kind="short">${APPLICATION.DESC.SHORT}</description>
 <!--${JNLP.ICONS}-->
 <!--${JNLP.OFFLINE.ALLOWED}-->
+        <shortcut online="true">
+            <desktop />
+            <menu submenu="Andaria"/>
+        </shortcut>
     </information>
+    <update check="timeout" policy="always"/>
 <!--${JNLP.SECURITY}-->
     <resources>
 <!--${JNLP.RESOURCES.RUNTIME}-->

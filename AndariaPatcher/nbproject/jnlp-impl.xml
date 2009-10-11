@@ -77,7 +77,12 @@ made subject to such option by the copyright holder.
         <homepage href="$${APPLICATION.HOMEPAGE}"/>
 <!--$${JNLP.ICONS}-->
 <!--$${JNLP.OFFLINE.ALLOWED}-->
+        <shortcut online="true">
+            <desktop />
+            <menu submenu="Andaria"/>
+        </shortcut>
     </information>
+    <update check="timeout" policy="always"/>
 <!--$${JNLP.SECURITY}-->
     <resources>
 <!--$${JNLP.RESOURCES.RUNTIME}-->

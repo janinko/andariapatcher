@@ -133,7 +133,9 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Opatchuj (je-li co) a spus&#x165; hru"/>
-                <Property name="toolTipText" type="java.lang.String" value="Nastav&#xed; v&#x161;echy patche v seznamu patch&#x16f; jako nainstalovan&#xe9;. Pou&#x17e;ij, pokud jsi spustil AndariaPatcher poprv&#xe9; a m&#xe1;&#x161; ji&#x17e; Ultimu pln&#x11b; opatchovanou souborama za shardu Andarie."/>
+                <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="AutoRunToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                </Property>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
@@ -1205,7 +1207,7 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Verze programu: 1.6beta2"/>
+                <Property name="text" type="java.lang.String" value="Verze programu: 1.6beta3"/>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="VersionToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>

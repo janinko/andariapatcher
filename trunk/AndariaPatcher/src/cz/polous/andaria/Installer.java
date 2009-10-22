@@ -131,7 +131,7 @@ class Installer extends PatcherQueue {
         // and  35% for installing patches expect for uoml file.
         // ProgressBars - for single file
         resetProgressBar(BARS.SINGLE, patchItem.getSize());
-        if (patchItem.getName().equals(settings.getUomlPatchItemName())) {
+        if (patchItem.getName().equals(Settings.CONST.uomlPatchItemName)) {
            // extractProgressPart = patchItem.getSize();
             // - if exist start_g.bat, execute it
             f = new File(settings.getOs().getConfigPath());
@@ -209,7 +209,7 @@ class Installer extends PatcherQueue {
                 setSingleProgressPercents(96);
             }
 
-            if (patchItem.getName().equals(settings.getUomlPatchItemName())) {
+            if (patchItem.getName().equals(Settings.CONST.uomlPatchItemName)) {
                 if (settings.getOs().getClass() == WindowsOS.class) {
                     WindowsOS os = (WindowsOS) settings.getOs();
                     os.generateRegistryData(uopath);
@@ -220,15 +220,15 @@ class Installer extends PatcherQueue {
                 FrontEnd.getInstance().saveSettings();
                 PatchList.getInstance().reload();
             }
-            if (patchItem.getFileName().equals(settings.getRazorPatchFileName())) {
-                Settings.getInstance().addAutorun("razor", uopath + File.separator + settings.getRazorPath(), "client");
+            if (patchItem.getFileName().equals(Settings.CONST.razorPatchFileName)) {
+                Settings.getInstance().addAutorun("razor", uopath + File.separator + Settings.CONST.razorPath, "client");
                 if (settings.getOs().getClass() == WindowsOS.class) {
                     WindowsOS os = (WindowsOS) settings.getOs();
                     os.generateRazorData(uopath);
                 }
             }
-            if (patchItem.getFileName().equals(settings.getUoamPatchFileName())) {
-                Settings.getInstance().addAutorun("uoam", uopath + File.separator + settings.getUoamPath());            
+            if (patchItem.getFileName().equals(Settings.CONST.uoamPatchFileName)) {
+                Settings.getInstance().addAutorun("uoam", uopath + File.separator + Settings.CONST.uoamPath);
             }
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");

@@ -208,9 +208,7 @@ public class FrontEnd extends JFrame {
         InputStream in = null;
 
         try {
-            String uri = Settings.getInstance().getCounter_url();
-
-            URL url = new URL(uri);
+            URL url = new URL(Settings.CONST.counter_url);
             conn = url.openConnection();
             in = conn.getInputStream();
             log.addDebug("Zavolal jsem počítadlo spuštění.");
@@ -493,7 +491,7 @@ public class FrontEnd extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
         setBackground(java.awt.Color.white);
-        setFont(new java.awt.Font("Verdana", 1, 12));
+        setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         setForeground(new java.awt.Color(163, 125, 86));
         setIconImage(getIcon("andaria.png"));
         setLocationByPlatform(true);
@@ -527,7 +525,8 @@ public class FrontEnd extends JFrame {
         jBPachAndPlay.setBackground(new java.awt.Color(204, 255, 204));
         jBPachAndPlay.setForeground(getForeground());
         jBPachAndPlay.setText("Opatchuj (je-li co) a spusť hru");
-        jBPachAndPlay.setToolTipText("Nastaví všechy patche v seznamu patchů jako nainstalované. Použij, pokud jsi spustil AndariaPatcher poprvé a máš již Ultimu plně opatchovanou souborama za shardu Andarie.");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("cz/polous/andaria/FrontEnd"); // NOI18N
+        jBPachAndPlay.setToolTipText(bundle.getString("AutoRunToolTip")); // NOI18N
         jBPachAndPlay.setFocusable(false);
         jBPachAndPlay.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBPachAndPlay.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -857,7 +856,6 @@ public class FrontEnd extends JFrame {
         jLConfUltimaOnlinePath.setForeground(getForeground());
         jLConfUltimaOnlinePath.setLabelFor(jTConfUltimaOnlinePath);
         jLConfUltimaOnlinePath.setText("Adresář ultimy");
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("cz/polous/andaria/FrontEnd"); // NOI18N
         jLConfUltimaOnlinePath.setToolTipText(bundle.getString("UOPathTootlTip")); // NOI18N
 
         jTConfUltimaOnlinePath.setBackground(getBackground());
@@ -972,7 +970,7 @@ public class FrontEnd extends JFrame {
         jLVersion.setBackground(getBackground());
         jLVersion.setForeground(getForeground());
         jLVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLVersion.setText("Verze programu: 1.6beta2");
+        jLVersion.setText("Verze programu: 1.6beta3");
         jLVersion.setToolTipText(bundle.getString("VersionToolTip")); // NOI18N
 
         jBDeleteNWB.setBackground(getBackground());

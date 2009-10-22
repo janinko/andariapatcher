@@ -29,25 +29,31 @@ class Settings {
     private Element settings; // settings of patcher
     private Element patches; // content of local stored patchlist
     private OperatingSystem os;
-    /**
-     * Adresy URL
-     */
     private final String local_storage = System.getProperty("java.io.tmpdir") + File.separator + "AndariaPatcher";
-    private final String remote_storage = "http://space.andaria.net/data/andaria_soubory_7zip";
-    private final String about_url = "http://patcher.andaria.net/java.php";
-    private final String news_url = "http://www.andaria.net/novinky_updater.php";
-    private final String debug_log = "0";
-    private final String counter_url = "http://patcher.andaria.net/counter.php";
-    private final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
-    private final String uomlRemotePath = "http://patcher.andaria.net/7z/";
-    private final String uomlPatchItemName = "UOML";
-    private final String razorPatchFileName = "razor.7z";
-    private final String uoamPatchFileName = "uoam.7z";
-    private final String razorPath = "razor\\razor.exe";
-    private final String uoamPath = "uoam\\uoam.exe";
-    private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
-    //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
-    //private final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
+
+    class CONST {
+
+        /**
+         * Adresy URL
+         */
+        public static final String remote_storage = "http://space.andaria.net/data/andaria_soubory_7zip";
+        public static final String about_url = "http://patcher.andaria.net/java.php";
+        public static final String news_url = "http://www.andaria.net/novinky_updater.php";
+        public static final String debug_log = "0";
+        public static final String counter_url = "http://patcher.andaria.net/counter.php";
+        public static final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
+        public static final String uomlRemotePath = "http://patcher.andaria.net/7z/";
+        public static final String razorPatchFileName = "razor.7z";
+        public static final String uoamPatchFileName = "uoam.7z";
+        public static final String razorPath = "razor\\razor.exe";
+        public static final String uoamPath = "uoam\\uoam.exe";
+        public static final String uomlPatchItemName = "UOML";
+        public static final String dotnetPatchItemName = "DotNetFx";
+    }
+    public static final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", CONST.uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
+    //public staticfinal String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
+    //public staticfinal String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
+    public static final String[] dotnetPatchItem = {"dotNetFx35setup.exe", CONST.dotnetPatchItemName, "1.10.2009, 12:00", "269f314b87e6222a20e5f745b6b89783", "0", "2869264", "3.0", "Oficialni instalacni soubor pro DotNetFx 3.5"};
     private static int autoInstall = AUTO_LEVELS.MANUAL;
     private static Log log;
     private String alternate_storage;
@@ -65,25 +71,6 @@ class Settings {
         return os;
     }
 
-    /*
-     * Get URL's method
-     */
-    public String getCounter_url() {
-        return counter_url;
-    }
-
-    public String getAbout_url() {
-        return about_url;
-    }
-
-    public String getDebug_log() {
-        return debug_log;
-    }
-
-    public String getFilelist_url() {
-        return filelist_url;
-    }
-
     public String getLocal_storage() {
         // ljk upravy 09.09.07
         if (alternate_storage != null) {
@@ -91,22 +78,6 @@ class Settings {
         } else {
             return local_storage;
         }
-    }
-
-    public String getRazorPath() {
-        return razorPath;
-    }
-
-    public String getUoamPath() {
-        return uoamPath;
-    }
-
-    public String getRazorPatchFileName() {
-        return razorPatchFileName;
-    }
-
-    public String getUoamPatchFileName() {
-        return uoamPatchFileName;
     }
 
     public static int getAutoInstall() {
@@ -117,37 +88,29 @@ class Settings {
         Settings.autoInstall = autoInstall;
     }
 
-    public String getNews_url() {
-        return news_url;
-    }
-
-    public String getRemote_storage() {
-        return remote_storage;
-    }
-
     public void setAlternate_storage(String storage) {
         alternate_storage = storage;
     }
 
     public String getUomlParams() {
         log.addDebug("-q -c " + getValue(VALUES.UOAM_SERVER) +
-                    "-p " + getValue(VALUES.UOAM_PORT) +
-                    "-n " + getValue(VALUES.UOAM_NAME) +
-                    "-pw " + getValue(VALUES.UOAM_PASSWORD));
-        
+                "-p " + getValue(VALUES.UOAM_PORT) +
+                "-n " + getValue(VALUES.UOAM_NAME) +
+                "-pw " + getValue(VALUES.UOAM_PASSWORD));
+
         if (getValue(VALUES.UOAM_SERVER).isEmpty() ||
                 getValue(VALUES.UOAM_PORT).isEmpty() ||
                 getValue(VALUES.UOAM_NAME).isEmpty() ||
-                getValue(VALUES.UOAM_PASSWORD).isEmpty() )
-
+                getValue(VALUES.UOAM_PASSWORD).isEmpty()) {
             return " -q ";
-        else
+        } else {
             return (" -q -c " + getValue(VALUES.UOAM_SERVER) +
                     " -p " + getValue(VALUES.UOAM_PORT) +
                     " -n " + getValue(VALUES.UOAM_NAME) +
-                    " -pw " + getValue(VALUES.UOAM_PASSWORD)
-                   );
+                    " -pw " + getValue(VALUES.UOAM_PASSWORD));
+        }
     }
+
     /***************************************************************************
      * Get configuration value specified by config name.
      * @param item  requested settings item sub-element
@@ -337,6 +300,7 @@ class Settings {
     }
 
     class VALUES {
+
         public static final int RUN_COMMAND = 0;
         public static final int RUN_COMMAND1 = 1;
         public static final int ULTIMA_ONINE_PATH = 2;
@@ -351,7 +315,6 @@ class Settings {
         public static final int UOAM_PORT = 11;
         public static final int UOAM_PASSWORD = 12;
         public static final int UOAM_NAME = 13;
-
     }
     private static final String[] settingList = {"run_command", "run_command1", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url", "run_command2", "uoam_server", "uoam_port", "uoam_password", "uoam_name"};
 
@@ -366,15 +329,15 @@ class Settings {
             case VALUES.LOCAL_STORAGE:
                 return getLocal_storage();
             case VALUES.REMOTE_STORAGE:
-                return getRemote_storage();
+                return CONST.remote_storage;
             case VALUES.ABOUT_URL:
-                return getAbout_url();
+                return CONST.about_url;
             case VALUES.NEWS_URL:
-                return getNews_url();
+                return CONST.news_url;
             case VALUES.DEBUG_MODE:
-                return getDebug_log();
+                return CONST.debug_log;
             case VALUES.FILE_LIST_URL:
-                return getFilelist_url();
+                return CONST.filelist_url;
             case VALUES.RUN_COMMAND2:
                 return os.getDefaultRunCommand2();
             case VALUES.UOAM_SERVER:
@@ -388,17 +351,8 @@ class Settings {
         }
     }
 
-    public boolean RenewWindowsRegistry() {
-
-        return true;
-    }
-
     public PatchItem getUomlPatchItem() {
         return new PatchItem(uomlPatchItem);
-    }
-
-    public String getUomlPatchItemName() {
-        return uomlPatchItemName;
     }
     /*
      * Funkce urcena ke zruseni ve verzi 1.7 ci pozdeji.
@@ -432,10 +386,6 @@ class Settings {
                 }
             }
         }
-    }
-
-    public String getUomlRemotePath() {
-        return uomlRemotePath;
     }
 
     public void updateTempSize() {

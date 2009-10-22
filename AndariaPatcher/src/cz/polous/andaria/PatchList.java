@@ -85,11 +85,13 @@ class PatchList {
 
             @Override
             public void run() {
+                String uri = Settings.getInstance().getValue(Settings.VALUES.FILE_LIST_URL);
                 try {
                     log.addLine("Zacinam stahovat seznam patchu z internetu.");
                     FrontEnd.getInstance().setJBPatchListEnabled(false);
                     FrontEnd.getInstance().setJBInstall(false);
-                    URL url = new URL(Settings.getInstance().getValue(Settings.VALUES.FILE_LIST_URL));
+
+                    URL url = new URL(uri);
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     Reader reader = new InputStreamReader(in, "UTF-8");
@@ -120,10 +122,14 @@ class PatchList {
                     }
                     jPPatchList.setLayout(new GridLayout(patchData.size(), 0));
                     reader.close();
-                    log.addLine("Seznam patchu byl nahran z internetu.");
+                    if (patchData.size() == 0) {
+                        log.addErr("Z nějakého důvodu se nepodařilo nahrát seznam patchů z internetu. Velmi častou příčinou býva nastaveni firewallu či antiviru. Raději to překontroluj. Možností je také je nedostupnost serveru Andaria. Zkus stahnout soubor: " + uri + ". Pokud seš si jistý, že je vše v pořádku, napiš o pomoc na fórum Andarie.");
+                    } else {
+                        log.addLine("Seznam patchu byl nahran z internetu.");
+                    }
                 } catch (IOException e) {
+                    log.addErr("Z nějakého důvodu se nepodařilo nahrát seznam patchů z internetu. Velmi častou příčinou býva nastaveni firewallu či antiviru. Raději to překontroluj. Možností je také je nedostupnost serveru Andaria. Zkus stahnout soubor: " + uri + ". Pokud seš si jistý, že je vše v pořádku, napiš o pomoc na fórum Andarie.");
                     log.addEx(e);
-                    log.addErr("Nejspíš se nepodařilo připojit k webovému serveru http://www.andaria.net !");
                 } finally {
                     FrontEnd.getInstance().setJBPatchListEnabled(true);
                     FrontEnd.getInstance().setJBInstall(true);

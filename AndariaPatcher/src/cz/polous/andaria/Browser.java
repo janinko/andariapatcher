@@ -14,12 +14,14 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLFrameHyperlinkEvent;
 import org.lobobrowser.html.FormInput;
 import org.lobobrowser.html.HtmlRendererContext;
+import org.lobobrowser.html.UserAgentContext;
 import org.lobobrowser.html.gui.HtmlPanel;
 import org.lobobrowser.html.gui.SelectionChangeEvent;
 import org.lobobrowser.html.gui.SelectionChangeListener;
 import org.lobobrowser.html.parser.DocumentBuilderImpl;
 import org.lobobrowser.html.parser.InputSourceImpl;
 import org.lobobrowser.html.test.SimpleHtmlRendererContext;
+import org.lobobrowser.html.test.SimpleUserAgentContext;
 import org.xml.sax.InputSource;
 
 /**
@@ -66,6 +68,7 @@ class Browser {
      */
     @Deprecated
     private class hyperlink implements HyperlinkListener {
+
         @Override
         public void hyperlinkUpdate(HyperlinkEvent e) {
             if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
@@ -85,6 +88,35 @@ class Browser {
         }
     }
 
+    private static class LocalUserAgentContext
+            extends SimpleUserAgentContext {
+        // Override methods from SimpleUserAgentContext to
+        // provide more accurate information about application.
+
+        public LocalUserAgentContext() {
+        }
+
+        @Override
+        public String getAppMinorVersion() {
+            return "6";
+        }
+
+        @Override
+        public String getAppName() {
+            return "AndariaPatcher";
+        }
+
+        @Override
+        public String getAppVersion() {
+            return "1";
+        }
+
+        @Override
+        public String getUserAgent() {
+            return "Mozilla/4.0 (compatible;) AndariaPatcher/cobra";
+        }
+    }
+
     /**
      * @param uri Url to display
      */
@@ -95,7 +127,8 @@ class Browser {
         Reader reader = new InputStreamReader(in, "windows-1250");
         InputSource is = new InputSourceImpl(reader, uri);
 
-        HtmlRendererContext rendererContext = new LocalHtmlRendererContext(htmlPanel);
+        UserAgentContext ucontext = new LocalUserAgentContext();
+        HtmlRendererContext rendererContext = new LocalHtmlRendererContext(htmlPanel, ucontext);
         htmlPanel.setPreferredSize(new Dimension(400, 400));
 
         DocumentBuilderImpl builder = new DocumentBuilderImpl(rendererContext.getUserAgentContext(), rendererContext);
@@ -115,6 +148,11 @@ class Browser {
         public LocalHtmlRendererContext(HtmlPanel contextComponent) {
             super(contextComponent);
             this.htmlPanel = contextComponent;
+        }
+
+        public LocalHtmlRendererContext(HtmlPanel contextComponent,
+                UserAgentContext ucontext) {
+            super(contextComponent, ucontext);
         }
 
         @Override

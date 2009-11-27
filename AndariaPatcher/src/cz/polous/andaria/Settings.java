@@ -50,7 +50,8 @@ class Settings {
         public static final String uomlPatchItemName = "UOML";
         public static final String dotnetPatchItemName = "DotNetFx";
     }
-    public static final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", CONST.uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
+    public static final String[] uomlPatchItem = {"uoml_win32_6-0-14-3_Andaria.7z", CONST.uomlPatchItemName, "8.9.2009, 18:51", "428174eb1856187be42b4e4630b9bace", "0", "556111101", "6.0.14.2", "Předinstalovaná ultima online."};
+    //public static final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", CONST.uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
     //public staticfinal String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
     //public staticfinal String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
     public static final String[] dotnetPatchItem = {"dotNetFx35setup.exe", CONST.dotnetPatchItemName, "1.10.2009, 12:00", "269f314b87e6222a20e5f745b6b89783", "0", "2869264", "3.0", "Oficialni instalacni soubor pro DotNetFx 3.5"};

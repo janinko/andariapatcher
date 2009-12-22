@@ -97,7 +97,7 @@ class PatchItem {
             installed = false;
         }
 
-        requiredFlag = ((data[4].equalsIgnoreCase("1") ? true : false)); //& ! installed );
+        requiredFlag = ((data[4].equalsIgnoreCase("1") ? true : false)); 
 
         installFlag = autoInstallFlag & !installed;
 
@@ -192,6 +192,8 @@ class PatchItem {
     public void setAutoInstallFlag(boolean b) {
         autoInstallFlag = b;
         Settings.getInstance().savePatchItem(this);
+        if (b && !installed) installFlag = true;
+        panel.refresh();
     }
 
     public void setInstallFlag(boolean b) {

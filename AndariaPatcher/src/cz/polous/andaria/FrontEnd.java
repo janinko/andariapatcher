@@ -208,7 +208,7 @@ public class FrontEnd extends JFrame {
         InputStream in = null;
 
         try {
-            URL url = new URL(Settings.CONST.counter_url);
+            URL url = new URL(Settings.getInstance().getValue(Settings.VALUES.COUNTER_URL));
             conn = url.openConnection();
             in = conn.getInputStream();
             log.addDebug("Zavolal jsem počítadlo spuštění.");

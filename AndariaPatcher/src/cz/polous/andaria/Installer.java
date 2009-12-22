@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import cz.polous.andaria.Settings.VALUES;
 
 /**
  * Installer se stara o rozbalovani (nebo jen kopirovani) souboru do adresare
@@ -76,7 +77,7 @@ class Installer extends PatcherQueue {
             public void run() {
                 try {
                     log.addDebug("Před spuštěním");
-                    Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getInstance().getValue(Settings.VALUES.ULTIMA_ONINE_PATH)));
+                    Process proc = Runtime.getRuntime().exec(command, null, new File(Settings.getInstance().getValue(VALUES.ULTIMA_ONINE_PATH)));
                     log.addDebug("Výstup procesu:");
                     String line;
 
@@ -125,13 +126,13 @@ class Installer extends PatcherQueue {
         PatchItem patchItem = getFirstItem();
         File f;
         final Settings settings = Settings.getInstance();
-        final String uopath = settings.getValue(Settings.VALUES.ULTIMA_ONINE_PATH);
+        final String uopath = settings.getValue(VALUES.ULTIMA_ONINE_PATH);
 
         // progress will be counted by 65% for extracting files
         // and  35% for installing patches expect for uoml file.
         // ProgressBars - for single file
         resetProgressBar(BARS.SINGLE, patchItem.getSize());
-        if (patchItem.getName().equals(Settings.CONST.uomlPatchItemName)) {
+        if (patchItem.getStorage() == VALUES.DIST_STORAGE) {
            // extractProgressPart = patchItem.getSize();
             // - if exist start_g.bat, execute it
             f = new File(settings.getOs().getConfigPath());
@@ -209,7 +210,7 @@ class Installer extends PatcherQueue {
                 setSingleProgressPercents(96);
             }
 
-            if (patchItem.getName().equals(Settings.CONST.uomlPatchItemName)) {
+            if (patchItem.getStorage() == (VALUES.DIST_STORAGE)) {
                 if (settings.getOs().getClass() == WindowsOS.class) {
                     WindowsOS os = (WindowsOS) settings.getOs();
                     os.generateRegistryData(uopath);
@@ -220,15 +221,15 @@ class Installer extends PatcherQueue {
                 FrontEnd.getInstance().saveSettings();
                 PatchList.getInstance().reload();
             }
-            if (patchItem.getFileName().equals(Settings.CONST.razorPatchFileName)) {
-                Settings.getInstance().addAutorun("razor", uopath + File.separator + Settings.CONST.razorPath, "client");
+            if (patchItem.getFileName().equals(settings.getValue(VALUES.RAZOR_PATCH_NAME))) {
+                Settings.getInstance().addAutorun("razor", uopath + File.separator + settings.getValue(VALUES.RAZOR_INSTALL_PATH), "client");
                 if (settings.getOs().getClass() == WindowsOS.class) {
                     WindowsOS os = (WindowsOS) settings.getOs();
                     os.generateRazorData(uopath);
                 }
             }
-            if (patchItem.getFileName().equals(Settings.CONST.uoamPatchFileName)) {
-                Settings.getInstance().addAutorun("uoam", uopath + File.separator + Settings.CONST.uoamPath);
+            if (patchItem.getFileName().equals(settings.getValue(VALUES.UOAM_PATCH_NAME))) {
+                Settings.getInstance().addAutorun("uoam", uopath + File.separator + settings.getValue(VALUES.UOAM_INSTALL_PATH));
             }
             setLabelText("Práce dokončena (" + patchItem.getFileName() + ").");
             log.addDebug("Instalace patche " + patchItem.getFileName() + " dokončena.");

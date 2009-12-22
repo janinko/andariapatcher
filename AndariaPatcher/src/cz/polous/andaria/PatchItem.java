@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileInputStream;
+import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import org.jdom.Element;
 
@@ -37,6 +38,7 @@ class PatchItem {
     private Boolean downloaded;             // is file downloaded and ready for instalation ?
     private static Log log;
     public PatchPanel panel;
+    private int storage;                    // remote path
     private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     //private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
 
@@ -48,7 +50,11 @@ class PatchItem {
      * Creates a new instance of PatchItem
      **************************************************************************/
     public PatchItem(String[] data) {
+            this(data, Settings.VALUES.REMOTE_STORAGE);
+    }
+    public PatchItem(String[] data, int storage) {
         log = new Log(this);
+        this.storage = storage;
         name = data[1];
         hash = new BigInteger(data[3].trim(), 16);
         version = data[6];
@@ -111,11 +117,11 @@ class PatchItem {
     }
 
     public String getRemoteFileName() {
-        if (name.equals(Settings.CONST.uomlPatchItemName)) {
-            return Settings.CONST.uomlRemotePath.concat(fileName);
-        } else {
-            return Settings.getInstance().getValue(Settings.VALUES.REMOTE_STORAGE) + "/" + fileName;
-        }
+            return Settings.getInstance().getValue(storage) + "/" + fileName;
+    }
+
+    public int getStorage() {
+        return storage;
     }
 
     public String getName() {

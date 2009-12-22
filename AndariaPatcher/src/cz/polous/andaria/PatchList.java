@@ -20,6 +20,7 @@ class PatchList {
 
     private static final PatchList INSTANCE = new PatchList();
     private Vector patchData; //= new Vector();
+    private Vector distData; //= new Vector();
     private Thread t;
     private static Log log;
     private Thread installThread;
@@ -85,9 +86,50 @@ class PatchList {
 
             @Override
             public void run() {
-                String uri = Settings.getInstance().getValue(Settings.VALUES.FILE_LIST_URL);
+                String uri = Settings.getInstance().getValue(Settings.VALUES.DIST_LIST_URL);
                 try {
-                    log.addLine("Zacinam stahovat seznam patchu z internetu.");
+                    log.addLine("Zjišťuji aktuální verzi používané Ultimy.");
+                    URL url = new URL(uri);
+                    URLConnection connection = url.openConnection();
+                    InputStream in = connection.getInputStream();
+                    Reader reader = new InputStreamReader(in, "UTF-8");
+                    BufferedReader br = new BufferedReader(reader);
+
+                    String sLine; // Line buffer
+                    String[] sItems; // Item Buffer
+                    distData = new Vector(); //reset distdata
+
+                    PatchItem patchItem;
+                    //CSVReade
+                    for (int i = 0; br.ready(); i++) {
+                        if (canceled) {
+                            reader.close();
+                            FrontEnd.getInstance().setJBPatchListEnabled(true);
+                            return;
+                        }
+                        sLine = br.readLine();
+                        log.addDebug(sLine);
+                        sItems = sLine.split(";");
+                        for (int k = 0; k < sItems.length; k++) {
+                            sItems[k] = sItems[k].substring(1, sItems[k].length() - 1);
+                        }
+                        patchItem = new PatchItem(sItems, Settings.VALUES.DIST_STORAGE);
+                        distData.add(patchItem);
+
+                    }
+                    if (distData.size() == 0) {
+                        throw new IOException();
+                    } else {
+                        log.addLine("Úspěšně jsem zjistil informace o aktuální verzi Ultimy ze server Andarie.");
+                    }
+                } catch (IOException e) {
+                    log.addErr("Z nějakého důvodu se nepodařilo zjistit aktuální verzi ultimy ze serveru Andarie. Velmi častou příčinou býva nastaveni firewallu či antiviru. Raději to překontroluj. Možností je také je nedostupnost serveru Andaria. Zkus stahnout soubor: " + uri + ". Pokud seš si jistý, že je vše v pořádku, napiš o pomoc na fórum Andarie.");
+                    log.addEx(e);
+                }
+
+                uri = Settings.getInstance().getValue(Settings.VALUES.FILE_LIST_URL);
+                try {
+                    log.addLine("Zacinam stahovat seznam patchu ze serveru Andarie.");
                     FrontEnd.getInstance().setJBPatchListEnabled(false);
                     FrontEnd.getInstance().setJBInstall(false);
 
@@ -123,12 +165,12 @@ class PatchList {
                     jPPatchList.setLayout(new GridLayout(patchData.size(), 0));
                     reader.close();
                     if (patchData.size() == 0) {
-                        log.addErr("Z nějakého důvodu se nepodařilo nahrát seznam patchů z internetu. Velmi častou příčinou býva nastaveni firewallu či antiviru. Raději to překontroluj. Možností je také je nedostupnost serveru Andaria. Zkus stahnout soubor: " + uri + ". Pokud seš si jistý, že je vše v pořádku, napiš o pomoc na fórum Andarie.");
+                        throw new IOException();
                     } else {
-                        log.addLine("Seznam patchu byl nahran z internetu.");
+                        log.addLine("Seznam patchu byl nahran ze serveru Andarie.");
                     }
                 } catch (IOException e) {
-                    log.addErr("Z nějakého důvodu se nepodařilo nahrát seznam patchů z internetu. Velmi častou příčinou býva nastaveni firewallu či antiviru. Raději to překontroluj. Možností je také je nedostupnost serveru Andaria. Zkus stahnout soubor: " + uri + ". Pokud seš si jistý, že je vše v pořádku, napiš o pomoc na fórum Andarie.");
+                    log.addErr("Z nějakého důvodu se nepodařilo nahrát seznam patchů ze serveru Andarie. Velmi častou příčinou býva nastaveni firewallu či antiviru. Raději to překontroluj. Možností je také je nedostupnost serveru Andaria. Zkus stahnout soubor: " + uri + ". Pokud seš si jistý, že je vše v pořádku, napiš o pomoc na fórum Andarie.");
                     log.addEx(e);
                 } finally {
                     FrontEnd.getInstance().setJBPatchListEnabled(true);
@@ -187,7 +229,7 @@ class PatchList {
         Downloader downloader = Downloader.getInstance();
         downloader.reset();
         Installer.getInstance().reset();
-        downloader.addPatchItem(Settings.getInstance().getUomlPatchItem());
+        downloader.addPatchItem((PatchItem) distData.get(0));
 
         if (downloader.patchQueue.size() > 0) {
             downloader.startSafe();

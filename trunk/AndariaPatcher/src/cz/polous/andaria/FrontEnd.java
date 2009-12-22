@@ -970,7 +970,7 @@ public class FrontEnd extends JFrame {
         jLVersion.setBackground(getBackground());
         jLVersion.setForeground(getForeground());
         jLVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLVersion.setText("Verze programu: 1.6beta4");
+        jLVersion.setText("Verze programu: 1.6beta5");
         jLVersion.setToolTipText(bundle.getString("VersionToolTip")); // NOI18N
 
         jBDeleteNWB.setBackground(getBackground());

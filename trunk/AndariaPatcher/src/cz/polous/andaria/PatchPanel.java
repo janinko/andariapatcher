@@ -41,19 +41,15 @@ class PatchPanel extends JPanel {
         // green 204,255,204 - installed
         // red 255,233,233 - required
         // white 255,255,255 - user choice
-        if (patchItem.isRequired()) {
+        if (patchItem.isRequired() || patchItem.getAutoInstallFlag()) {
             if (patchItem.isInstalled()) {
                 setBg(new Color(204, 255, 204));
             } else {
                 setBg(new Color(255, 233, 233));
             }
         } else {
-            if (patchItem.getAutoInstallFlag()) {
-                if (patchItem.isInstalled()) {
-                    setBg(new Color(204, 255, 204));
-                } else {
-                    setBg(new Color(255, 233, 233));
-                }
+            if (patchItem.isInstalled()) {
+                setBg(new Color(204, 255, 204));
             } else {
                 setBg(new Color(255, 255, 255));
             }

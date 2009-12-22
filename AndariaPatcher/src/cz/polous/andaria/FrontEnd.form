@@ -1207,7 +1207,7 @@
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Verze programu: 1.6beta3"/>
+                <Property name="text" type="java.lang.String" value="Verze programu: 1.6beta4"/>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="VersionToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>

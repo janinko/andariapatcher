@@ -36,25 +36,26 @@ class Settings {
         /**
          * Adresy URL
          */
-        public static final String remote_storage = "http://space.andaria.net/data/andaria_soubory_7zip";
-        public static final String about_url = "http://patcher.andaria.net/java.php";
-        public static final String news_url = "http://www.andaria.net/novinky_updater.php";
-        public static final String debug_log = "0";
-        public static final String counter_url = "http://patcher.andaria.net/counter.php";
-        public static final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
-        public static final String uomlRemotePath = "http://patcher.andaria.net/7z/";
-        public static final String razorPatchFileName = "razor.7z";
-        public static final String uoamPatchFileName = "uoam.7z";
-        public static final String razorPath = "razor\\razor.exe";
-        public static final String uoamPath = "uoam\\uoam.exe";
-        public static final String uomlPatchItemName = "UOML";
-        public static final String dotnetPatchItemName = "DotNetFx";
+        private static final String remote_storage = "http://space.andaria.net/data/andaria_soubory_7zip";
+        private static final String about_url = "http://patcher.andaria.net/java.php";
+        private static final String news_url = "http://www.andaria.net/novinky_updater.php";
+        private static final String debug_log = "0";
+        private static final String counter_url = "http://patcher.andaria.net/counter.php";
+        private static final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
+        private static final String distlist_url = "http://patcher.andaria.net/7z/versions.csv";
+        private static final String dist_storage = "http://patcher.andaria.net/7z";
+        private static final String razorPatchFileName = "razor.7z";
+        private static final String uoamPatchFileName = "uoam.7z";
+        private static final String razorPath = "razor\\razor.exe";
+        private static final String uoamPath = "uoam\\uoam.exe";
+//        private static final String uomlPatchItemName = "UOML";
+//        private static final String dotnetPatchItemName = "DotNetFx";
     }
-    public static final String[] uomlPatchItem = {"uoml_win32_6-0-14-3_Andaria.7z", CONST.uomlPatchItemName, "8.9.2009, 18:51", "428174eb1856187be42b4e4630b9bace", "0", "556111101", "6.0.14.2", "Předinstalovaná ultima online."};
+    //public static final String[] uomlPatchItem = {"uoml_win32_6-0-14-3_Andaria.7z", CONST.uomlPatchItemName, "8.9.2009, 18:51", "428174eb1856187be42b4e4630b9bace", "0", "556111101", "6.0.14.2", "Předinstalovaná ultima online."};
     //public static final String[] uomlPatchItem = {"uoml_win32_6-0-14-2_Andaria.7z", CONST.uomlPatchItemName, "8.9.2009, 18:51", "3874f382e20355ba29f9ecc6aff445d7", "0", "645048128", "6.0.14.2", "Předinstalovaná ultima online."};
     //public staticfinal String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnly.7z", uomlPatchItemName, "8.9.2009, 18:51", "183e6e68922c3ff9b9bddb2e34632bde", "0", "1013", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani."};
     //public staticfinal String[] uomlPatchItem = {"uoml_win32_6-0-14-2_ConfigOnlyNoLogin.7z", uomlPatchItemName, "8.9.2009, 18:51", "346083434d0142bb7aec9e96e0b364e7", "0", "987", "6.0.14.2", "Předinstalovaná ultima online - jenom config pro testovani bez login patche."};
-    public static final String[] dotnetPatchItem = {"dotNetFx35setup.exe", CONST.dotnetPatchItemName, "1.10.2009, 12:00", "269f314b87e6222a20e5f745b6b89783", "0", "2869264", "3.0", "Oficialni instalacni soubor pro DotNetFx 3.5"};
+//    public static final String[] dotnetPatchItem = {"dotNetFx35setup.exe", CONST.dotnetPatchItemName, "1.10.2009, 12:00", "269f314b87e6222a20e5f745b6b89783", "0", "2869264", "3.0", "Oficialni instalacni soubor pro DotNetFx 3.5"};
     private static int autoInstall = AUTO_LEVELS.MANUAL;
     private static Log log;
     private String alternate_storage;
@@ -316,9 +317,44 @@ class Settings {
         public static final int UOAM_PORT = 11;
         public static final int UOAM_PASSWORD = 12;
         public static final int UOAM_NAME = 13;
-    }
-    private static final String[] settingList = {"run_command", "run_command1", "ultima_online_path", "local_storage", "remote_storage", "about_url", "news_url", "debug_log", "filelist_url", "run_command2", "uoam_server", "uoam_port", "uoam_password", "uoam_name"};
+        public static final int DIST_STORAGE = 14;
+        public static final int DIST_LIST_URL = 15;
+        public static final int COUNTER_URL = 16;
+        public static final int RAZOR_PATCH_NAME = 17;
+        public static final int RAZOR_INSTALL_PATH= 18;
+        public static final int UOAM_PATCH_NAME = 19;
+        public static final int UOAM_INSTALL_PATH = 20;
+//        public static final int = 21;
+//        public static final int = 22;
 
+    }
+    // !! NEVER CHANGE THIS STRINGS
+    private static final String[] settingList =
+        {"run_command", "run_command1", "ultima_online_path", "local_storage", "remote_storage",
+         "about_url", "news_url", "debug_log", "filelist_url", "run_command2",
+         "uoam_server", "uoam_port", "uoam_password", "uoam_name", "dist_storage",
+         "distlist_url", "counter_url", "razor_patch_name", "razor_path", "uoam_patch_name",
+         "uoam_install_path"
+        };
+
+    /* private Map<Integer, String> settingsList = new HashMap<Integer, String>();
+    settingsList.put(VALUES.RUN_COMMAND, "run_command");
+    settingsList.put(VALUES.RUN_COMMAND1, "run_command1");
+    settingsList.put(VALUES.RUN_COMMAND2, "run_command2");
+    settingsList.put(VALUES.ULTIMA_ONINE_PATH, "ultima_online_path");
+    settingsList.put(VALUES.LOCAL_STORAGE, "local_storage");
+    settingsList.put(VALUES.REMOTE_STORAGE, "remote_storage");
+    settingsList.put(VALUES.ABOUT_URL, "about_url");
+    settingsList.put(VALUES.NEWS_URL, "news_url");
+    settingsList.put(VALUES.DEBUG_MODE, "debug_log");
+    settingsList.put(VALUES.FILE_LIST_URL, "filelist_url");
+
+    settingsList.put(VALUES.UOAM_SERVER, "uoam_server");
+    settingsList.put(VALUES.UOAM_PORT, "uoam_port");
+    settingsList.put(VALUES.UOAM_PASSWORD, "uoam_password");
+    settingsList.put(VALUES.UOAM_NAME, "uoam_name");
+    settingsList.put(VALUES.DIST_LIST_URL, "distlist_url");
+   */
     private String getDefaultValue(int item) {
         switch (item) {
             case VALUES.RUN_COMMAND:
@@ -346,15 +382,29 @@ class Settings {
             case VALUES.UOAM_PASSWORD:
             case VALUES.UOAM_NAME:
                 return "";
+            case VALUES.DIST_STORAGE:
+                return CONST.dist_storage;
+            case VALUES.DIST_LIST_URL:
+                return CONST.distlist_url;
+            case VALUES.COUNTER_URL:
+                return CONST.counter_url;
+            case VALUES.RAZOR_PATCH_NAME:
+                return CONST.razorPatchFileName;
+            case VALUES.RAZOR_INSTALL_PATH:
+                return CONST.razorPath;
+            case VALUES.UOAM_PATCH_NAME:
+                return CONST.uoamPatchFileName;
+            case VALUES.UOAM_INSTALL_PATH:
+                return CONST.uoamPath;
 
             default:
                 return "";
         }
     }
 
-    public PatchItem getUomlPatchItem() {
+  /*  public PatchItem getUomlPatchItem() {
         return new PatchItem(uomlPatchItem);
-    }
+    }*/
     /*
      * Funkce urcena ke zruseni ve verzi 1.7 ci pozdeji.
      */

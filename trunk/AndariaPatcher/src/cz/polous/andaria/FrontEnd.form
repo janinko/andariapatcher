@@ -429,9 +429,6 @@
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Pr&#x16f;b&#x11b;h stahov&#xe1;n&#xed; aktu&#xe1;ln&#xed;ho souboru."/>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
                     <Property name="stringPainted" type="boolean" value="true"/>
                   </Properties>
                 </Component>
@@ -463,9 +460,6 @@
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Pr&#x16f;b&#x11b;h celkov&#xe9;ho stahov&#xe1;n&#xed; vybran&#xfd;ch updat&#x16f;."/>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
                     <Property name="stringPainted" type="boolean" value="true"/>
                   </Properties>
                 </Component>
@@ -585,9 +579,6 @@
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Pr&#x16f;b&#x11b;h instalace aktu&#xe1;ln&#xed;ho patche."/>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
                     <Property name="stringPainted" type="boolean" value="true"/>
                   </Properties>
                 </Component>
@@ -619,9 +610,6 @@
                       <Connection component="Form" name="foreground" type="property"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Celkov&#xfd; pr&#x16f;b&#x11b;h instalace vybran&#xfd;ch updat&#x16f;."/>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
                     <Property name="stringPainted" type="boolean" value="true"/>
                   </Properties>
                 </Component>
@@ -672,12 +660,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jBInstallSelectAll" linkSize="1" min="-2" pref="216" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jBInstallSelection" pref="276" max="32767" attributes="0"/>
+                      <Component id="jBInstallSelection" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jBInstallSelectNone" linkSize="1" min="-2" pref="216" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jSPPatchList" alignment="0" pref="722" max="32767" attributes="0"/>
+                  <Component id="jSPPatchList" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -1335,13 +1323,13 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection component="Form" name="foreground" type="property"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Instalovat Ultimu Online Monday&apos;s Legacy pro shard Andaria.net jedn&#xed;m klikem"/>
+                <Property name="text" type="java.lang.String" value="Instalovat Ultimu Online Monday&apos;s Legacy pro shard Andaria.cz jedn&#xed;m klikem"/>
                 <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="cz/polous/andaria/FrontEnd.properties" key="InstallUomlToolTip" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Nainstaluje Ultimu Online a v&#x161;e pot&#x159;ebn&#xe9; pro hran&#xed; na Shardu Andaria.net do adres&#xe1;&#x159;e, kter&#xfd; jsi zvolil p&#x159;i spu&#x161;t&#x11b;n&#xed; AndariaPatcheru. Slo&#x17e;ku m&#x16f;&#x17e;e&#x161; zm&#x11b;nit zde v nastaven&#xed; - polo&#x17e;ka &quot;Adres&#xe1;&#x159; ultimy&quot;."/>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Nainstaluje Ultimu Online a v&#x161;e pot&#x159;ebn&#xe9; pro hran&#xed; na Shardu Andaria.cz do adres&#xe1;&#x159;e, kter&#xfd; jsi zvolil p&#x159;i spu&#x161;t&#x11b;n&#xed; AndariaPatcheru. Slo&#x17e;ku m&#x16f;&#x17e;e&#x161; zm&#x11b;nit zde v nastaven&#xed; - polo&#x17e;ka &quot;Adres&#xe1;&#x159; ultimy&quot;."/>
               </AccessibilityProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBDownloadUOActionPerformed"/>

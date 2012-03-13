@@ -491,7 +491,7 @@ public class FrontEnd extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Andaria Patcher");
         setBackground(java.awt.Color.white);
-        setFont(new java.awt.Font("Verdana", 1, 12));
+        setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         setForeground(new java.awt.Color(163, 125, 86));
         setIconImage(getIcon("andaria.png"));
         setLocationByPlatform(true);
@@ -502,7 +502,7 @@ public class FrontEnd extends JFrame {
         jTPMain.setBackground(getBackground());
         jTPMain.setForeground(getForeground());
         jTPMain.setToolTipText("");
-        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14));
+        jTPMain.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         jTPMain.setMinimumSize(new java.awt.Dimension(727, 481));
         jTPMain.setName(""); // NOI18N
         jTPMain.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -679,7 +679,6 @@ public class FrontEnd extends JFrame {
         jPBDownloadSingle.setBackground(getBackground());
         jPBDownloadSingle.setForeground(getForeground());
         jPBDownloadSingle.setToolTipText("Průběh stahování aktuálního souboru.");
-        jPBDownloadSingle.setBorder(null);
         jPBDownloadSingle.setStringPainted(true);
         jPDownloadProgress.add(jPBDownloadSingle);
 
@@ -693,7 +692,6 @@ public class FrontEnd extends JFrame {
         jPBDownloadTotal.setBackground(getBackground());
         jPBDownloadTotal.setForeground(getForeground());
         jPBDownloadTotal.setToolTipText("Průběh celkového stahování vybraných updatů.");
-        jPBDownloadTotal.setBorder(null);
         jPBDownloadTotal.setStringPainted(true);
         jPDownloadProgress.add(jPBDownloadTotal);
 
@@ -743,7 +741,6 @@ public class FrontEnd extends JFrame {
         jPBInstallSingle.setBackground(getBackground());
         jPBInstallSingle.setForeground(getForeground());
         jPBInstallSingle.setToolTipText("Průběh instalace aktuálního patche.");
-        jPBInstallSingle.setBorder(null);
         jPBInstallSingle.setStringPainted(true);
         jPInstallProgress.add(jPBInstallSingle);
 
@@ -757,7 +754,6 @@ public class FrontEnd extends JFrame {
         jPBInstallTotal.setBackground(getBackground());
         jPBInstallTotal.setForeground(getForeground());
         jPBInstallTotal.setToolTipText("Celkový průběh instalace vybraných updatů.");
-        jPBInstallTotal.setBorder(null);
         jPBInstallTotal.setStringPainted(true);
         jPInstallProgress.add(jPBInstallTotal);
 
@@ -823,11 +819,11 @@ public class FrontEnd extends JFrame {
             .add(jPPatchListTabLayout.createSequentialGroup()
                 .add(jBInstallSelectAll, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 216, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                .add(jBInstallSelection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jBInstallSelectNone, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 216, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(2, 2, 2))
-            .add(jSPPatchList, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .add(jSPPatchList, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPPatchListTabLayout.linkSize(new java.awt.Component[] {jBInstallSelectAll, jBInstallSelectNone}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
@@ -1033,7 +1029,7 @@ public class FrontEnd extends JFrame {
 
         jBDownloadUO.setBackground(getBackground());
         jBDownloadUO.setForeground(getForeground());
-        jBDownloadUO.setText("Instalovat Ultimu Online Monday's Legacy pro shard Andaria.net jedním klikem");
+        jBDownloadUO.setText("Instalovat Ultimu Online Monday's Legacy pro shard Andaria.cz jedním klikem");
         jBDownloadUO.setToolTipText(bundle.getString("InstallUomlToolTip")); // NOI18N
         jBDownloadUO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1084,7 +1080,7 @@ public class FrontEnd extends JFrame {
         });
 
         jPUoam.setBackground(getBackground());
-        jPUoam.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nastavení UOAM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), getForeground())); // NOI18N
+        jPUoam.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nastavení UOAM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, getForeground()));
         jPUoam.setForeground(getForeground());
         jPUoam.setToolTipText(bundle.getString("UoamTootlTip")); // NOI18N
 
@@ -1306,7 +1302,7 @@ public class FrontEnd extends JFrame {
         );
 
         jBRemoveTempFiles.getAccessibleContext().setAccessibleDescription("Pomůže uvolnit nějaké to místo na disku. ");
-        jBDownloadUO.getAccessibleContext().setAccessibleDescription("Nainstaluje Ultimu Online a vše potřebné pro hraní na Shardu Andaria.net do adresáře, který jsi zvolil při spuštění AndariaPatcheru. Složku můžeš změnit zde v nastavení - položka \"Adresář ultimy\".");
+        jBDownloadUO.getAccessibleContext().setAccessibleDescription("Nainstaluje Ultimu Online a vše potřebné pro hraní na Shardu Andaria.cz do adresáře, který jsi zvolil při spuštění AndariaPatcheru. Složku můžeš změnit zde v nastavení - položka \"Adresář ultimy\".");
 
         jTPMain.addTab("Nastavení", null, jPSettingsTab, "Klikni pro zobrazení panelu s nastavením Andaria Patcheru...");
 

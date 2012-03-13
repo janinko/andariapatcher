@@ -36,14 +36,14 @@ class Settings {
         /**
          * Adresy URL
          */
-        private static final String remote_storage = "http://space.andaria.net/data/andaria_soubory_7zip";
-        private static final String about_url = "http://patcher.andaria.net/java.php";
-        private static final String news_url = "http://www.andaria.net/novinky_updater.php";
+        private static final String remote_storage = "http://space.andaria.cz/data/andaria_soubory_7zip";
+        private static final String about_url = "http://patcher.andaria.cz/java.php";
+        private static final String news_url = "http://www.andaria.cz/novinky_updater.php";
         private static final String debug_log = "0";
-        private static final String counter_url = "http://patcher.andaria.net/counter.php";
-        private static final String filelist_url = "http://www.andaria.net/admin/patcher.csv";
-        private static final String distlist_url = "http://patcher.andaria.net/7z/versions.csv";
-        private static final String dist_storage = "http://patcher.andaria.net/7z";
+        private static final String counter_url = "http://patcher.andaria.cz/counter.php";
+        private static final String filelist_url = "http://www.andaria.cz/admin/patcher.csv";
+        private static final String distlist_url = "http://patcher.andaria.cz/7z/versions.csv";
+        private static final String dist_storage = "http://patcher.andaria.cz/7z";
         private static final String razorPatchFileName = "razor.7z";
         private static final String uoamPatchFileName = "uoam.7z";
         private static final String razorPath = "razor\\razor.exe";

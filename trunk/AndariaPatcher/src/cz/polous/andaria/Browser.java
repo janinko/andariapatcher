@@ -124,7 +124,7 @@ class Browser {
         URL url = new URL(uri);
         URLConnection connection = url.openConnection();
         InputStream in = connection.getInputStream();
-        Reader reader = new InputStreamReader(in, "windows-1250");
+        Reader reader = new InputStreamReader(in, "utf-8");
         InputSource is = new InputSourceImpl(reader, uri);
 
         UserAgentContext ucontext = new LocalUserAgentContext();
@@ -178,7 +178,7 @@ class Browser {
             URL url = action;
             URLConnection connection = url.openConnection();
             InputStream in = connection.getInputStream();
-            Reader reader = new InputStreamReader(in, "windows-1250");
+            Reader reader = new InputStreamReader(in, "utf-8");
             InputSource is = new InputSourceImpl(reader, action.toString());
 
             HtmlRendererContext rendererContext = new LocalHtmlRendererContext(htmlPanel);

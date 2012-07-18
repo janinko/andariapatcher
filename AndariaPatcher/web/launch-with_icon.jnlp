@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jnlp spec="1.0+" codebase="http://patcher.andaria.net/" href="launch.jnlp">
+<jnlp spec="1.0+" codebase="http://patcher.andaria.cz/" href="launch.jnlp">
     <information>
         <title>Andaria Patcher</title>
         <vendor>Martin Polehla</vendor>
@@ -14,7 +14,7 @@ Chci pomoct s vývojem ?
 Licencování ?
 * AndariaPatcher je vydán pod licencí GNU GPL v jejím posledním znění. Porušení licence tohoto projektu zapříčiní trvalou deformaci mozku hříšníka a poškození ostatních orgánu (zejména statních, které si pro něj v nestřeženou chvíli příjdou !).</description>
         <description kind="short">Andaria Patcher</description>
-        <homepage href="http://www.andaria.net/index.php?link=strazci_patcher"/>
+        <homepage href="http://www.andaria.cz/index.php?link=strazci_patcher"/>
         <icon href="andaria.png" kind="default"/>
         <icon href="andaria_splash.png" kind="splash"/>
         <shortcut online="true">
